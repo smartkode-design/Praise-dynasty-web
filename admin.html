@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Praise Dynasty Real Estate - Admin Dashboard">
+    <title>Praise Dynasty Admin Dashboard</title>
+    <!-- In any event an edit should be made pls go thru the comments to see how the site was structured and there sections to navigate easily -->
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0B1B3D',    /* Deep Royal Blue */
+                            magenta: '#E0005E', /* Bold Magenta/Pink */
+                            light: '#F8F9FA'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="bg-gray-50 font-sans text-gray-800 antialiased selection:bg-brand-magenta selection:text-white flex h-screen overflow-hidden text-sm">
+
+    <!-- Mobile Header & Hamburger -->
+    <div
+        class="md:hidden fixed top-0 w-full bg-gray-900 text-white z-50 flex justify-between items-center px-6 py-4 shadow-lg shrink-0 h-16">
+        <div class="text-xl font-bold tracking-wide flex items-center gap-2">
+            <span class="text-brand-magenta">Praise Dynasty</span> Admin
+        </div>
+        <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path id="icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"></path>
+                <path id="icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar"
+        class="bg-gray-900 w-72 shrink-0 h-full fixed md:relative z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col border-r border-gray-800">
+        <!-- Logo Area -->
+        <div class="h-20 hidden md:flex items-center px-8 border-b border-gray-800">
+            <h1 class="text-2xl font-bold tracking-tight text-white leading-tight">
+                <span class="text-brand-magenta block text-sm font-normal tracking-widest uppercase mb-1">Praise
+                    Dynasty</span>
+                Administrator
+            </h1>
+        </div>
+
+        <!-- Mobile padding spacer -->
+        <div class="h-16 md:hidden"></div>
+
+        <!-- Links -->
+        <nav class="flex-grow px-4 py-8 space-y-2 overflow-y-auto">
+            <a href="#"
+                class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group">
+                <svg class="w-5 h-5 mr-3 group-hover:text-brand-magenta transition-colors" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                    </path>
+                </svg>
+                Dashboard
+            </a>
+            <a href="#"
+                class="flex items-center px-4 py-3 bg-brand-magenta/10 text-white rounded-lg transition-colors border border-brand-magenta/20 shadow-inner group font-semibold">
+                <svg class="w-5 h-5 mr-3 text-brand-magenta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Add New Property
+            </a>
+            <a href="#"
+                class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group">
+                <svg class="w-5 h-5 mr-3 group-hover:text-brand-magenta transition-colors" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                </svg>
+                Manage Listings
+            </a>
+        </nav>
+
+        <!-- Profile & Logout -->
+        <div class="px-6 py-6 border-t border-gray-800">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=0D8ABC&color=fff" alt="Admin"
+                        class="h-10 w-10 rounded-full border-2 border-gray-700">
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-white">Chief Admin</p>
+                        <p class="text-xs text-gray-500">admin@praisedynasty.com</p>
+                    </div>
+                </div>
+                <button id="logout-btn" class="text-gray-400 hover:text-red-400 transition-colors p-2" title="Logout">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Overlay for mobile -->
+    <div id="sidebar-overlay"
+        class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-30 hidden md:hidden transition-opacity"></div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto mt-16 md:mt-0 pb-12">
+
+        <header
+            class="bg-white border-b border-gray-200 px-8 py-6 sticky top-0 z-20 flex justify-between items-center shadow-sm">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Upload Property</h2>
+                <p class="text-sm text-gray-500 mt-1">Publish an exclusive listing to the global feed.</p>
+            </div>
+        </header>
+
+        <div class="p-6 lg:p-10 max-w-6xl mx-auto w-full space-y-10">
+
+            <!-- The Upload Form -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="p-8">
+                    <form class="space-y-8" id="upload-form">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                            <div class="md:col-span-2 pb-2 border-b border-gray-100">
+                                <h4 class="text-lg font-bold text-gray-900">1. Basic Information</h4>
+                            </div>
+
+                            <!-- Title (Full Width) -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Property Title <span
+                                        class="text-red-500">*</span></label>
+                                <input id="property-title" type="text" placeholder="e.g., NAF Sunny Ville Estate"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all placeholder-gray-400 text-gray-900 font-medium">
+                            </div>
+
+                            <!-- Global Location (Datalist) -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Global Location <span
+                                        class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input id="property-location" list="location-options" type="text"
+                                        placeholder="e.g., Abuja, Nigeria"
+                                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all text-gray-900 font-medium placeholder-gray-400">
+                                    <datalist id="location-options">
+                                        <option value="Abuja, Nigeria">
+                                        <option value="Lagos, Nigeria">
+                                        <option value="Dubai, UAE">
+                                        <option value="London, UK">
+                                        <option value="New York, USA">
+                                    </datalist>
+                                </div>
+                            </div>
+
+                            <!-- Property Type (Datalist) -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Property Type <span
+                                        class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input id="property-type" list="type-options" type="text"
+                                        placeholder="e.g., Luxury Villa"
+                                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all text-gray-900 font-medium placeholder-gray-400">
+                                    <datalist id="type-options">
+                                        <option value="Luxury Villa">
+                                        <option value="Penthouse">
+                                        <option value="Commercial Tower">
+                                        <option value="Land">
+                                        <option value="Duplex">
+                                    </datalist>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Property Status (Full Width) -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Property Status <span
+                                        class="text-red-500">*</span></label>
+                                <select id="property-status"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all text-gray-900 font-medium cursor-pointer">
+                                    <option value="Active">Active</option>
+                                    <option value="Recently Sold">Recently Sold</option>
+                                    <option value="Off-Market">Off-Market</option>
+                                </select>
+                            </div>
+
+                            <!-- Premium Description (Full Width) -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Premium
+                                    Description</label>
+                                <textarea id="property-desc" rows="4"
+                                    placeholder="Craft a compelling narrative about this exclusive property..."
+                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all placeholder-gray-400 resize-y font-medium text-gray-900"></textarea>
+                            </div>
+
+                        </div>
+
+                        <!-- 2. Dynamic Pricing & Units Section -->
+                        <div class="pt-6 border-t border-gray-100 md:col-span-2">
+                            <div class="flex justify-between items-center mb-4">
+                                <h4 class="text-lg font-bold text-gray-900">2. Configuration & Units</h4>
+                                <div class="relative flex text-gray-700 w-32 shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                        <span class="text-xs font-bold text-gray-400">CUR</span>
+                                    </div>
+                                    <select id="property-currency"
+                                        class="w-full rounded-lg border border-gray-200 bg-gray-50 pl-10 pr-2 py-2 text-gray-600 font-bold focus:outline-none focus:ring-2 focus:ring-brand-blue cursor-pointer text-sm">
+                                        <option value="₦">₦</option>
+                                        <option value="$">$</option>
+                                        <option value="£">£</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="units-container" class="space-y-4">
+                                <!-- Default Row -->
+                                <div
+                                    class="unit-row flex gap-4 items-center bg-gray-50 p-4 rounded-xl border border-gray-200">
+                                    <div class="flex-1">
+                                        <input type="text" placeholder="Unit Type e.g., '4 Bedroom Detached'"
+                                            class="unit-type w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none text-gray-900 text-sm">
+                                    </div>
+                                    <div class="flex-1">
+                                        <input type="number" placeholder="Price (e.g., 450000000)"
+                                            class="unit-price w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none text-gray-900 text-sm">
+                                    </div>
+                                    <button type="button" class="remove-unit text-red-400 hover:text-red-600 p-2 hidden"
+                                        onclick="this.parentElement.remove()">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button type="button" id="add-unit-btn"
+                                class="mt-4 flex items-center text-sm font-bold text-brand-magenta hover:text-brand-blue transition-colors">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                Add Another Unit
+                            </button>
+                        </div>
+
+                        <!-- 3. Media Section -->
+                        <div class="pt-6 border-t border-gray-100 md:col-span-2 space-y-6">
+                            <h4 class="text-lg font-bold text-gray-900">3. Media Assets</h4>
+
+                            <!-- YouTube Integration -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">YouTube Video URL
+                                    (Optional)</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                                            <path
+                                                d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 00-2.122 2.136C0 8.07 0 12 0 12s0 3.93.501 5.814a3.016 3.016 0 002.122 2.136c1.871.55 9.377.55 9.377.55s7.505 0 9.377-.55a3.016 3.016 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <input id="property-youtube" type="url"
+                                        placeholder="https://www.youtube.com/watch?v=..."
+                                        class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 outline-none transition-all placeholder-gray-400 text-gray-900 font-medium text-sm">
+                                </div>
+                            </div>
+
+                            <!-- Cloudinary Dropzone -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Cover Image
+                                    (Optional)</label>
+                                <label for="property-image"
+                                    class="border-2 border-dashed border-gray-300 bg-gray-50 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-100 hover:border-brand-blue transition-all group relative">
+                                    <input type="file" id="property-image" accept="image/*"
+                                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+
+                                    <div
+                                        class="bg-white p-4 rounded-full shadow-sm mb-4 border border-gray-100 group-hover:scale-110 transition-transform">
+                                        <svg class="w-8 h-8 text-brand-blue" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <h4 id="file-name-display"
+                                        class="text-lg font-bold text-gray-900 mb-1 z-10 transition-colors">Drag & drop
+                                        high-resolution images</h4>
+                                    <p id="file-instruction" class="text-sm text-gray-500 mb-6 z-10">or click to browse
+                                        from
+                                        device</p>
+                                    <div
+                                        class="px-5 py-2.5 bg-white border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 shadow-sm transition-colors z-10 hover:bg-gray-50">
+                                        Select Files</div>
+                                </label>
+                                <div class="mt-4 flex items-start text-xs text-gray-500">
+                                    <svg class="w-4 h-4 mr-1.5 text-blue-500 shrink-0" fill="currentColor"
+                                        viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    Images are automatically compressed to WebP via Cloudinary before hitting the
+                                    database.
+                                </div>
+                            </div>
+
+                            <!-- Publish Button -->
+                            <div class="pt-6 border-t border-gray-100">
+                                <button id="publish-btn" type="button"
+                                    class="w-full flex items-center justify-center px-8 py-4 bg-gray-900 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-brand-magenta transition-all duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 disabled:opacity-50">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                    <span>Publish to Global Feed</span>
+                                </button>
+                            </div>
+
+                    </form>
+                </div>
+            </section>
+
+            <!-- Active Inventory Table -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-8 py-6 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-xl font-bold text-gray-900">Live Properties</h3>
+                    <span id="active-count"
+                        class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full border border-green-200">Loading...</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr
+                                class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider font-semibold border-b border-gray-200">
+                                <th class="px-6 py-4">Listing</th>
+                                <th class="px-6 py-4">Location</th>
+                                <th class="px-6 py-4">Price</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="properties-list" class="divide-y divide-gray-100 min-w-full text-sm">
+                            <!-- Dynamic Content Rendered Here via Firebase -->
+                            <tr>
+                                <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                                    Syncing with Firebase...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Global Toast Notifications Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Sidebar Toggle Script -->
+    <script>
+        const toastContainer = document.getElementById('toast-container');
+        window.showToast = function (message, type = 'success') {
+            const toast = document.createElement('div');
+            const bgClass = type === 'error' ? 'bg-brand-magenta' : 'bg-[#25D366]';
+            const icon = type === 'error'
+                ? '<svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+                : '<svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+
+            toast.className = `flex items-center text-white px-6 py-4 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.2)] transform transition-all duration-500 translate-x-full opacity-0 ${bgClass} z-[9999]`;
+            toast.innerHTML = `${icon} <span class="font-bold text-sm tracking-wide shadow-black drop-shadow-md leading-tight">${message}</span>`;
+
+            toastContainer.appendChild(toast);
+
+            // Animate in
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-x-full', 'opacity-0');
+            });
+
+            // Auto dismiss
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        };
+
+        const btn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const openIcon = document.getElementById('icon-open');
+        const closeIcon = document.getElementById('icon-close');
+
+        function toggleMobileMenu() {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+            openIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        }
+
+        btn.addEventListener('click', toggleMobileMenu);
+        overlay.addEventListener('click', toggleMobileMenu);
+    </script>
+
+    <!-- Firebase Secured Engine Intercept -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+        import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJBGi_WKLDU493eOrH4Emx7xx_li7wzoY",
+            authDomain: "praise-dynasty-hni.firebaseapp.com",
+            projectId: "praise-dynasty-hni",
+            storageBucket: "praise-dynasty-hni.firebasestorage.app",
+            messagingSenderId: "702909860929",
+            appId: "1:702909860929:web:7c9d2a3c899df3dbf0cac0"
+        };
+        const app = initializeApp(firebaseConfig);
+
+        // --- 1. Security Bouncer: Lock down immediately ---
+        const auth = getAuth(app);
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                // Not authenticated, kick client natively out of the dashboard
+                window.location.replace('login.html');
+            }
+        });
+
+        // --- 2. Database Services ---
+        const db = getDatabase(app);
+
+        const publishBtn = document.getElementById('publish-btn');
+        const uploadForm = document.getElementById('upload-form');
+        const titleInput = document.getElementById('property-title');
+        const currencySelect = document.getElementById('property-currency');
+        const locationInput = document.getElementById('property-location');
+        const typeInput = document.getElementById('property-type');
+        const descInput = document.getElementById('property-desc');
+        const statusInput = document.getElementById('property-status');
+        const youtubeInput = document.getElementById('property-youtube');
+
+        // Dynamic Units DOM
+        const unitsContainer = document.getElementById('units-container');
+        const addUnitBtn = document.getElementById('add-unit-btn');
+
+        addUnitBtn.addEventListener('click', () => {
+            const rowStr = `
+                <div class="unit-row flex gap-4 items-center bg-gray-50 p-4 rounded-xl border border-gray-200 mt-4 animate-fade-in">
+                    <div class="flex-1">
+                        <input type="text" placeholder="Unit Type e.g., '3 Bedroom Terrace'" class="unit-type w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none text-gray-900 text-sm">
+                    </div>
+                    <div class="flex-1">
+                        <input type="number" placeholder="Price" class="unit-price w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none text-gray-900 text-sm">
+                    </div>
+                    <button type="button" class="remove-unit text-red-400 hover:text-red-600 p-2" onclick="this.parentElement.remove()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </button>
+                </div>
+            `;
+            unitsContainer.insertAdjacentHTML('beforeend', rowStr);
+
+            // Show remove buttons if > 1
+            const rows = unitsContainer.querySelectorAll('.unit-row');
+            if (rows.length > 1) {
+                rows[0].querySelector('.remove-unit').classList.remove('hidden');
+            }
+        });
+
+        const propertyImageInput = document.getElementById('property-image');
+        const fileNameDisplay = document.getElementById('file-name-display');
+        const fileInstruction = document.getElementById('file-instruction');
+
+        const propertiesList = document.getElementById('properties-list');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        // Logout Event Engine
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.replace('login.html');
+                }).catch((error) => console.error("Sign-out failure:", error));
+            });
+        }
+        const activeCount = document.getElementById('active-count');
+
+        const propertiesRef = ref(db, 'properties');
+
+        let editingId = null;
+        let propertiesCache = {};
+
+        // UI Interactions for File Dropzone
+        propertyImageInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                const fileName = e.target.files[0].name;
+                fileNameDisplay.innerText = fileName;
+                fileNameDisplay.classList.add('text-brand-magenta');
+                fileInstruction.innerText = "Ready to upload";
+            } else {
+                fileNameDisplay.innerText = "Drag & drop high-resolution images";
+                fileNameDisplay.classList.remove('text-brand-magenta');
+                fileInstruction.innerText = "or click to browse from device";
+            }
+        });
+
+        // Upload / Update Property (Write)
+        publishBtn.addEventListener('click', async () => {
+            const titleVal = titleInput.value.trim();
+            const curVal = currencySelect.value;
+            const locVal = locationInput.value.trim();
+            const typeVal = typeInput.value.trim();
+            const descVal = descInput.value.trim();
+            const statusVal = statusInput.value;
+            const youtubeVal = youtubeInput.value.trim();
+
+            // Extract dynamic units
+            const units = [];
+            const rowNodes = unitsContainer.querySelectorAll('.unit-row');
+            rowNodes.forEach(row => {
+                const typeText = row.querySelector('.unit-type').value.trim();
+                const priceNum = row.querySelector('.unit-price').value;
+                if (typeText || priceNum) {
+                    units.push({
+                        type: typeText || 'Standard Unit',
+                        price: Number(priceNum || 0)
+                    });
+                }
+            });
+
+            if (!titleVal || units.length === 0 || !locVal || !typeVal) {
+                window.showToast('Please fill in Title, Location, Type Dropdowns, and verify at least one Unit configuration.', 'error');
+                return;
+            }
+
+            const propertyData = {
+                title: titleVal,
+                currency: curVal,
+                location: locVal,
+                type: typeVal,
+                description: descVal,
+                status: statusVal,
+                youtubeUrl: youtubeVal,
+                units: units
+            };
+
+            const btnText = publishBtn.querySelector('span');
+
+            try {
+                // Determine whether inserting or updating text
+                publishBtn.disabled = true;
+
+                // 1. Image Upload Logic to Cloudinary First
+                const fileList = propertyImageInput.files;
+                let imageUrl = "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80"; // Luxury fallback initially
+
+                if (fileList && fileList.length > 0) {
+                    btnText.innerText = 'Uploading High-Res Image...';
+                    const formData = new FormData();
+                    formData.append('file', fileList[0]);
+                    formData.append('upload_preset', 'ml_default');
+
+                    const cloudinaryRes = await fetch("https://api.cloudinary.com/v1_1/dnlyjgkbz/image/upload", {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!cloudinaryRes.ok) {
+                        const errDesc = await cloudinaryRes.text();
+                        console.error('Cloudinary Rejection:', errDesc);
+                        throw new Error('Cloudinary Upload Failed.');
+                    }
+
+                    const uploadData = await cloudinaryRes.json();
+                    imageUrl = uploadData.secure_url;
+                } else if (editingId && propertiesCache[editingId]?.imageUrl) {
+                    imageUrl = propertiesCache[editingId].imageUrl; // Preserve previous image heavily during an Update
+                } else if (!editingId && (!fileList || fileList.length === 0)) {
+                    // Force the fallback if they skipped images when creating new props
+                }
+
+                propertyData.imageUrl = imageUrl;
+
+                // 2. Map Payload securely to Firebase Realtime DB
+                btnText.innerText = editingId ? 'Updating Database...' : 'Syncing to Global Feed...';
+
+                if (editingId) {
+                    const specificPropertyRef = ref(db, `properties/${editingId}`);
+                    // Preserve createdAt by pulling from cache, or only update specific fields
+                    if (propertiesCache[editingId]?.createdAt) {
+                        propertyData.createdAt = propertiesCache[editingId].createdAt;
+                    } else {
+                        propertyData.createdAt = Date.now();
+                    }
+                    await update(specificPropertyRef, propertyData);
+                    window.showToast('Property Updated Successfully!', 'success');
+                } else {
+                    propertyData.createdAt = Date.now();
+                    const newPropertyRef = push(propertiesRef);
+                    await set(newPropertyRef, propertyData);
+                    window.showToast('Property Published with Media!', 'success');
+                }
+
+                // Reset UI & State
+                uploadForm.reset();
+                editingId = null;
+                btnText.innerText = 'Publish to Global Feed';
+
+                // Reset custom file label triggers
+                fileNameDisplay.innerText = "Drag & drop high-resolution images";
+                fileNameDisplay.classList.remove('text-brand-magenta');
+                fileInstruction.innerText = "or click to browse from device";
+
+            } catch (error) {
+                console.error("Error writing to database: ", error);
+                window.showToast("Upload Failed: " + error.message, 'error');
+                btnText.innerText = editingId ? 'Update Property' : 'Publish to Global Feed';
+                publishBtn.disabled = false;
+            } finally {
+                publishBtn.disabled = false;
+            }
+        });
+
+        // Live Properties Table (Read)
+        onValue(propertiesRef, (snapshot) => {
+            propertiesCache = {}; // flush cache
+
+            if (!snapshot.exists()) {
+                propertiesList.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-gray-500">No properties found. Add one above!</td></tr>';
+                activeCount.innerText = '0 Active';
+                return;
+            }
+
+            propertiesList.innerHTML = '';
+            let count = 0;
+
+            snapshot.forEach((childSnapshot) => {
+                const key = childSnapshot.key;
+                const property = childSnapshot.val();
+
+                // Exclude off-market from active count (or keep it but just count all for admin view)
+                // Admin needs to see all properties always!
+                count++;
+                propertiesCache[key] = property; // store in cache for edits
+
+                // formatting price
+                let formattedPrice = 'N/A';
+                if (property.units && Array.isArray(property.units) && property.units.length > 0) {
+                    const firstUnit = property.units[0];
+                    if (firstUnit.price && firstUnit.price > 0) {
+                        formattedPrice = new Intl.NumberFormat('en-US').format(firstUnit.price) + ' (Base)';
+                    }
+                } else if (property.price && property.price > 0) {
+                    formattedPrice = new Intl.NumberFormat('en-US').format(property.price);
+                }
+
+                // format date timestamp to '18 Mar 2026, 09:30 PM'
+                let formattedDate = 'Recent';
+                if (property.createdAt) {
+                    const d = new Date(property.createdAt);
+                    formattedDate = d.toLocaleString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                    }).replace(/ AM/, ' AM').replace(/ PM/, ' PM'); // Clean up spacing based on browser
+                }
+
+                // Location splitting for UI table
+                let city = property.location || "Unknown";
+                let country = "";
+                if (city.includes(",")) {
+                    let parts = city.split(",");
+                    city = parts[0].trim();
+                    country = parts.slice(1).join(",").trim();
+                }
+
+                // Dynamic Status Badge
+                let badgeClass = 'bg-gray-100 text-gray-600 border border-gray-200';
+                let dotHtml = '';
+                if (property.status === 'Active') {
+                    badgeClass = 'bg-green-50 text-green-700 border border-green-200';
+                    dotHtml = '<svg class="-ml-1 mr-1.5 h-2 w-2 text-green-500" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3"></circle></svg>';
+                } else if (property.status === 'Recently Sold') {
+                    badgeClass = 'bg-gray-800 text-white border border-gray-900';
+                }
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50/50 transition-colors group';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="h-12 w-16 flex-shrink-0 bg-gray-200 rounded overflow-hidden">
+                                <img src="${property.imageUrl || 'https://via.placeholder.com/150'}" alt="Thumbnail" class="h-full w-full object-cover">
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-bold text-gray-900 leading-tight">${property.title}</div>
+                                <div class="text-xs text-brand-magenta font-medium mt-0.5">${property.type}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-gray-900 font-medium">${city}</div>
+                        <div class="text-gray-500 text-xs text-opacity-80">${country}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="font-bold text-gray-900">${property.currency || '₦'}${formattedPrice}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${badgeClass}">
+                            ${dotHtml}
+                            ${property.status || 'Active'}
+                        </span>
+                        <div class="text-[10px] text-gray-400 mt-1.5 font-bold tracking-wide border-t border-gray-100 pt-1.5">${formattedDate}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button class="edit-btn text-gray-400 hover:text-brand-blue p-1.5 transition-colors" data-id="${key}" title="Edit">
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        </button>
+                        <button class="delete-btn text-gray-400 hover:text-red-500 p-1.5 transition-colors ml-2" data-id="${key}" title="Delete">
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    </td>
+                `;
+                propertiesList.appendChild(tr);
+            });
+
+            activeCount.innerText = count + ' Total Listings';
+        });
+
+        // Event Delegation for Table Actions
+        propertiesList.addEventListener('click', async (e) => {
+            const editBtn = e.target.closest('.edit-btn');
+            const deleteBtn = e.target.closest('.delete-btn');
+
+            if (deleteBtn) {
+                const id = deleteBtn.getAttribute('data-id');
+                if (confirm('Are you definitely sure you want to permanently delete this listing?')) {
+                    try {
+                        await remove(ref(db, `properties/${id}`));
+                    } catch (err) {
+                        alert("Error removing: " + err.message);
+                    }
+                }
+            }
+
+            if (editBtn) {
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Send to top of form
+                const id = editBtn.getAttribute('data-id');
+                const p = propertiesCache[id];
+                if (p) {
+                    editingId = id; // Flag system into Edit Mode
+                    titleInput.value = p.title || '';
+                    currencySelect.value = p.currency || '₦';
+                    priceInput.value = p.price || '';
+                    locationInput.value = p.location || '';
+                    typeInput.value = p.type || '';
+                    bedsInput.value = p.bedrooms || '';
+                    bathsInput.value = p.bathrooms || '';
+                    descInput.value = p.description || '';
+
+                    // Pulling Status
+                    if (p.status) {
+                        statusInput.value = p.status;
+                    } else {
+                        statusInput.value = 'Active';
+                    }
+
+                    publishBtn.querySelector('span').innerText = 'Update Property';
+                }
+            }
+        });
+    </script>
+</body>
+<!-- Published by SmartKode solutionns.....CopyRight 2026 -->
+
+</html>

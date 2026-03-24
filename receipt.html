@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Receipt - SK-2026-001</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        smartkode: {
+                            blue: '#0F172A',
+                            accent: '#3B82F6',
+                            light: '#F8FAFC'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            body {
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .print-hidden {
+                display: none !important;
+            }
+
+            .print-shadow-none {
+                box-shadow: none !important;
+            }
+
+            .print-border {
+                border-color: #e2e8f0 !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-800 antialiased py-12 print:py-0">
+
+    <!-- Print / Download Button -->
+    <button onclick="window.print()"
+        class="fixed top-8 right-8 bg-smartkode-blue hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2 print-hidden z-50 group">
+        <svg class="w-5 h-5 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+        </svg>
+        Download PDF
+    </button>
+
+    <!-- Receipt Container -->
+    <main
+        class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden print-shadow-none print-border border border-gray-100">
+
+        <!-- Header Banner (Subtle design accent) -->
+        <div class="h-2 bg-gradient-to-r from-smartkode-blue via-smartkode-accent to-blue-300"></div>
+
+        <div class="p-10 sm:p-14">
+
+            <!-- Header Section -->
+            <header class="flex flex-col md:flex-row justify-between items-start mb-16 gap-8 relative">
+
+                <!-- Logo & Brand -->
+                <div class="flex flex-col items-start">
+                    <img src="./images/smartkode logo.jpeg" alt="Smartkode Logo"
+                        class="h-20 object-contain rounded-md shadow-sm mb-4 bg-white p-1 border border-gray-100">
+                    <h1 class="text-xl md:text-2xl font-extrabold text-smartkode-blue tracking-tight uppercase">
+                        SMARTKODE</h1>
+                    <p class="text-xs md:text-sm text-gray-500 font-medium tracking-widest uppercase mt-1">Intelligent
+                        Digital Solutions</p>
+                </div>
+
+                <!-- Receipt Details -->
+                <div
+                    class="text-left md:text-right bg-smartkode-light p-6 rounded-xl border border-gray-100 w-full md:w-auto">
+                    <h2 class="text-2xl font-black text-smartkode-blue tracking-wider mb-2">PAYMENT RECEIPT</h2>
+                    <div class="space-y-1">
+                        <p class="text-sm text-gray-600"><span class="font-semibold text-gray-800">Receipt #:</span>
+                            SK-2026-001</p>
+                        <p class="text-sm text-gray-600"><span class="font-semibold text-gray-800">Date:</span> March
+                            19, 2026</p>
+                        <p class="text-sm text-gray-600"><span class="font-semibold text-gray-800">Status:</span> <span
+                                class="text-green-600 font-bold uppercase tracking-wider text-xs ml-1 bg-green-100 px-2 py-0.5 rounded-full">Partial
+                                Payment</span></p>
+                    </div>
+                </div>
+            </header>
+
+            <hr class="border-gray-100 mb-12">
+
+            <!-- Client & Generator Info -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                <!-- Billed To -->
+                <div>
+                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Billed To</h3>
+                    <p class="text-lg font-bold text-smartkode-blue">Praise Dynasty</p>
+                    <p class="text-sm font-medium text-gray-600 mt-1">Enterprise Real Estate Platform</p>
+                </div>
+
+                <!-- Generated By -->
+                <div class="md:text-right">
+                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Generated By</h3>
+                    <p class="text-lg font-bold text-smartkode-blue">Hussein</p>
+                    <p class="text-sm font-medium text-gray-600 mt-1">Lead Software Engineer, Smartkode</p>
+                </div>
+            </section>
+
+            <!-- Description Table -->
+            <section class="mb-16">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-smartkode-blue text-white">
+                                <th class="py-4 px-6 font-semibold text-sm uppercase tracking-wider rounded-tl-lg">
+                                    Description</th>
+                                <th
+                                    class="py-4 px-6 font-semibold text-sm uppercase tracking-wider text-right rounded-tr-lg w-48">
+                                    Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody
+                            class="divide-y divide-gray-100 border-x border-b border-gray-100 rounded-b-lg block sm:table-row-group">
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="py-6 px-6">
+                                    <p class="font-bold text-gray-900">Phase 1: Enterprise Platform Architecture</p>
+                                    <p class="text-sm text-gray-500 mt-2 leading-relaxed">System backbone initialization
+                                        encompassing secure database setup, authenticated gateway mappings, and dynamic
+                                        Global Market Filter mechanisms.</p>
+                                </td>
+                                <td class="py-6 px-6 text-right font-medium text-gray-900 border-l border-gray-100">
+                                    ₦700,000
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Math / Totals -->
+            <section class="flex flex-col md:flex-row justify-end items-end mb-16">
+                <div class="w-full md:w-1/2 lg:w-2/5 p-6 bg-smartkode-light rounded-xl border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm font-semibold text-gray-600">Total Project Cost</span>
+                        <span class="text-base font-bold text-gray-900">₦700,000</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
+                        <span class="text-sm font-semibold text-gray-600">Amount Received Today</span>
+                        <span class="text-base font-bold text-green-600">- ₦100,000</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-base font-bold text-smartkode-blue uppercase tracking-wide">Outstanding
+                            Balance</span>
+                        <span class="text-xl font-black text-red-600">₦600,000</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer Notes -->
+            <footer class="text-center pt-10 border-t border-gray-100">
+                <p class="text-sm font-medium text-gray-500 mb-2">Thank you for trusting Smartkode with your enterprise
+                    infrastructure.</p>
+                <p class="text-xs text-gray-400">If you have any questions regarding this receipt, please contact your
+                    account manager.</p>
+            </footer>
+
+        </div>
+    </main>
+
+</body>
+
+</html>
