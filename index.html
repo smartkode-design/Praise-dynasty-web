@@ -1,1009 +1,1084 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Praise Dynasty Real Estate Ltd - Premium Real Estate Services in Asokoro, Abuja."
-    />
-    <title>Praise Dynasty Real Estate Ltd</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Praise Dynasty Real Estate Ltd | Luxury Properties in Abuja</title>
+    <meta name="description" content="Discover ultra-luxury real estate, off-market properties, and prime investments in Abuja, Nigeria with Praise Dynasty Real Estate.">
+    <link rel="canonical" href="https://www.praisedynastyrealty.com/" />
+    <meta property="og:title" content="Praise Dynasty Real Estate Ltd | Luxury Properties in Abuja" />
+    <meta property="og:description" content="Discover ultra-luxury real estate, off-market properties, and prime investments in Abuja, Nigeria with Praise Dynasty Real Estate." />
+    <meta property="og:image" content="https://www.praisedynastyrealty.com/images/logo-light.jpg" />
+    <meta property="og:url" content="https://www.praisedynastyrealty.com/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
     <!-- In any event an edit should be made pls go thru the comments to see how the site was structured and there sections to navigate easily -->
     <!-- Preconnect to Font APIs  -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- favicon -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="favicon/favicon-96x96.png"
-      sizes="96x96"
-    />
-    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
-    <link rel="shortcut icon" href="favicon/favicon.ico" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="favicon/apple-touch-icon.png"
-    />
-    <link rel="manifest" href="favicon/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Hero Image -->
-    <link
-      rel="preload"
-      href="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-      as="image"
-    />
+    <link rel="preload"
+        href="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+        as="image">
 
     <!-- Used Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                blue: "#0B1B3D",
-                magenta: "#E0005E",
-                light: "#F8F9FA",
-              },
-            },
-            fontFamily: {
-              sans: ["Outfit", "sans-serif"],
-            },
-          },
-        },
-      };
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0B1B3D',
+                            magenta: '#E0005E',
+                            light: '#F8F9FA'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
     </script>
     <style type="text/tailwindcss">
-      @layer utilities {
-        .hero-pattern {
-          background-image:
-            linear-gradient(
-              to bottom,
-              rgba(11, 27, 61, 0.7),
-              rgba(0, 0, 0, 0.8)
-            ),
-            url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
+        @layer utilities {
+            .hero-pattern {
+                background-image: 
+                    linear-gradient(to bottom, rgba(11, 27, 61, 0.7), rgba(0, 0, 0, 0.8)),
+                    url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            .animate-fade-up {
+                animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                opacity: 0;
+            }
+            .delay-100 { animation-delay: 100ms; }
+            .delay-200 { animation-delay: 200ms; }
+            .delay-300 { animation-delay: 300ms; }
         }
-        .animate-fade-up {
-          animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          opacity: 0;
+        
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .delay-100 {
-          animation-delay: 100ms;
-        }
-        .delay-200 {
-          animation-delay: 200ms;
-        }
-        .delay-300 {
-          animation-delay: 300ms;
-        }
-      }
-
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
     </style>
-  </head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CSMJ74EREW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  <body
-    class="font-sans text-gray-800 bg-white antialiased selection:bg-brand-magenta selection:text-white"
-  >
-    <!-- 1. Thee Navigation Bar -->
+      gtag('config', 'G-CSMJ74EREW');
+    </script>
+</head>
+
+<body
+    class="bg-gray-50 font-sans tracking-wide selection:bg-brand-magenta selection:text-white relative overflow-x-hidden min-h-screen flex flex-col">
+
+    <!-- Premium Particles Background -->
+    <div id="particles-js" class="fixed inset-0 z-40 pointer-events-none"></div>
+
+    <!-- 1. The Navigation Bar -->
     <nav
-      class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-20">
-          <!-- praise dynasty Logo -->
-          <div class="flex-shrink-0 flex items-center group">
-            <img
-              src="./images/logo-light.jpg"
-              alt="Praise Dynasty Real Estate"
-              class="h-12 w-auto object-contain rounded transition-transform group-hover:scale-105"
-            />
-          </div>
+        class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- praise dynasty Logo -->
+                <div class="flex-shrink-0 flex items-center group">
+                    <img src="./images/logo-light.jpg" alt="Praise Dynasty Real Estate"
+                        class="h-12 w-auto object-contain rounded transition-transform group-hover:scale-105">
+                </div>
 
-          <!-- The Desktop Links, Dont think we need to add more well just a suggestion -->
-          <div class="hidden md:flex space-x-10">
-            <a
-              href="#home"
-              class="text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200"
-              >Home</a
-            >
-            <a
-              href="#about"
-              class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200"
-              >About</a
-            >
-            <a
-              href="#services"
-              class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200"
-              >Services</a
-            >
-          </div>
+                <!-- The Desktop Links, Dont think we need to add more well just a suggestion -->
+                <div class="hidden md:flex space-x-10">
+                    <a href="#home"
+                        class="text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200">Home</a>
+                    <a href="#about"
+                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">About</a>
+                    <a href="#services"
+                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">Services</a>
+                    <a href="videos.html"
+                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">Videos</a>
+                    <a href="articles.html"
+                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">Articles</a>
+                </div>
 
-          <!-- WhatsApp CTA Button -->
-          <div class="hidden md:flex items-center">
-            <a
-              href="https://wa.me/2348081975967"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/40 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              <!-- WhatsApp Icon -->
-              <svg
-                class="w-5 h-5 mr-2 -ml-1"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"
-                />
-              </svg>
-              Chat on WhatsApp
-            </a>
-          </div>
+                <!-- WhatsApp CTA Button -->
+                <div class="hidden md:flex items-center">
+                    <a href="https://wa.me/2348081975967" target="_blank" rel="noopener noreferrer"
+                        class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/40 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <!-- WhatsApp Icon -->
+                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                        </svg>
+                        Chat on WhatsApp
+                    </a>
+                </div>
 
-          <!--The Mobile Menu Button -->
-          <div class="md:hidden flex items-center">
-            <button
-              id="mobile-menu-btn"
-              aria-expanded="false"
-              class="text-brand-blue hover:text-brand-magenta transition-colors focus:outline-none"
-            >
-              <svg
-                class="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  id="menu-icon-open"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-                <path
-                  id="menu-icon-close"
-                  class="hidden"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
+                <!--The Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" aria-expanded="false"
+                        class="text-brand-blue hover:text-brand-magenta transition-colors focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                            <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- The Mobile Menu Dropdown -->
+            <div id="mobile-menu"
+                class="md:hidden hidden bg-white border-t border-gray-100 py-4 max-h-[calc(100vh-5rem)] overflow-y-auto absolute left-0 w-full shadow-lg">
+                <div class="flex flex-col space-y-4 px-4 sm:px-6">
+                    <a href="#home"
+                        class="mobile-link text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Home</a>
+                    <a href="#about"
+                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">About</a>
+                    <a href="#services"
+                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Services</a>
+                    <a href="videos.html"
+                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Videos</a>
+                    <a href="articles.html"
+                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Articles</a>
+                    <a href="https://wa.me/2348081975967" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                        </svg>
+                        Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
         </div>
-
-        <!-- The Mobile Menu Dropdown -->
-        <div
-          id="mobile-menu"
-          class="md:hidden hidden bg-white border-t border-gray-100 py-4 max-h-[calc(100vh-5rem)] overflow-y-auto absolute left-0 w-full shadow-lg"
-        >
-          <div class="flex flex-col space-y-4 px-4 sm:px-6">
-            <a
-              href="#home"
-              class="mobile-link text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50"
-              >Home</a
-            >
-            <a
-              href="#about"
-              class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50"
-              >About</a
-            >
-            <a
-              href="#services"
-              class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50"
-              >Services</a
-            >
-            <a
-              href="https://wa.me/2348081975967"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600"
-            >
-              <svg
-                class="w-5 h-5 mr-2"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"
-                />
-              </svg>
-              Chat on WhatsApp
-            </a>
-          </div>
-        </div>
-      </div>
     </nav>
 
     <!-- 2. The Hero Section -->
-    <section
-      id="home"
-      class="relative w-full h-screen min-h-[600px] flex items-center justify-center hero-pattern text-center"
-    >
-      <div
-        class="absolute inset-0 bg-brand-blue/30 mix-blend-multiply z-0"
-      ></div>
-      <div
-        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 z-0"
-      ></div>
+    <section id="home"
+        class="relative w-full h-screen min-h-[600px] flex items-center justify-center hero-pattern text-center">
+        <div class="absolute inset-0 bg-brand-blue/30 mix-blend-multiply z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 z-0"></div>
 
-      <div
-        class="relative z-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto flex flex-col items-center justify-center"
-      >
-        <h1
-          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 tracking-tight animate-fade-up"
-        >
-          Transforming Properties into <br class="hidden sm:block" />
-          <span class="text-brand-magenta">Cherished Homes</span>
-          <span class="font-light">&amp;</span>
-          <span class="text-brand-magenta">Successful Investments</span>
-        </h1>
+        <div class="relative z-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto flex flex-col items-center justify-center">
 
-        <p
-          class="mt-4 text-lg sm:text-xl lg:text-2xl text-gray-200 max-w-3xl font-light mb-10 animate-fade-up delay-100"
-        >
-          Nigeria’s premier provider of premium real estate services,
-          headquartered in Asokoro, Abuja.
-        </p>
+            <h1
+                class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 tracking-tight animate-fade-up">
+                Transforming Properties into <br class="hidden sm:block">
+                <span class="text-brand-magenta">Cherished Homes</span> <span class="font-light">&amp;</span> <span
+                    class="text-brand-magenta">Successful Investments</span>
+            </h1>
 
-        <div class="animate-fade-up delay-200">
-          <a
-            href="#contact"
-            class="inline-flex items-center justify-center px-8 py-4 text-base sm:text-lg font-semibold text-white transition-all duration-300 bg-brand-magenta rounded-full hover:bg-rose-600 hover:shadow-xl hover:shadow-brand-magenta/40 hover:-translate-y-1"
-          >
-            Request VIP Consultation
-            <svg
-              class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              ></path>
-            </svg>
-          </a>
+            <p
+                class="mt-4 text-lg sm:text-xl lg:text-2xl text-gray-200 max-w-3xl font-light mb-10 animate-fade-up delay-100">
+                Nigeria’s premier provider of premium real estate services, headquartered in Asokoro, Abuja.
+            </p>
+
+            <div class="animate-fade-up delay-200">
+                <a href="https://wa.me/2348081975967?text=I%20would%20like%20to%20request%20a%20VIP%20consultation."
+                    target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center px-8 py-4 text-base sm:text-lg font-semibold text-white transition-all duration-300 bg-brand-magenta rounded-full hover:bg-rose-600 hover:shadow-xl hover:shadow-brand-magenta/40 hover:-translate-y-1">
+                    Request VIP Consultation
+                    <svg class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- 3. The About Us Section review and check if its consistent with what there want -->
     <section id="about" class="py-24 bg-white relative overflow-hidden">
-      <!-- Abstract gradient shapes -->
-      <div
-        class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-brand-blue/5 blur-3xl rounded-full"
-      ></div>
-      <div
-        class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-brand-magenta/5 blur-3xl rounded-full"
-      ></div>
-
-      <div
-        class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
-      >
-        <span
-          class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block"
-          >About Us</span
-        >
-        <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-8">
-          Our Firm &amp; Philosophy
-        </h2>
-
-        <div
-          class="w-20 h-1.5 bg-gradient-to-r from-brand-blue to-brand-magenta mx-auto mb-10 rounded-full"
-        ></div>
-
-        <div class="relative py-8">
-          <span
-            class="text-8xl text-gray-100 absolute top-0 left-0 md:-left-8 font-serif leading-none italic"
-            >"</span
-          >
-          <p
-            class="text-lg md:text-2xl text-gray-600 leading-relaxed font-light italic relative z-10"
-          >
-            At PRAISE DYNASTY REAL ESTATE LTD., we are passionate about
-            connecting people with their ideal properties. Our commitment to
-            excellence, integrity, and innovation sets us apart. We aspire to
-            inspire confidence, empower dreams, and turn visions into reality.
-          </p>
-          <span
-            class="text-8xl text-gray-100 absolute bottom-0 right-0 md:-right-8 font-serif leading-none rotate-180 italic"
-            >"</span
-          >
+        <!-- Abstract gradient shapes -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-brand-blue/5 blur-3xl rounded-full">
         </div>
-      </div>
+        <div
+            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-brand-magenta/5 blur-3xl rounded-full">
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block">About Us</span>
+            <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-8">Our Firm &amp; Philosophy</h2>
+
+            <div class="w-20 h-1.5 bg-gradient-to-r from-brand-blue to-brand-magenta mx-auto mb-10 rounded-full"></div>
+
+            <div class="relative py-8">
+                <span
+                    class="text-8xl text-gray-100 absolute top-0 left-0 md:-left-8 font-serif leading-none italic">"</span>
+                <p class="text-lg md:text-2xl text-gray-600 leading-relaxed font-light italic relative z-10">
+                    At PRAISE DYNASTY REAL ESTATE LTD., we are passionate about connecting people with their ideal
+                    properties. Our commitment to excellence, integrity, and innovation sets us apart. We aspire to
+                    inspire confidence, empower dreams, and turn visions into reality.
+                </p>
+                <span
+                    class="text-8xl text-gray-100 absolute bottom-0 right-0 md:-right-8 font-serif leading-none rotate-180 italic">"</span>
+            </div>
+        </div>
     </section>
 
     <!-- 4. The Services Grid Section -->
-    <section
-      id="services"
-      class="py-24 bg-brand-light relative border-t border-gray-100"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-          <span
-            class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block"
-            >What We Offer</span
-          >
-          <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-6">
-            Services
-          </h2>
-          <p class="text-gray-500 text-lg font-light">
-            Comprehensive real estate solutions tailored to elevate your
-            portfolio and facilitate seamless transactions.
-          </p>
+    <section id="services" class="py-24 bg-brand-light relative border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block">What We
+                    Offer</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-6">Services</h2>
+                <p class="text-gray-500 text-lg font-light">Comprehensive real estate solutions tailored to elevate your
+                    portfolio and facilitate seamless transactions.</p>
+            </div>
+
+            <!-- Using 3x2 Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Service 1 -->
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col">
+                    <div
+                        class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-blue mb-3">Real Estate Consultancy</h3>
+                    <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">Strategic advice, comprehensive
+                        market analyses, and bespoke guidance for optimal property investments.</p>
+                </div>
+
+                <!-- Then Service 2 -->
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col">
+                    <div
+                        class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-blue mb-3">Real Estate Agency</h3>
+                    <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">Premium intermediary services
+                        connecting distinguished buyers, sellers, landlords, and tenants transparently.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col">
+                    <div
+                        class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-blue mb-3">Property Sales and Purchase</h3>
+                    <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">Exclusive access to premier
+                        listings and a frictionless process for acquiring and disposing of top-tier assets.</p>
+                </div>
+
+                <!--  Service 4 -->
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col">
+                    <div
+                        class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-blue mb-3">Property and Facilities Management</h3>
+                    <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">Proactive management focused on
+                        maintaining world-class standards, maximizing yield, and resident satisfaction.</p>
+                </div>
+
+                <!-- Service 5 -->
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col">
+                    <div
+                        class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-blue mb-3">Property Development / Remodeling</h3>
+                    <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">Innovative architectural
+                        development and meticulous remodeling tailored to modern luxury standards.</p>
+                </div>
+
+                <!-- finally Service 6 -->
+                <div
+                    class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col">
+                    <div
+                        class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-blue mb-3">Assets and Property Valuation</h3>
+                    <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">Accurate, data-driven assessments
+                        of real estate assets to inform sound, critical financial decisions.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Using 3x2 Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Service 1 -->
-          <div
-            class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col"
-          >
-            <div
-              class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner"
-            >
-              <svg
-                class="w-7 h-7"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1.5"
-                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                ></path>
-              </svg>
+    <!-- 4.25 Google Reviews / Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-brand-light relative border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5 text-[#fbbc05]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Verified Experience
+                </span>
+                <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-4">Google Reviews</h2>
+                <p class="text-gray-500 text-lg font-light">See what our esteemed clients have to say about their premium real estate experience with Praise Dynasty.</p>
             </div>
-            <h3 class="text-xl font-bold text-brand-blue mb-3">
-              Real Estate Consultancy
-            </h3>
-            <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">
-              Strategic advice, comprehensive market analyses, and bespoke
-              guidance for optimal property investments.
-            </p>
-          </div>
 
-          <!-- Then Service 2 -->
-          <div
-            class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col"
-          >
-            <div
-              class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner"
-            >
-              <svg
-                class="w-7 h-7"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1.5"
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                ></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-brand-blue mb-3">
-              Real Estate Agency
-            </h3>
-            <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">
-              Premium intermediary services connecting distinguished buyers,
-              sellers, landlords, and tenants transparently.
-            </p>
-          </div>
+            <!-- Review Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- Card 1 -->
+                <a href="https://maps.app.goo.gl/mJZgt1xCF2A8r2JQ6?g_st=ic" target="_blank" rel="noopener noreferrer" class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col h-full cursor-pointer">
+                    <div class="flex items-center mb-4 gap-1 text-[#fbbc05]">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow font-light leading-relaxed text-sm italic">"Abuja's premier real estate agency. They offer verified and FCDA approved properties. Highly recommended."</p>
+                    <div class="flex items-center mt-auto border-t border-gray-50 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue font-bold mr-3">C</div>
+                        <div>
+                            <p class="font-bold text-brand-blue text-sm">Chinedu O.</p>
+                            <p class="text-xs text-gray-400">Google Reviewer</p>
+                        </div>
+                    </div>
+                </a>
 
-          <!-- Service 3 -->
-          <div
-            class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col"
-          >
-            <div
-              class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner"
-            >
-              <svg
-                class="w-7 h-7"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1.5"
-                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                ></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-brand-blue mb-3">
-              Property Sales and Purchase
-            </h3>
-            <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">
-              Exclusive access to premier listings and a frictionless process
-              for acquiring and disposing of top-tier assets.
-            </p>
-          </div>
+                <!-- Card 2 -->
+                <a href="https://maps.app.goo.gl/mJZgt1xCF2A8r2JQ6?g_st=ic" target="_blank" rel="noopener noreferrer" class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col h-full cursor-pointer">
+                    <div class="flex items-center mb-4 gap-1 text-[#fbbc05]">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow font-light leading-relaxed text-sm italic">"Exceptional service! They made finding a property in Maitama completely stress-free and transparent."</p>
+                    <div class="flex items-center mt-auto border-t border-gray-50 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue font-bold mr-3">A</div>
+                        <div>
+                            <p class="font-bold text-brand-blue text-sm">Aisha M.</p>
+                            <p class="text-xs text-gray-400">Google Reviewer</p>
+                        </div>
+                    </div>
+                </a>
 
-          <!--  Service 4 -->
-          <div
-            class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col"
-          >
-            <div
-              class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner"
-            >
-              <svg
-                class="w-7 h-7"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1.5"
-                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                ></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-brand-blue mb-3">
-              Property and Facilities Management
-            </h3>
-            <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">
-              Proactive management focused on maintaining world-class standards,
-              maximizing yield, and resident satisfaction.
-            </p>
-          </div>
+                <!-- Card 3 -->
+                <a href="https://maps.app.goo.gl/mJZgt1xCF2A8r2JQ6?g_st=ic" target="_blank" rel="noopener noreferrer" class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col h-full cursor-pointer">
+                    <div class="flex items-center mb-4 gap-1 text-[#fbbc05]">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow font-light leading-relaxed text-sm italic">"Professional, reliable, and incredibly fast. The best real estate firm in the Federal Capital Territory."</p>
+                    <div class="flex items-center mt-auto border-t border-gray-50 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue font-bold mr-3">D</div>
+                        <div>
+                            <p class="font-bold text-brand-blue text-sm">Daniel K.</p>
+                            <p class="text-xs text-gray-400">Google Reviewer</p>
+                        </div>
+                    </div>
+                </a>
 
-          <!-- Service 5 -->
-          <div
-            class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col"
-          >
-            <div
-              class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner"
-            >
-              <svg
-                class="w-7 h-7"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1.5"
-                  d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
-                ></path>
-              </svg>
+                <!-- Card 4 -->
+                <a href="https://maps.app.goo.gl/mJZgt1xCF2A8r2JQ6?g_st=ic" target="_blank" rel="noopener noreferrer" class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col h-full cursor-pointer">
+                    <div class="flex items-center mb-4 gap-1 text-[#fbbc05]">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex-grow font-light leading-relaxed text-sm italic">"They understood exactly what I was looking for. Excellent communication from start to finish."</p>
+                    <div class="flex items-center mt-auto border-t border-gray-50 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue font-bold mr-3">G</div>
+                        <div>
+                            <p class="font-bold text-brand-blue text-sm">Grace E.</p>
+                            <p class="text-xs text-gray-400">Google Reviewer</p>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <h3 class="text-xl font-bold text-brand-blue mb-3">
-              Property Development / Remodeling
-            </h3>
-            <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">
-              Innovative architectural development and meticulous remodeling
-              tailored to modern luxury standards.
-            </p>
-          </div>
 
-          <!-- finally Service 6 -->
-          <div
-            class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-brand-magenta/30 hover:-translate-y-2 flex flex-col"
-          >
-            <div
-              class="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-inner"
-            >
-              <svg
-                class="w-7 h-7"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1.5"
-                  d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                ></path>
-              </svg>
+            <!-- CTA Button -->
+            <div class="text-center">
+                <a href="https://maps.app.goo.gl/mJZgt1xCF2A8r2JQ6?g_st=ic" target="_blank" rel="noopener noreferrer" 
+                    class="inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold text-gray-900 transition-all duration-300 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+                    View More Reviews on Google
+                </a>
             </div>
-            <h3 class="text-xl font-bold text-brand-blue mb-3">
-              Assets and Property Valuation
-            </h3>
-            <p class="text-gray-500 mb-4 flex-grow font-light leading-relaxed">
-              Accurate, data-driven assessments of real estate assets to inform
-              sound, critical financial decisions.
-            </p>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- 4.5 Featured Properties Section -->
     <section id="properties" class="py-24 bg-white relative">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div
-          class="flex flex-col md:flex-row md:items-end justify-between mb-16"
-        >
-          <div class="max-w-2xl mb-6 md:mb-0">
-            <span
-              class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block"
-              >Exclusive Listings</span
-            >
-            <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-4">
-              Featured Properties
-            </h2>
-            <p class="text-gray-500 text-lg font-light">
-              Explore our curated selection of ultra-luxury residences and prime
-              real estate investments.
-            </p>
-          </div>
-          <div class="flex-shrink-0">
-            <a
-              href="all-listings.html"
-              class="inline-flex items-center text-brand-blue font-semibold hover:text-brand-magenta transition-colors group"
-            >
-              View All Properties
-              <svg
-                class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                ></path>
-              </svg>
-            </a>
-          </div>
-        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        <!-- Global Market Filters -->
-        <div
-          class="flex flex-wrap items-center gap-3 mb-10 overflow-x-auto pb-2 scrollbar-hide"
-        >
-          <button
-            data-filter="All"
-            class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-gray-900 text-white shadow-md transition-all whitespace-nowrap"
-          >
-            All
-          </button>
-          <button
-            data-filter="Nigeria"
-            class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap"
-          >
-            Nigeria
-          </button>
-          <button
-            data-filter="Dubai"
-            class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap"
-          >
-            Dubai
-          </button>
-          <button
-            data-filter="United Kingdom"
-            class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap"
-          >
-            United Kingdom
-          </button>
-          <button
-            data-filter="USA"
-            class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap"
-          >
-            USA
-          </button>
-        </div>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+                <div class="max-w-2xl mb-6 md:mb-0">
+                    <span class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block">Exclusive
+                        Listings</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-4">Featured Properties</h2>
+                    <p class="text-gray-500 text-lg font-light">Explore our curated selection of ultra-luxury residences
+                        and prime real estate investments.</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <a href="all-listings.html"
+                        class="inline-flex items-center text-brand-blue font-semibold hover:text-brand-magenta transition-colors group">
+                        View All Properties
+                        <svg class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
 
-        <!-- 3-Column Grid (Live) -->
-        <div
-          id="live-property-grid"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          <!-- Reactively Populated by Firebase -->
-          <div
-            class="col-span-full py-12 text-center text-gray-500 font-medium tracking-wide animate-pulse"
-          >
-            Loading luxury properties...
-          </div>
+            <!-- Cascading Market Filters (Custom Premium Components) -->
+            
+            <div class="w-full mb-6 relative z-30">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" id="text-search-input" placeholder="Search by Neighborhood, District, Title, or Keyword (e.g. Asokoro, Guzape)" class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all text-gray-900 font-medium shadow-sm">
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 mb-10 max-w-2xl relative z-30">
+                <!-- Tier 1: Country Dropdown -->
+                <div class="relative w-full sm:w-64">
+                    <button id="country-dropdown-btn"
+                        class="w-full flex items-center justify-between px-6 py-3.5 bg-gray-900 text-white border border-gray-800 rounded-xl hover:border-brand-magenta focus:outline-none transition-all shadow-md font-semibold text-sm">
+                        <span id="country-dropdown-text">Globally (All Countries)</span>
+                        <svg id="country-dropdown-icon" class="w-4 h-4 ml-2 transition-transform duration-200"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <!-- Country Menu -->
+                    <div id="country-dropdown-menu"
+                        class="absolute left-0 w-full mt-2 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl hidden flex-col overflow-hidden text-sm z-50">
+                        <div class="max-h-60 overflow-y-auto w-full">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tier 2: State/City Dropdown -->
+                <div class="relative w-full sm:w-64">
+                    <button id="state-dropdown-btn" disabled
+                        class="w-full flex items-center justify-between px-6 py-3.5 bg-gray-800 text-gray-500 border border-gray-700 rounded-xl cursor-not-allowed transition-all shadow-md font-semibold text-sm">
+                        <span id="state-dropdown-text">All States / Cities</span>
+                        <svg id="state-dropdown-icon" class="w-4 h-4 ml-2 transition-transform duration-200" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <!-- State Menu -->
+                    <div id="state-dropdown-menu"
+                        class="absolute left-0 w-full mt-2 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl hidden flex-col overflow-hidden text-sm z-50">
+                        <div class="max-h-60 overflow-y-auto w-full">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tier 3: Dynamic Price Dropdown -->
+                <div class="relative w-full sm:w-64">
+                    <button id="price-dropdown-btn"
+                        class="w-full flex items-center justify-between px-5 py-3.5 bg-brand-light text-brand-blue border border-gray-200 rounded-xl hover:border-brand-magenta focus:outline-none transition-all shadow-sm font-bold text-sm">
+                        <span id="price-dropdown-text">Any Price Range</span>
+                        <svg id="price-dropdown-icon" class="w-4 h-4 ml-2 transition-transform duration-200 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <!-- Price Menu -->
+                    <div id="price-dropdown-menu"
+                        class="absolute right-0 w-full sm:w-72 mt-2 bg-white border border-gray-100 rounded-xl shadow-2xl hidden flex-col overflow-hidden text-sm z-50">
+                        <div class="max-h-60 overflow-y-auto w-full" id="price-menu-options">
+                            <div class="px-5 py-3 cursor-pointer transition-colors bg-brand-magenta text-white font-bold" data-min="0" data-max="Infinity">Any Price Range</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="20000000" data-max="50000000">₦20 Million - ₦50 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="50000000" data-max="100000000">₦50 Million - ₦100 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="100000000" data-max="150000000">₦100 Million - ₦150 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="150000000" data-max="300000000">₦150 Million - ₦300 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="300000000" data-max="500000000">₦300 Million - ₦500 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="500000000" data-max="2000000000">₦500 Million - ₦2 Billion</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="2000000000" data-max="Infinity">₦2 Billion +</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Tabs -->
+            <div class="flex justify-start mb-10 border-b border-gray-200 overflow-x-auto pb-1 hide-scrollbar">
+                <div class="flex gap-6 sm:gap-8 min-w-max">
+                    <button id="tab-sales"
+                        class="pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-brand-magenta text-brand-blue">Sales</button>
+                    <button id="tab-rentals"
+                        class="pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue">Rentals</button>
+                    <button id="tab-airbnb"
+                        class="pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue">AirBnB / Short-let</button>
+                    <button id="tab-land"
+                        class="pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue">Land / Plots</button>
+                </div>
+            </div>
+
+            <!-- 3-Column Grid (Live) -->
+            <div id="live-property-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300">
+                <!-- Reactively Populated by Firebase -->
+                <div class="col-span-full py-12 text-center text-gray-500 font-medium tracking-wide animate-pulse">
+                    Loading luxury properties...
+                </div>
+            </div>
+
+            <!-- Enhanced Numerical Pagination Controls -->
+            <div id="pagination-controls" class="flex justify-center items-center mt-12 space-x-2"></div>
         </div>
-      </div>
     </section>
 
     <!-- Global Market Insights Section -->
-    <section
-      id="insights"
-      class="py-24 bg-brand-light relative border-t border-gray-100"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div
-          class="flex flex-col md:flex-row md:items-end justify-between mb-16"
-        >
-          <div class="max-w-2xl mb-6 md:mb-0">
-            <span
-              class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block"
-              >Market Intelligence</span
-            >
-            <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-4">
-              Global Market Insights
-            </h2>
-            <p class="text-gray-500 text-lg font-light">
-              Stay informed with the latest trends, analyses, and exclusive news
-              in international luxury real estate.
-            </p>
-          </div>
-        </div>
-
-        <!-- Auto-Scrolling Content Tray for the real time news -->
-        <div class="relative w-full">
-          <div
-            class="absolute top-0 bottom-8 left-0 w-16 bg-gradient-to-r from-brand-light to-transparent z-10 pointer-events-none hidden md:block"
-          ></div>
-          <div
-            class="absolute top-0 bottom-8 right-0 w-16 bg-gradient-to-l from-brand-light to-transparent z-10 pointer-events-none hidden md:block"
-          ></div>
-
-          <div
-            class="flex overflow-x-auto gap-6 pb-12 no-scrollbar"
-            id="news-grid"
-            style="scrollbar-width: none; -ms-overflow-style: none"
-          >
-            <!-- Articles will be auto injected here by fetchMarketInsights -->
-            <div
-              class="w-full flex-shrink-0 flex items-center justify-center py-20 text-center text-gray-400 font-medium tracking-wide animate-pulse"
-            >
-              Aggregating global market intelligence...
+    <section id="insights" class="py-24 bg-brand-light relative border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+                <div class="max-w-2xl mb-6 md:mb-0">
+                    <span class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block">Market
+                        Intelligence</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-4">Global Market Insights</h2>
+                    <p class="text-gray-500 text-lg font-light">Stay informed with the latest trends, analyses, and
+                        exclusive news in international luxury real estate.</p>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="text-center mt-2">
-          <a
-            href="#insights"
-            onclick="
-              alert('Full news archival system coming in next build phase!')
-            "
-            class="inline-flex items-center text-brand-blue font-bold hover:text-brand-magenta transition-colors group tracking-wider uppercase text-sm"
-          >
-            See More Options
-            <svg
-              class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              ></path>
-            </svg>
-          </a>
+            <!-- Auto-Scrolling Content Tray for the real time news -->
+            <div class="relative w-full">
+                <div
+                    class="absolute top-0 bottom-8 left-0 w-16 bg-gradient-to-r from-brand-light to-transparent z-10 pointer-events-none hidden md:block">
+                </div>
+                <div
+                    class="absolute top-0 bottom-8 right-0 w-16 bg-gradient-to-l from-brand-light to-transparent z-10 pointer-events-none hidden md:block">
+                </div>
+
+                <div class="flex overflow-x-auto gap-6 pb-12 no-scrollbar" id="news-grid"
+                    style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <!-- Articles will be auto injected here by fetchMarketInsights -->
+                    <div
+                        class="w-full flex-shrink-0 flex items-center justify-center py-20 text-center text-gray-400 font-medium tracking-wide animate-pulse">
+                        Aggregating global market intelligence...
+                    </div>
+                </div>
+            </div>
+
+            <!-- See More button removed -->
         </div>
-      </div>
-      <style>
-        /*  hidden scrollbar  */
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      </style>
+        <style>
+            /*  hidden scrollbar  */
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+        </style>
     </section>
 
     <!-- 5. Footer Page / Contact Page -->
-    <footer
-      class="bg-brand-blue pt-20 pb-10 border-t-[6px] border-brand-magenta text-white"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16"
-        >
-          <!-- Praise dynasty Branding -->
-          <div class="lg:col-span-2 pr-0 lg:pr-12">
-            <div class="text-3xl font-bold text-white mb-6 tracking-tight">
-              <span class="text-brand-magenta">Praise Dynasty</span> Real
-              Estate.
+    <footer class="bg-brand-blue pt-20 pb-10 border-t-[6px] border-brand-magenta text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Praise dynasty Branding -->
+                <div class="lg:col-span-2 pr-0 lg:pr-12">
+                    <div class="text-3xl font-bold text-white mb-6 tracking-tight">
+                        <span class="text-brand-magenta">Praise Dynasty</span> Real Estate.
+                    </div>
+                    <p class="text-blue-100/70 mb-8 leading-relaxed font-light text-lg">
+                        Nigeria’s premier provider of premium real estate services, bringing unparalleled expertise and
+                        integrity to every transaction.
+                    </p>
+                </div>
+
+                <!-- praise dynasty Headquarters -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white border-b border-brand-magenta/50 pb-3 inline-block">
+                        Headquarters</h4>
+                    <p class="text-blue-100/70 leading-relaxed font-light text-base">
+                        Office A5, NAF Valley Plaza,<br>
+                        S.B Abubakar Street,<br>
+                        Asokoro, Abuja.
+                    </p>
+                </div>
+
+                <!-- The Contact Funnel CTA -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white border-b border-brand-magenta/50 pb-3 inline-block">Get
+                        Started</h4>
+                    <p class="text-blue-100/70 leading-relaxed mb-6 font-light">
+                        Ready to elevate your property portfolio? Let's connect directly.
+                    </p>
+                    <a href="https://wa.me/" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center w-full px-6 py-4 text-sm font-bold text-brand-blue transition-all duration-300 bg-white rounded-xl hover:bg-gray-100 shadow-xl shadow-black/30 hover:-translate-y-1">
+                        <svg class="w-6 h-6 mr-3 text-green-500" fill="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                        </svg>
+                        Contact Us on WhatsApp
+                    </a>
+                </div>
             </div>
-            <p class="text-blue-100/70 mb-8 leading-relaxed font-light text-lg">
-              Nigeria’s premier provider of premium real estate services,
-              bringing unparalleled expertise and integrity to every
-              transaction.
-            </p>
-          </div>
 
-          <!-- praise dynasty Headquarters -->
-          <div>
-            <h4
-              class="text-lg font-bold mb-6 text-white border-b border-brand-magenta/50 pb-3 inline-block"
-            >
-              Headquarters
-            </h4>
-            <p class="text-blue-100/70 leading-relaxed font-light text-base">
-              Office A5, NAF Valley Plaza,<br />
-              S.B Abubakar Street,<br />
-              Asokoro, Abuja.
-            </p>
-          </div>
-
-          <!-- The Contact Funnel CTA -->
-          <div>
-            <h4
-              class="text-lg font-bold mb-6 text-white border-b border-brand-magenta/50 pb-3 inline-block"
-            >
-              Get Started
-            </h4>
-            <p class="text-blue-100/70 leading-relaxed mb-6 font-light">
-              Ready to elevate your property portfolio? Let's connect directly.
-            </p>
-            <a
-              href="https://wa.me/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center justify-center w-full px-6 py-4 text-sm font-bold text-brand-blue transition-all duration-300 bg-white rounded-xl hover:bg-gray-100 shadow-xl shadow-black/30 hover:-translate-y-1"
-            >
-              <svg
-                class="w-6 h-6 mr-3 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
-                />
-              </svg>
-              Contact Us on WhatsApp
-            </a>
-          </div>
+            <div
+                class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-blue-100/50">
+                <p>&copy; 2026 Praise Dynasty Real Estate Ltd. All rights reserved.</p>
+                <div class="mt-4 md:mt-0 flex gap-6">
+                    <a href="privacy.html" class="hover:text-white transition-colors duration-200">Privacy Policy</a>
+                    <a href="terms.html" class="hover:text-white transition-colors duration-200">Terms of Service</a>
+                </div>
+            </div>
         </div>
-
-        <div
-          class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-blue-100/50"
-        >
-          <p>
-            &copy; 2026 Praise Dynasty Real Estate Ltd. All rights reserved.
-          </p>
-          <div class="mt-4 md:mt-0 flex gap-6">
-            <a href="#" class="hover:text-white transition-colors duration-200"
-              >Privacy Policy</a
-            >
-            <a href="#" class="hover:text-white transition-colors duration-200"
-              >Terms of Service</a
-            >
-          </div>
-        </div>
-      </div>
     </footer>
 
+    <!-- Particles.js Engine -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-      // Mobile Menu Toggle Logic
-      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const iconOpen = document.getElementById("menu-icon-open");
-      const iconClose = document.getElementById("menu-icon-close");
-      const mobileLinks = document.querySelectorAll(".mobile-link");
-
-      function toggleMenu() {
-        const isHidden = mobileMenu.classList.contains("hidden");
-        if (isHidden) {
-          mobileMenu.classList.remove("hidden");
-          iconOpen.classList.add("hidden");
-          iconClose.classList.remove("hidden");
-          mobileMenuBtn.setAttribute("aria-expanded", "true");
-        } else {
-          mobileMenu.classList.add("hidden");
-          iconOpen.classList.remove("hidden");
-          iconClose.classList.add("hidden");
-          mobileMenuBtn.setAttribute("aria-expanded", "false");
-        }
-      }
-
-      mobileMenuBtn.addEventListener("click", toggleMenu);
-
-      // Should close menu when clicking any mobile link
-      mobileLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-          if (!mobileMenu.classList.contains("hidden")) {
-            toggleMenu();
-          }
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#cbd5e1" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": false },
+                "size": { "value": 3, "random": true },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#cbd5e1",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1.5,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "window",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 180, "line_linked": { "opacity": 0.5 } },
+                    "push": { "particles_nb": 3 }
+                }
+            },
+            "retina_detect": true
         });
-      });
+    </script>
+    <script>
+        // Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('menu-icon-open');
+        const iconClose = document.getElementById('menu-icon-close');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                iconOpen.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+            } else {
+                mobileMenu.classList.add('hidden');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+
+        // Should close menu when clicking any mobile link
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMenu();
+                }
+            });
+        });
     </script>
 
     <!-- Firebase Realtime App Injection, omo  -->
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-      import {
-        getDatabase,
-        ref,
-        onValue,
-      } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyDJBGi_WKLDU493eOrH4Emx7xx_li7wzoY",
-        authDomain: "praise-dynasty-hni.firebaseapp.com",
-        projectId: "praise-dynasty-hni",
-        storageBucket: "praise-dynasty-hni.firebasestorage.app",
-        messagingSenderId: "702909860929",
-        appId: "1:702909860929:web:7c9d2a3c899df3dbf0cac0",
-      };
-      const app = initializeApp(firebaseConfig);
-      const db = getDatabase(app);
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJBGi_WKLDU493eOrH4Emx7xx_li7wzoY",
+            authDomain: "praise-dynasty-hni.firebaseapp.com",
+            projectId: "praise-dynasty-hni",
+            storageBucket: "praise-dynasty-hni.firebasestorage.app",
+            messagingSenderId: "702909860929",
+            appId: "1:702909860929:web:7c9d2a3c899df3dbf0cac0"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-      const propertyGrid = document.getElementById("live-property-grid");
-      const filterBtns = document.querySelectorAll(".filter-btn");
+        const propertyGrid = document.getElementById('live-property-grid');
 
-      let allProperties = [];
-      let currentFilter = "All";
+        // UI References
+        const countryBtn = document.getElementById('country-dropdown-btn');
+        const countryText = document.getElementById('country-dropdown-text');
+        const countryMenu = document.getElementById('country-dropdown-menu');
+        const countryMenuContainer = countryMenu.querySelector('div');
+        const countryIcon = document.getElementById('country-dropdown-icon');
 
-      const baseFilterNames = {
-        All: "All",
-        Nigeria: "Nigeria",
-        Dubai: "Dubai",
-        "United Kingdom": "United Kingdom",
-        USA: "USA",
-      };
+        const stateBtn = document.getElementById('state-dropdown-btn');
+        const stateText = document.getElementById('state-dropdown-text');
+        const stateMenu = document.getElementById('state-dropdown-menu');
+        const stateMenuContainer = stateMenu.querySelector('div');
+        const stateIcon = document.getElementById('state-dropdown-icon');
 
-      const propertiesRef = ref(db, "properties");
+        let allProperties = [];
+        let currentCountryFilter = 'All';
+        let currentStateFilter = 'All';
+        let currentTextSearch = '';
+        let activeTab = 'sale'; // 'sale' or 'rent'
+        
+        // Pagination State
+        let currentPage = 1;
+        const propertiesPerPage = 6;
 
-      onValue(propertiesRef, (snapshot) => {
-        allProperties = []; // reset array
-        if (snapshot.exists()) {
-          snapshot.forEach((childSnapshot) => {
-            const data = childSnapshot.val();
-            data.id = childSnapshot.key;
-            allProperties.push(data);
-          });
+        const locationData = {
+            "Nigeria": ["Abuja", "Lagos", "Imo State", "Anambra State", "Enugu State", "Asaba State", "Calabar"],
+            "UAE": ["Dubai"],
+            "UK": ["London"],
+            "USA": ["New York"]
+        };
+        const countriesList = ["All", "Nigeria", "UAE", "UK", "USA"];
+
+        function toggleMenu(menu, icon) {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+            icon.classList.toggle('rotate-180');
         }
 
-        // Update filter tab counts dynamically
-        filterBtns.forEach((btn) => {
-          const filterType = btn.getAttribute("data-filter");
-          let count = 0;
-          if (filterType === "All") {
-            count = allProperties.length;
-          } else {
-            count = allProperties.filter(
-              (p) => p.location && p.location.includes(filterType),
-            ).length;
-          }
-          const baseName = baseFilterNames[filterType] || filterType;
-          btn.innerText = `${baseName} (${count})`;
-        });
-
-        renderProperties();
-      });
-
-      // Global Filters Logic
-      filterBtns.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          // Clear active states
-          filterBtns.forEach((b) => {
-            b.className =
-              "filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap";
-          });
-          // Set active style on clicked
-          e.target.className =
-            "filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-gray-900 text-white shadow-md transition-all whitespace-nowrap";
-
-          currentFilter = e.target.getAttribute("data-filter");
-          renderProperties();
-        });
-      });
-
-      window.globalPropertiesCache = [];
-
-      function renderProperties() {
-        propertyGrid.innerHTML = ""; // clear grid
-        window.globalPropertiesCache = [];
-
-        let filtered = allProperties;
-        // Exclude Off-Market properties immediately from the frontend UI
-        filtered = filtered.filter((p) => p.status !== "Off-Market");
-
-        if (currentFilter !== "All") {
-          filtered = filtered.filter(
-            (p) => p.location && p.location.includes(currentFilter),
-          );
-        }
-
-        if (filtered.length === 0) {
-          propertyGrid.innerHTML =
-            '<div class="col-span-full py-12 text-center text-gray-500 font-medium tracking-wide">No top-tier properties currently available matching this region.</div>';
-          return;
-        }
-
-        // Limit array to 6 properties maximum for the homepage
-        const limitedProperties = filtered.slice(0, 6);
-        window.globalPropertiesCache = limitedProperties; // Save slice for modal lookups
-
-        limitedProperties.forEach((property, index) => {
-          const currency = property.currency || "₦";
-
-          // 1. Smart Pricing Logic
-          let priceDisplay = "Price on Request";
-
-          if (
-            property.units &&
-            Array.isArray(property.units) &&
-            property.units.length > 0
-          ) {
-            const firstUnit = property.units[0];
-            if (firstUnit.price && firstUnit.price > 0) {
-              const formatted = new Intl.NumberFormat("en-US").format(
-                firstUnit.price,
-              );
-              priceDisplay = `<span class='font-bold text-sm text-gray-500 mr-2 uppercase tracking-wider'>Starting from</span>${currency}${formatted}`;
+        document.addEventListener('click', (e) => {
+            if (!countryBtn.contains(e.target) && !countryMenu.contains(e.target)) {
+                countryMenu.classList.add('hidden');
+                countryMenu.classList.remove('flex');
+                countryIcon.classList.remove('rotate-180');
             }
-          } else if (property.price && property.price > 0) {
-            const formattedPrice = new Intl.NumberFormat("en-US").format(
-              property.price,
-            );
-            priceDisplay = `${currency}${formattedPrice}`;
-          }
+            if (!stateBtn.contains(e.target) && !stateMenu.contains(e.target)) {
+                stateMenu.classList.add('hidden');
+                stateMenu.classList.remove('flex');
+                stateIcon.classList.remove('rotate-180');
+            }
+        });
 
-          // 2. Smart Thumbnail Engine
-          let imgSource =
-            "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80";
+        countryBtn.addEventListener('click', () => { toggleMenu(countryMenu, countryIcon); });
+        stateBtn.addEventListener('click', () => { if (!stateBtn.disabled) toggleMenu(stateMenu, stateIcon); });
 
-          function localExtractYouTubeId(url) {
-            if (!url) return null;
-            const regex =
-              /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\/shorts\/)([^#\&\?]*).*/;
-            const match = url.match(regex);
-            return match && match[2].length === 11 ? match[2] : null;
-          }
-          const ytId = localExtractYouTubeId(property.youtubeUrl);
+        const propertiesRef = ref(db, 'properties');
 
-          if (property.imageUrl && property.imageUrl.trim() !== "") {
-            imgSource = property.imageUrl;
-          } else if (ytId) {
-            imgSource = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
-          }
+        onValue(propertiesRef, (snapshot) => {
+            allProperties = [];
+            if (snapshot.exists()) {
+                snapshot.forEach((childSnapshot) => {
+                    const data = childSnapshot.val();
+                    data.id = childSnapshot.key;
+                    allProperties.push(data);
+                });
+            }
+            buildCountryDropdown();
+            renderProperties();
+        });
 
-          // Dynamic Badge Rendering Logic
-          let tagColor = "bg-brand-magenta";
-          let tagText = property.status || "Active";
-          if (
-            property.status === "Recently Sold" ||
-            property.status === "Sold"
-          ) {
-            tagColor = "bg-gray-800";
-            tagText = "Sold";
-          }
+        function getCount(country, state) {
+            let filtered = allProperties.filter(p => p.status !== 'Off-Market');
+            if (country !== 'All') {
+                filtered = filtered.filter(p => p.location && p.location.includes(country));
+            }
+            if (state && state !== 'All') {
+                filtered = filtered.filter(p => p.location && p.location.includes(state));
+            }
+            return filtered.length;
+        }
 
-          propertyGrid.innerHTML += `
+        function createOption(label, count, value, isSelected, onClick) {
+            const div = document.createElement('div');
+            div.className = `px-6 py-3 cursor-pointer transition-colors ${isSelected ? 'bg-brand-magenta text-white font-bold' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}`;
+            div.innerHTML = `<span>${label}</span> <span class="ml-2 text-xs opacity-70">(${count})</span>`;
+            div.addEventListener('click', () => { onClick(value, label, count); });
+            return div;
+        }
+
+        function buildCountryDropdown() {
+            countryMenuContainer.innerHTML = '';
+            countriesList.forEach(c => {
+                const count = getCount(c, null);
+                const label = c === "All" ? "Globally (All Countries)" : c;
+                const isSelected = (c === currentCountryFilter);
+
+                if (isSelected) countryText.innerHTML = `${label} <span class="opacity-70 ml-1">(${count})</span>`;
+
+                const opt = createOption(label, count, c, isSelected, (val, dispLabel, dispCount) => {
+                    currentCountryFilter = val;
+                    currentStateFilter = 'All';
+                    currentPage = 1; // Reset pagination
+                    countryText.innerHTML = `${dispLabel} <span class="opacity-70 ml-1">(${dispCount})</span>`;
+                    toggleMenu(countryMenu, countryIcon);
+                    buildStateDropdown();
+                    renderProperties();
+                    buildCountryDropdown();
+                });
+                countryMenuContainer.appendChild(opt);
+            });
+            buildStateDropdown();
+        }
+
+        function buildStateDropdown() {
+            stateMenuContainer.innerHTML = '';
+
+            if (currentCountryFilter !== 'All' && locationData[currentCountryFilter]) {
+                stateBtn.disabled = false;
+                stateBtn.className = "w-full flex items-center justify-between px-6 py-3.5 bg-gray-900 text-white border border-gray-800 rounded-xl hover:border-brand-magenta focus:outline-none transition-all shadow-md font-semibold text-sm";
+
+                const statesList = ["All"].concat(locationData[currentCountryFilter]);
+
+                statesList.forEach(s => {
+                    const count = getCount(currentCountryFilter, s);
+                    const label = s === "All" ? "All States / Cities" : s;
+                    const isSelected = (s === currentStateFilter);
+
+                    if (isSelected) stateText.innerHTML = `${label} <span class="opacity-70 ml-1">(${count})</span>`;
+
+                    const opt = createOption(label, count, s, isSelected, (val, dispLabel, dispCount) => {
+                        currentStateFilter = val;
+                        currentPage = 1; // Reset pagination
+                        stateText.innerHTML = `${dispLabel} <span class="opacity-70 ml-1">(${dispCount})</span>`;
+                        toggleMenu(stateMenu, stateIcon);
+                        renderProperties();
+                        buildStateDropdown();
+                    });
+                    stateMenuContainer.appendChild(opt);
+                });
+            } else {
+                stateBtn.disabled = true;
+                stateBtn.className = "w-full flex items-center justify-between px-6 py-3.5 bg-gray-800 text-gray-500 border border-gray-700 rounded-xl cursor-not-allowed transition-all shadow-md font-semibold text-sm";
+                stateText.innerHTML = `All States / Cities <span class="opacity-70 ml-1">(0)</span>`;
+            }
+        }
+
+        // --- Global State ---
+        window.globalPropertiesCache = [];
+        
+        // Price Filter State
+        let currentMinPrice = 0;
+        let currentMaxPrice = Infinity;
+
+        const gridView = document.getElementById('live-property-grid');
+        const paginationControls = document.getElementById('pagination-controls');
+
+        // Price Dropdown Logic
+        const priceBtn = document.getElementById('price-dropdown-btn');
+        const priceText = document.getElementById('price-dropdown-text');
+        const priceMenu = document.getElementById('price-dropdown-menu');
+        const priceIcon = document.getElementById('price-dropdown-icon');
+        const priceOptions = document.querySelectorAll('#price-menu-options div');
+
+        document.addEventListener('click', (e) => {
+            if (priceBtn && priceMenu && !priceBtn.contains(e.target) && !priceMenu.contains(e.target)) {
+                priceMenu.classList.add('hidden');
+                priceMenu.classList.remove('flex');
+                if (priceIcon) priceIcon.classList.remove('rotate-180');
+            }
+        });
+
+        if (priceBtn) {
+            priceBtn.addEventListener('click', () => {
+                priceMenu.classList.toggle('hidden');
+                priceMenu.classList.toggle('flex');
+                priceIcon.classList.toggle('rotate-180');
+            });
+        }
+
+        if (priceOptions) {
+            priceOptions.forEach(opt => {
+                opt.addEventListener('click', (e) => {
+                    priceOptions.forEach(o => o.className = 'px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue');
+                    opt.className = 'px-5 py-3 cursor-pointer transition-colors bg-brand-magenta text-white font-bold';
+                    
+                    currentMinPrice = Number(opt.getAttribute('data-min'));
+                    currentMaxPrice = Number(opt.getAttribute('data-max'));
+                    priceText.innerText = opt.innerText;
+                    
+                    priceMenu.classList.add('hidden');
+                    priceMenu.classList.remove('flex');
+                    priceIcon.classList.remove('rotate-180');
+                    
+                    currentPage = 1;
+                    renderProperties();
+                });
+            });
+        }
+
+        // Smart Price Extractor
+        function getPropPrice(p) {
+            if (p.units && Array.isArray(p.units) && p.units.length > 0 && p.units[0].price > 0) return p.units[0].price;
+            if (p.price && p.price > 0) return p.price;
+            return 0;
+        }
+
+        function renderProperties() {
+            propertyGrid.innerHTML = ''; // clear grid
+            window.globalPropertiesCache = [];
+
+            let filtered = allProperties;
+            // Exclude Off-Market properties immediately from the frontend UI
+            filtered = filtered.filter(p => p.status !== 'Off-Market');
+
+            if (currentCountryFilter !== 'All') {
+                filtered = filtered.filter(p => p.location && p.location.includes(currentCountryFilter));
+            }
+            if (currentStateFilter !== 'All') {
+                filtered = filtered.filter(p => p.location && p.location.includes(currentStateFilter));
+            }
+
+            
+            if (currentTextSearch) {
+                const query = currentTextSearch.toLowerCase();
+                filtered = filtered.filter(p => {
+                    const titleMatch = p.title && p.title.toLowerCase().includes(query);
+                    const locMatch = p.location && p.location.toLowerCase().includes(query);
+                    const neighborhoodMatch = p.neighborhood && p.neighborhood.toLowerCase().includes(query);
+                    return titleMatch || locMatch || neighborhoodMatch;
+                });
+            }
+
+            // 3. Tab State Filters (Sale, Rent, AirBnB, Land)
+            filtered = filtered.filter(p => {
+                if (!p) return false;
+                const propTypeStr = p.propertyType ? String(p.propertyType).toLowerCase() : '';
+                const typeStr = p.type ? String(p.type).toLowerCase() : '';
+                
+                if (activeTab === 'sale') return (propTypeStr === 'sale' && !typeStr.includes('land'));
+                if (activeTab === 'rent') return (propTypeStr === 'rent' && !typeStr.includes('land'));
+                if (activeTab === 'airbnb') return (propTypeStr.includes('airbnb') || propTypeStr.includes('short-let') || propTypeStr.includes('shortlet'));
+                if (activeTab === 'land') return typeStr.includes('land');
+                return true;
+            });
+
+            // 4. Dynamic Range Pricing Filter
+            filtered = filtered.filter(p => {
+                const pPrice = getPropPrice(p);
+                if (pPrice === 0) return true; // Keep "Price on Request" items
+                return pPrice >= currentMinPrice && pPrice <= currentMaxPrice;
+            });
+
+            if (filtered.length === 0) {
+                propertyGrid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 font-medium tracking-wide">No top-tier properties currently available matching this region.</div>';
+                const pc = document.getElementById('pagination-controls');
+                if (pc) pc.innerHTML = '';
+                return;
+            }
+
+            // Pagination Logic
+            const totalProperties = filtered.length;
+            const totalPages = Math.ceil(totalProperties / propertiesPerPage);
+
+            if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * propertiesPerPage;
+            const endIndex = startIndex + propertiesPerPage;
+
+            const limitedProperties = filtered.slice(startIndex, endIndex);
+            window.globalPropertiesCache = limitedProperties; // Save slice for modal lookups
+
+            limitedProperties.forEach((property, index) => {
+                const currency = property.currency || '₦';
+
+                // 1. Smart Pricing Logic
+                let priceDisplay = 'Price on Request';
+
+                if (property.units && Array.isArray(property.units) && property.units.length > 0) {
+                    const firstUnit = property.units[0];
+                    if (firstUnit.price && firstUnit.price > 0) {
+                        const formatted = new Intl.NumberFormat('en-US').format(firstUnit.price);
+                        priceDisplay = `<span class='font-bold text-sm text-gray-500 mr-2 uppercase tracking-wider'>Starting from</span> ${currency}${formatted}`;
+                    }
+                } else if (property.price && property.price > 0) {
+                    const formattedPrice = new Intl.NumberFormat('en-US').format(property.price);
+                    priceDisplay = `${currency}${formattedPrice} `;
+                }
+
+                // 2. Smart Thumbnail Engine
+                let imgSource = "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80";
+
+                function localExtractYouTubeId(url) {
+                    if (!url) return null;
+                    const regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\/shorts\/)([^#\&\?]*).*/;
+                    const match = url.match(regex);
+                    return (match && match[2].length === 11) ? match[2] : null;
+                }
+                const ytId = localExtractYouTubeId(property.youtubeUrl);
+
+                if (property.imageUrl && property.imageUrl.trim() !== "") {
+                    imgSource = property.imageUrl;
+                } else if (ytId) {
+                    imgSource = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                }
+
+                // Dynamic Badge Rendering Logic
+                let tagColor = 'bg-brand-magenta';
+                let tagText = property.status || 'Active';
+                if (property.status === 'Recently Sold' || property.status === 'Sold') {
+                    tagColor = 'bg-gray-800';
+                    tagText = 'Sold';
+                }
+
+                propertyGrid.innerHTML += `
                     <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col">
-                        <a href="details.html?id=${property.id}" class="relative h-64 overflow-hidden bg-gray-100 block">
+                        <a href="details.html#${property.id}" class="relative h-64 overflow-hidden bg-gray-100 block">
                             <img src="${imgSource}"
                                 alt="${property.title}"
                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
@@ -1012,13 +1087,13 @@
                             </div>
                         </a>
                         <div class="p-6 flex flex-col flex-grow items-start">
-                            <a href="details.html?id=${property.id}" class="flex items-start justify-between mb-2 transition-colors hover:text-brand-magenta w-full">
-                                <h3 class="text-xl font-bold text-brand-blue">${property.title || "Exclusive Listing"}</h3>
+                            <a href="details.html#${property.id}" class="flex items-start justify-between mb-2 transition-colors hover:text-brand-magenta w-full">
+                                <h3 class="text-xl font-bold text-brand-blue">${property.title || 'Exclusive Listing'}</h3>
                             </a>
                             <div class="flex items-center text-gray-500 text-sm mb-6">
                                 <svg class="w-4 h-4 mr-1 text-brand-magenta" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.242-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                ${property.location || "Global Real Estate"}
+                                ${property.location || 'Global Real Estate'}
                             </div>
 
                             <div class="mb-4">
@@ -1027,7 +1102,7 @@
 
                             <div class="mt-auto pt-5 border-t border-gray-100 flex items-center w-full">
                                 <!-- 3. Secure Inter-Page Routing CTA -->
-                                <a href="details.html?id=${property.id}"
+                                <a href="details.html#${property.id}"
                                     class="inline-flex items-center justify-center w-full px-5 py-3.5 text-sm font-semibold text-white transition-all duration-300 bg-gray-900 rounded-xl hover:bg-brand-magenta shadow-lg hover:shadow-xl hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                                     title="View Property Details">
                                     View Details
@@ -1037,49 +1112,111 @@
                         </div>
                     </div>
                 `;
+            });
+
+            // Trigger Pagination Builder
+            buildPagination(totalPages);
+        }
+
+        // --- Master Tab Switching Logic ---
+        const tabs = [
+            { id: 'tab-sales', val: 'sale' },
+            { id: 'tab-rentals', val: 'rent' },
+            { id: 'tab-airbnb', val: 'airbnb' },
+            { id: 'tab-land', val: 'land' }
+        ];
+
+        tabs.forEach(t => {
+            const btn = document.getElementById(t.id);
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    activeTab = t.val;
+                    currentPage = 1;
+                    // Reset all
+                    tabs.forEach(x => {
+                        const xbtn = document.getElementById(x.id);
+                        if (xbtn) xbtn.className = 'pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue';
+                    });
+                    // Activate this
+                    btn.className = 'pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-brand-magenta text-brand-blue';
+                    renderProperties();
+                });
+            }
         });
-      }
+
+        function buildPagination(totalPages) {
+            const paginationContainer = document.getElementById('pagination-controls');
+            if (!paginationContainer) return;
+
+            paginationContainer.innerHTML = '';
+
+            if (totalPages <= 1) return; // Hide pagination if only 1 page
+
+            // Prev Button
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '&lt; Previous';
+            prevBtn.className = `px-4 py-2 rounded-lg text-sm font-bold transition-colors ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-brand-blue hover:bg-gray-100'}`;
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; renderProperties(); window.scrollTo({ top: document.getElementById('properties').offsetTop - 50, behavior: 'smooth' }); } };
+            paginationContainer.appendChild(prevBtn);
+
+            // Page Numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.innerText = i;
+                if (i === currentPage) {
+                    pageBtn.className = 'w-10 h-10 rounded-lg bg-gray-900 text-white font-bold shadow-md';
+                } else {
+                    pageBtn.className = 'w-10 h-10 rounded-lg text-gray-500 font-bold hover:bg-gray-100 hover:text-brand-blue transition-colors';
+                }
+                pageBtn.onclick = () => { currentPage = i; renderProperties(); window.scrollTo({ top: document.getElementById('properties').offsetTop - 50, behavior: 'smooth' }); };
+                paginationContainer.appendChild(pageBtn);
+            }
+
+            // Next Button
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = 'Next &gt;';
+            nextBtn.className = `px-4 py-2 rounded-lg text-sm font-bold transition-colors ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-brand-blue hover:bg-gray-100'}`;
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage++; renderProperties(); window.scrollTo({ top: document.getElementById('properties').offsetTop - 50, behavior: 'smooth' }); } };
+            paginationContainer.appendChild(nextBtn);
+        }
     </script>
+
+
 
     <!-- Market Insights API Engine -->
     <script>
-      async function fetchMarketInsights() {
-        const newsGrid = document.getElementById("news-grid");
-        if (!newsGrid) return;
+        async function fetchMarketInsights() {
+            const newsGrid = document.getElementById('news-grid');
+            if (!newsGrid) return;
 
-        try {
-          // Fetch dynamic news using AllOrigins Proxy to bypass strictly enforced NewsAPI Developer Tier browser-CORS blocks
-          const apiKey = "8f65d2b46db64ad1997e9ca75b3abd75";
-          const originalUrl = `https://newsapi.org/v2/everything?q="luxury real estate" OR "Dubai property"&language=en&sortBy=publishedAt&pageSize=10&apiKey=${apiKey}`;
+            try {
+                // Fetch dynamic news using AllOrigins Proxy to bypass strictly enforced NewsAPI Developer Tier browser-CORS blocks
+                const apiKey = '8f65d2b46db64ad1997e9ca75b3abd75';
+                const originalUrl = `https://newsapi.org/v2/everything?q="luxury real estate" OR "Dubai property"&language=en&sortBy=publishedAt&pageSize=10&apiKey=${apiKey}`;
 
-          // Wrap securely in AllOrigins Raw endpoint
-          const endpoint = `https://api.allorigins.win/raw?url=${encodeURIComponent(originalUrl)}`;
+                // Wrap securely in AllOrigins Raw endpoint
+                const endpoint = `https://api.allorigins.win/raw?url=${encodeURIComponent(originalUrl)}`;
 
-          const response = await fetch(endpoint);
-          if (!response.ok) throw new Error("News API routing error via Proxy");
+                const response = await fetch(endpoint);
+                if (!response.ok) throw new Error('News API routing error via Proxy');
 
-          const data = await response.json();
+                const data = await response.json();
 
-          if (data.articles && data.articles.length > 0) {
-            newsGrid.innerHTML = ""; // clear loading state
+                if (data.articles && data.articles.length > 0) {
+                    newsGrid.innerHTML = ''; // clear loading state
 
-            data.articles.forEach((article) => {
-              const imgFallback =
-                "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80";
-              const imageUrl = article.urlToImage
-                ? article.urlToImage
-                : imgFallback;
+                    data.articles.forEach(article => {
+                        const imgFallback = "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80";
+                        const imageUrl = article.urlToImage ? article.urlToImage : imgFallback;
 
-              const pubDate = new Date(article.publishedAt);
-              const dateString = pubDate.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              });
-              const sourceName = article.source?.name || "Global Insights";
+                        const pubDate = new Date(article.publishedAt);
+                        const dateString = pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                        const sourceName = article.source?.name || 'Global Insights';
 
-              // Using a highly specific flexible width to force a horizontal tray view
-              newsGrid.innerHTML += `
+                        // Using a highly specific flexible width to force a horizontal tray view
+                        newsGrid.innerHTML += `
             <article class="w-[85vw] sm:w-[50vw] lg:w-[350px] xl:w-[400px] flex-shrink-0 group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col cursor-pointer" onclick="window.open('${article.url}', '_blank')">
                 <div class="relative h-48 overflow-hidden bg-gray-200">
                     <img src="${imageUrl}" alt="News Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
@@ -1098,21 +1235,19 @@
                 </div>
             </article>
             `;
-            });
+                    });
 
-            // Activate infinite Auto-Scroll Logic for the Tray
-            startAutoScroll(newsGrid);
-          } else {
-            throw new Error("No articles found");
-          }
-        } catch (error) {
-          console.warn(
-            "API Unavailable - Falling back to Bulletproof static nodes:",
-            error,
-          );
+                    // Activate infinite Auto-Scroll Logic for the Tray
+                    startAutoScroll(newsGrid);
 
-          // The Bulletproof Fallback
-          newsGrid.innerHTML = `
+                } else {
+                    throw new Error('No articles found');
+                }
+            } catch (error) {
+                console.warn("API Unavailable - Falling back to Bulletproof static nodes:", error);
+
+                // The Bulletproof Fallback
+                newsGrid.innerHTML = `
             <article class="w-[85vw] sm:w-[50vw] lg:w-[350px] xl:w-[400px] flex-shrink-0 group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col">
                 <div class="relative h-48 overflow-hidden bg-gray-200">
                     <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
@@ -1141,44 +1276,40 @@
                 </div>
             </article>
                 `;
-          startAutoScroll(newsGrid);
-        }
-      }
-
-      // Auto-Scrolling Logic
-      function startAutoScroll(container) {
-        let scrollAmount = 0;
-        const scrollStep = 1;
-        const scrollDelay = 30; // ms
-
-        let isHovered = false;
-
-        container.addEventListener("mouseenter", () => (isHovered = true));
-        container.addEventListener("mouseleave", () => (isHovered = false));
-        container.addEventListener("touchstart", () => (isHovered = true));
-        container.addEventListener("touchend", () => {
-          setTimeout(() => (isHovered = false), 1000);
-        });
-
-        setInterval(() => {
-          if (!isHovered) {
-            container.scrollBy({ left: scrollStep });
-            scrollAmount += scrollStep;
-
-            // Simple infinite loop reset fallback
-            if (
-              container.scrollLeft + container.clientWidth >=
-              container.scrollWidth - 10
-            ) {
-              container.scrollTo({ left: 0, behavior: "instant" });
+                startAutoScroll(newsGrid);
             }
-          }
-        }, scrollDelay);
-      }
+        }
 
-      // Execute on page load
-      document.addEventListener("DOMContentLoaded", fetchMarketInsights);
+        // Auto-Scrolling Logic
+        function startAutoScroll(container) {
+            let scrollAmount = 0;
+            const scrollStep = 1;
+            const scrollDelay = 30; // ms
+
+            let isHovered = false;
+
+            container.addEventListener('mouseenter', () => isHovered = true);
+            container.addEventListener('mouseleave', () => isHovered = false);
+            container.addEventListener('touchstart', () => isHovered = true);
+            container.addEventListener('touchend', () => { setTimeout(() => isHovered = false, 1000); });
+
+            setInterval(() => {
+                if (!isHovered) {
+                    container.scrollBy({ left: scrollStep });
+                    scrollAmount += scrollStep;
+
+                    // Simple infinite loop reset fallback
+                    if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+                        container.scrollTo({ left: 0, behavior: 'instant' });
+                    }
+                }
+            }, scrollDelay);
+        }
+
+        // Execute on page load
+        document.addEventListener('DOMContentLoaded', fetchMarketInsights);
     </script>
-  </body>
-  <!-- Published by SmartKode solutionns.....CopyRight 2026 -->
+</body>
+<!-- Published by SmartKode solutionns.....CopyRight 2026 -->
+
 </html>

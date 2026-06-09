@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Property Video Gallery | Praise Dynasty Real Estate</title>
+    <meta name="description" content="Take virtual tours and watch high-definition video walkthroughs of our luxury properties.">
+    <link rel="canonical" href="https://www.praisedynastyrealty.com/videos.html" />
+    <meta property="og:title" content="Property Video Gallery | Praise Dynasty Real Estate" />
+    <meta property="og:description" content="Take virtual tours and watch high-definition video walkthroughs of our luxury properties." />
+    <meta property="og:image" content="https://www.praisedynastyrealty.com/images/logo-light.jpg" />
+    <meta property="og:url" content="https://www.praisedynastyrealty.com/videos.html" />
+    <meta property="og:type" content="website" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+
+    <!-- Preconnect to Font APIs  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Used Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0B1B3D',
+                            magenta: '#E0005E',
+                            light: '#F8F9FA'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .hero-pattern {
+                background-image: 
+                    linear-gradient(to bottom, rgba(11, 27, 61, 0.7), rgba(0, 0, 0, 0.9)),
+                    url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            .animate-fade-up {
+                animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                opacity: 0;
+            }
+            .delay-100 { animation-delay: 100ms; }
+        }
+        
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CSMJ74EREW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-CSMJ74EREW');
+    </script>
+</head>
+
+<body
+    class="bg-gray-50 font-sans tracking-wide selection:bg-brand-magenta selection:text-white relative overflow-x-hidden min-h-screen flex flex-col">
+
+    <!-- 1. The Navigation Bar -->
+    <nav
+        class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- praise dynasty Logo -->
+                <div class="flex-shrink-0 flex items-center group">
+                    <a href="index.html">
+                        <img src="./images/logo-light.jpg" alt="Praise Dynasty Real Estate"
+                            class="h-12 w-auto object-contain rounded transition-transform group-hover:scale-105">
+                    </a>
+                </div>
+
+                <!-- The Desktop Links -->
+                <div class="hidden md:flex space-x-10">
+                    <a href="index.html"
+                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">Home</a>
+                    <a href="all-listings.html"
+                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">Properties</a>
+                    <a href="videos.html"
+                        class="text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200">Videos</a>
+                </div>
+
+                <!-- WhatsApp CTA Button -->
+                <div class="hidden md:flex items-center">
+                    <a href="https://wa.me/2348081975967" target="_blank" rel="noopener noreferrer"
+                        class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/40 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                        </svg>
+                        Chat on WhatsApp
+                    </a>
+                </div>
+
+                <!--The Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" aria-expanded="false"
+                        class="text-brand-blue hover:text-brand-magenta transition-colors focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                            <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- The Mobile Menu Dropdown -->
+            <div id="mobile-menu"
+                class="md:hidden hidden bg-white border-t border-gray-100 py-4 max-h-[calc(100vh-5rem)] overflow-y-auto absolute left-0 w-full shadow-lg">
+                <div class="flex flex-col space-y-4 px-4 sm:px-6">
+                    <a href="index.html"
+                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Home</a>
+                    <a href="all-listings.html"
+                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Properties</a>
+                    <a href="videos.html"
+                        class="mobile-link text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Videos</a>
+                    <a href="https://wa.me/2348081975967" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                        </svg>
+                        Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="h-[40vh] min-h-[350px] hero-pattern relative flex items-center justify-center text-center">
+        <div class="absolute inset-0 bg-brand-blue/30 mix-blend-multiply z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-50 via-gray-50/10 to-transparent z-0"></div>
+        <div class="relative z-10 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto pt-10">
+            <span
+                class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block animate-fade-up">Cinematic
+                Experience</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 animate-fade-up delay-100">Video
+                Gallery</h1>
+            <p class="text-lg md:text-xl text-gray-200 font-light animate-fade-up delay-100">Immerse yourself in our
+                premium properties through our high-definition walkthroughs.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="flex-grow py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full z-10 -mt-10 relative">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 sm:p-12 mb-12">
+
+            <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <!-- Videos will be injected here via Firebase -->
+                <div class="col-span-full py-20 text-center text-gray-500 font-medium tracking-wide animate-pulse">
+                    Loading cinematic tours...
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-blue pt-20 pb-10 border-t-[6px] border-brand-magenta text-white mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Praise dynasty Branding -->
+                <div class="lg:col-span-2 pr-0 lg:pr-12">
+                    <div class="text-3xl font-bold text-white mb-6 tracking-tight">
+                        <span class="text-brand-magenta">Praise Dynasty</span> Real Estate.
+                    </div>
+                    <p class="text-blue-100/70 mb-8 leading-relaxed font-light text-lg">
+                        Nigeria’s premier provider of premium real estate services, bringing unparalleled expertise and
+                        integrity to every transaction.
+                    </p>
+                </div>
+
+                <!-- praise dynasty Headquarters -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white border-b border-brand-magenta/50 pb-3 inline-block">
+                        Headquarters</h4>
+                    <p class="text-blue-100/70 leading-relaxed font-light text-base">
+                        Office A5, NAF Valley Plaza,<br>
+                        S.B Abubakar Street,<br>
+                        Asokoro, Abuja.
+                    </p>
+                </div>
+
+                <!-- The Contact Funnel CTA -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white border-b border-brand-magenta/50 pb-3 inline-block">Get
+                        Started</h4>
+                    <p class="text-blue-100/70 leading-relaxed mb-6 font-light">
+                        Ready to elevate your property portfolio? Let's connect directly.
+                    </p>
+                    <a href="https://wa.me/2348081975967" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center w-full px-6 py-4 text-sm font-bold text-brand-blue transition-all duration-300 bg-white rounded-xl hover:bg-gray-100 shadow-xl shadow-black/30 hover:-translate-y-1">
+                        <svg class="w-6 h-6 mr-3 text-green-500" fill="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                        </svg>
+                        Contact Us on WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-blue-100/50">
+                <p>&copy; 2026 Praise Dynasty Real Estate Ltd. All rights reserved.</p>
+                <div class="mt-4 md:mt-0 flex gap-6">
+                    <a href="privacy.html" class="hover:text-white transition-colors duration-200">Privacy Policy</a>
+                    <a href="terms.html" class="hover:text-white transition-colors duration-200">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('menu-icon-open');
+        const iconClose = document.getElementById('menu-icon-close');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                iconOpen.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+            } else {
+                mobileMenu.classList.add('hidden');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+
+    <!-- Firebase Realtime App Injection -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJBGi_WKLDU493eOrH4Emx7xx_li7wzoY",
+            authDomain: "praise-dynasty-hni.firebaseapp.com",
+            projectId: "praise-dynasty-hni",
+            storageBucket: "praise-dynasty-hni.firebasestorage.app",
+            messagingSenderId: "702909860929",
+            appId: "1:702909860929:web:7c9d2a3c899df3dbf0cac0"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const videoGrid = document.getElementById('video-grid');
+        const videosRef = ref(db, 'videos');
+
+        onValue(videosRef, (snapshot) => {
+            if (!snapshot.exists()) {
+                videoGrid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 font-medium tracking-wide">No cinematic tours are currently available. Please check back later.</div>';
+                return;
+            }
+
+            videoGrid.innerHTML = '';
+
+            // Collect and sort videos by createdAt descending (newest first)
+            const videosArray = [];
+            snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                data.id = childSnapshot.key;
+                videosArray.push(data);
+            });
+
+            videosArray.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            videosArray.forEach((video) => {
+                // Ensure URL works in an iframe (e.g. convert full YouTube link to embed if needed)
+                let embedUrl = video.url;
+                try {
+                    if (embedUrl.includes('youtube.com') || embedUrl.includes('youtu.be')) {
+                        let videoId = null;
+                        if (embedUrl.includes('youtu.be/')) {
+                            videoId = embedUrl.split('youtu.be/')[1].split('?')[0];
+                        } else if (embedUrl.includes('watch?v=')) {
+                            videoId = embedUrl.split('watch?v=')[1].split('&')[0];
+                        } else if (embedUrl.includes('/shorts/')) {
+                            videoId = embedUrl.split('/shorts/')[1].split('?')[0];
+                        } else if (embedUrl.includes('/embed/')) {
+                            videoId = embedUrl.split('/embed/')[1].split('?')[0];
+                        }
+                        if (videoId) {
+                            embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                        }
+                    } else if (embedUrl.includes('vimeo.com') && !embedUrl.includes('player.vimeo.com')) {
+                        const vimeoMatch = embedUrl.match(/vimeo\.com\/(\d+)/);
+                        if (vimeoMatch && vimeoMatch[1]) {
+                            embedUrl = `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+                        }
+                    }
+                } catch (e) {
+                    console.error("URL Parsing error:", e);
+                }
+
+                const card = document.createElement('div');
+                card.className = "group flex flex-col bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden";
+                card.innerHTML = `
+                    <div class="relative w-full overflow-hidden" style="padding-top: 56.25%;">
+                        <iframe 
+                            class="absolute inset-0 w-full h-full"
+                            src="${embedUrl}" 
+                            title="${video.title}" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brand-blue mb-2 group-hover:text-brand-magenta transition-colors">${video.title}</h3>
+                        <div class="w-12 h-1 bg-brand-magenta/30 rounded-full group-hover:w-full group-hover:bg-brand-magenta transition-all duration-300 mt-4"></div>
+                    </div>
+                `;
+                videoGrid.appendChild(card);
+            });
+        });
+    </script>
+</body>
+
+</html>

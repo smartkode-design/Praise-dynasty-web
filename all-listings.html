@@ -3,18 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Praise Dynasty Real Estate Ltd - Premium Real Estate Services in Asokoro, Abuja.">
-    <title>Praise Dynasty Real Estate Ltd</title>
-        <!-- favicon -->
-<link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
-<link rel="shortcut icon" href="favicon/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
-<link rel="manifest" href="favicon/site.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Exclusive Properties & Listings | Praise Dynasty Real Estate</title>
+    <meta name="description" content="Browse our complete global inventory of exclusive properties, luxury duplexes, and prime real estate investments.">
+    <link rel="canonical" href="https://www.praisedynastyrealty.com/all-listings.html" />
+    <meta property="og:title" content="Exclusive Properties & Listings | Praise Dynasty Real Estate" />
+    <meta property="og:description" content="Browse our complete global inventory of exclusive properties, luxury duplexes, and prime real estate investments." />
+    <meta property="og:image" content="https://www.praisedynastyrealty.com/images/logo-light.jpg" />
+    <meta property="og:url" content="https://www.praisedynastyrealty.com/all-listings.html" />
+    <meta property="og:type" content="website" />
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
     <!-- In any event an edit should be made pls go thru the comments to see how the site was structured and there sections to navigate easily -->
-    <!-- This page is for the see all properties page its mostly coherent with the.html main page -->
+    <!-- This page is for the see all properties page its mostly coherent with the main page -->
     <!-- Preconnect to Font APIs it helps to improve load time -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,6 +51,9 @@
             }
         }
     </script>
+    <!-- Leaflet Mapping JS & CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style type="text/tailwindcss">
         @layer utilities {
             .hero-pattern {
@@ -77,29 +84,44 @@
             }
         }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CSMJ74EREW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-CSMJ74EREW');
+    </script>
 </head>
 
-<body class="font-sans text-gray-800 bg-white antialiased selection:bg-brand-magenta selection:text-white">
+<body
+    class="bg-gray-50 font-sans tracking-wide selection:bg-brand-magenta selection:text-white relative overflow-x-hidden min-h-screen flex flex-col flex-1">
+
+    <!-- Premium Particles Background -->
+    <div id="particles-js" class="fixed inset-0 z-40 pointer-events-none"></div>
 
     <!-- 1. The Navigation Bar -->
     <nav
-        class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all ">
+        class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center group">
-                    <img src="./images/logo-light.jpg" alt="Praise Dynasty Real Estate logo"
+                    <img src="./images/logo-light.jpg" alt="Praise Dynasty Real Estate"
                         class="h-12 w-auto object-contain rounded transition-transform group-hover:scale-105">
                 </div>
 
                 <!-- Desktop Links -->
                 <div class="hidden md:flex space-x-10">
                     <a href="index.html"
-                        class="text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200">Home</a>
-                    <a href="#about"
-                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">About</a>
-                    <a href="#services"
-                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">Services</a>
+                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">Home</a>
+                    <a href="all-listings.html"
+                        class="text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200">Properties</a>
+                    <a href="videos.html"
+                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">Videos</a>
+                    <a href="articles.html"
+                        class="text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200">Articles</a>
                 </div>
 
                 <!-- WhatsApp CTA Button -->
@@ -135,11 +157,13 @@
                 class="md:hidden hidden bg-white border-t border-gray-100 py-4 max-h-[calc(100vh-5rem)] overflow-y-auto absolute left-0 w-full shadow-lg">
                 <div class="flex flex-col space-y-4 px-4 sm:px-6">
                     <a href="index.html"
-                        class="mobile-link text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Home</a>
-                    <a href="#about"
-                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">About</a>
-                    <a href="#services"
-                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Services</a>
+                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Home</a>
+                    <a href="all-listings.html"
+                        class="mobile-link text-brand-blue font-semibold hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Properties</a>
+                    <a href="videos.html"
+                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Videos</a>
+                    <a href="articles.html"
+                        class="mobile-link text-gray-600 font-medium hover:text-brand-magenta transition-colors duration-200 py-2 border-b border-gray-50">Articles</a>
                     <a href="https://wa.me/2348081975967" target="_blank" rel="noopener noreferrer"
                         class="inline-flex items-center justify-center px-6 py-3 mt-4 text-sm font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"
@@ -162,34 +186,119 @@
                 <div class="max-w-2xl mb-6 md:mb-0">
                     <span class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block">Complete
                         Collection</span>
-                    <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-4">Exclusive Global Inventory</h2>
+                    <h1 class="text-3xl md:text-5xl font-bold text-brand-blue mb-4">Exclusive Global Inventory</h1>
                     <p class="text-gray-500 text-lg font-light">Explore our unbridled selection of ultra-luxury
                         residences
                         and prime real estate investments.</p>
                 </div>
             </div>
 
-            <!-- Global Market Filters -->
-            <div class="flex flex-wrap items-center gap-3 mb-10 overflow-x-auto pb-2 scrollbar-hide">
-                <button data-filter="All"
-                    class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-gray-900 text-white shadow-md transition-all whitespace-nowrap">All</button>
-                <button data-filter="Nigeria"
-                    class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap">Nigeria</button>
-                <button data-filter="Dubai"
-                    class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap">Dubai</button>
-                <button data-filter="United Kingdom"
-                    class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap">United
-                    Kingdom</button>
-                <button data-filter="USA"
-                    class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap">USA</button>
+            <!-- Text/Neighborhood Search -->
+            <div class="w-full mb-6 relative z-30">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" id="text-search-input" placeholder="Search by Neighborhood, District, Title, or Keyword (e.g. Asokoro, Guzape)" class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all text-gray-900 font-medium shadow-sm">
+                </div>
+            </div>
+
+            <!-- Cascading Market Filters (Custom Premium Components) -->
+            <div class="flex flex-col lg:flex-row gap-6 mb-8 w-full relative z-30 items-start lg:items-center justify-between">
+                
+                <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                    <!-- Tier 1: Country Dropdown -->
+                    <div class="relative w-full sm:w-64">
+                        <button id="country-dropdown-btn"
+                            class="w-full flex items-center justify-between px-6 py-3.5 bg-gray-900 text-white border border-gray-800 rounded-xl hover:border-brand-magenta focus:outline-none transition-all shadow-md font-semibold text-sm">
+                            <span id="country-dropdown-text">Globally (All Countries)</span>
+                            <svg id="country-dropdown-icon" class="w-4 h-4 ml-2 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <!-- Country Menu -->
+                        <div id="country-dropdown-menu"
+                            class="absolute left-0 w-full mt-2 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl hidden flex-col overflow-hidden text-sm z-50">
+                            <div class="max-h-60 overflow-y-auto w-full">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tier 2: State/City Dropdown -->
+                    <div class="relative w-full sm:w-64">
+                        <button id="state-dropdown-btn" disabled
+                            class="w-full flex items-center justify-between px-6 py-3.5 bg-gray-800 text-gray-500 border border-gray-700 rounded-xl cursor-not-allowed transition-all shadow-md font-semibold text-sm">
+                            <span id="state-dropdown-text">All States / Cities</span>
+                            <svg id="state-dropdown-icon" class="w-4 h-4 ml-2 transition-transform duration-200" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                                </path>
+                            </svg>
+                        </button>
+                        <!-- State Menu -->
+                        <div id="state-dropdown-menu"
+                            class="absolute left-0 w-full mt-2 bg-gray-900 border border-gray-800 rounded-xl shadow-2xl hidden flex-col overflow-hidden text-sm z-50">
+                            <div class="max-h-60 overflow-y-auto w-full">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Price Range Dropdown -->
+                <div class="relative w-full lg:w-64">
+                    <button id="price-dropdown-btn"
+                        class="w-full flex items-center justify-between px-5 py-3.5 bg-gray-50 text-brand-blue border border-gray-200 rounded-xl hover:border-brand-magenta focus:outline-none transition-all shadow-sm font-bold text-sm">
+                        <span id="price-dropdown-text">Any Price Range</span>
+                        <svg id="price-dropdown-icon" class="w-4 h-4 ml-2 transition-transform duration-200 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <!-- Price Menu -->
+                    <div id="price-dropdown-menu"
+                        class="absolute right-0 w-full lg:w-72 mt-2 bg-white border border-gray-100 rounded-xl shadow-2xl hidden flex-col overflow-hidden text-sm z-50">
+                        <div class="max-h-60 overflow-y-auto w-full" id="price-menu-options">
+                            <div class="px-5 py-3 cursor-pointer transition-colors bg-brand-magenta text-white font-bold" data-min="0" data-max="Infinity">Any Price Range</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="20000000" data-max="50000000">₦20 Million - ₦50 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="50000000" data-max="100000000">₦50 Million - ₦100 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="100000000" data-max="150000000">₦100 Million - ₦150 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="150000000" data-max="300000000">₦150 Million - ₦300 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="300000000" data-max="500000000">₦300 Million - ₦500 Million</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="500000000" data-max="2000000000">₦500 Million - ₦2 Billion</div>
+                            <div class="px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue" data-min="2000000000" data-max="Infinity">₦2 Billion +</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Tabs -->
+            <div class="flex justify-start mb-10 border-b border-gray-200 overflow-x-auto pb-1 hide-scrollbar">
+                <div class="flex gap-6 sm:gap-8 min-w-max">
+                    <button id="tab-sales"
+                        class="pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-brand-magenta text-brand-blue">Sales</button>
+                    <button id="tab-rentals"
+                        class="pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue">Rentals</button>
+                    <button id="tab-airbnb"
+                        class="pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue">AirBnB / Short-let</button>
+                    <button id="tab-land"
+                        class="pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue">Land / Plots</button>
+                </div>
             </div>
 
             <!-- 3-Column Grid (Live) -->
-            <div id="live-property-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="live-property-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300">
                 <!-- Reactively Populated by Firebase -->
                 <div class="col-span-full py-12 text-center text-gray-500 font-medium tracking-wide animate-pulse">
                     Loading luxury properties...
                 </div>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div id="pagination-controls" class="flex justify-center items-center mt-16 space-x-2">
+                <!-- Injected via JS -->
             </div>
         </div>
     </section>
@@ -201,7 +310,7 @@
                 <div class="max-w-2xl mb-6 md:mb-0">
                     <span class="text-brand-magenta font-bold tracking-wider uppercase text-sm mb-3 block">Market
                         Intelligence</span>
-                    <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-4">Global Market Insights</h2>
+                    <h2 class="text-3xl md:text-5xl font-bold text-brand-blue mb-4">Global Market Insights</h1>
                     <p class="text-gray-500 text-lg font-light">Stay informed with the latest trends, analyses, and
                         exclusive news in international luxury real estate.</p>
                 </div>
@@ -345,8 +454,8 @@
                 class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-blue-100/50">
                 <p>&copy; 2026 Praise Dynasty Real Estate Ltd. All rights reserved.</p>
                 <div class="mt-4 md:mt-0 flex gap-6">
-                    <a href="#" class="hover:text-white transition-colors duration-200">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition-colors duration-200">Terms of Service</a>
+                    <a href="privacy.html" class="hover:text-white transition-colors duration-200">Privacy Policy</a>
+                    <a href="terms.html" class="hover:text-white transition-colors duration-200">Terms of Service</a>
                 </div>
             </div>
         </div>
@@ -404,23 +513,79 @@
         const db = getDatabase(app);
 
         const propertyGrid = document.getElementById('live-property-grid');
-        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // UI References
+        const countryBtn = document.getElementById('country-dropdown-btn');
+        const countryText = document.getElementById('country-dropdown-text');
+        const countryMenu = document.getElementById('country-dropdown-menu');
+        const countryMenuContainer = countryMenu.querySelector('div');
+        const countryIcon = document.getElementById('country-dropdown-icon');
+
+        const stateBtn = document.getElementById('state-dropdown-btn');
+        const stateText = document.getElementById('state-dropdown-text');
+        const stateMenu = document.getElementById('state-dropdown-menu');
+        const stateMenuContainer = stateMenu.querySelector('div');
+        const stateIcon = document.getElementById('state-dropdown-icon');
 
         let allProperties = [];
-        let currentFilter = 'All';
+        let currentCountryFilter = 'All';
+        let currentStateFilter = 'All';
 
-        const baseFilterNames = {
-            'All': 'All',
-            'Nigeria': 'Nigeria',
-            'Dubai': 'Dubai',
-            'United Kingdom': 'United Kingdom',
-            'USA': 'USA'
+        const locationData = {
+            "Nigeria": ["Abuja", "Lagos", "Imo State", "Anambra State", "Enugu State", "Asaba State", "Calabar"],
+            "UAE": ["Dubai"],
+            "UK": ["London"],
+            "USA": ["New York"]
         };
+        const countriesList = ["All", "Nigeria", "UAE", "UK", "USA"];
+
+        let activeTab = 'sale'; // 'sale' or 'rent'
+
+        // Apply URL Routing parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('region') || urlParams.has('state')) {
+            const locParam = urlParams.get('region') || urlParams.get('state');
+            currentStateFilter = locParam;
+            // Best effort implicit mapping
+            for (const [country, states] of Object.entries(locationData)) {
+                if (states.includes(locParam)) {
+                    currentCountryFilter = country;
+                    break;
+                }
+            }
+        } else if (urlParams.has('country')) {
+            currentCountryFilter = urlParams.get('country');
+        }
+
+        let currentPage = 1;
+        const propertiesPerPage = 9;
+
+        function toggleMenu(menu, icon) {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+            icon.classList.toggle('rotate-180');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!countryBtn.contains(e.target) && !countryMenu.contains(e.target)) {
+                countryMenu.classList.add('hidden');
+                countryMenu.classList.remove('flex');
+                countryIcon.classList.remove('rotate-180');
+            }
+            if (!stateBtn.contains(e.target) && !stateMenu.contains(e.target)) {
+                stateMenu.classList.add('hidden');
+                stateMenu.classList.remove('flex');
+                stateIcon.classList.remove('rotate-180');
+            }
+        });
+
+        countryBtn.addEventListener('click', () => { toggleMenu(countryMenu, countryIcon); });
+        stateBtn.addEventListener('click', () => { if (!stateBtn.disabled) toggleMenu(stateMenu, stateIcon); });
 
         const propertiesRef = ref(db, 'properties');
 
         onValue(propertiesRef, (snapshot) => {
-            allProperties = []; // reset array
+            allProperties = [];
             if (snapshot.exists()) {
                 snapshot.forEach((childSnapshot) => {
                     const data = childSnapshot.val();
@@ -428,95 +593,227 @@
                     allProperties.push(data);
                 });
             }
-
-            // Update filter tab counts dynamically
-            filterBtns.forEach(btn => {
-                const filterType = btn.getAttribute('data-filter');
-                let count = 0;
-                if (filterType === 'All') {
-                    count = allProperties.length;
-                } else {
-                    count = allProperties.filter(p => p.location && p.location.includes(filterType)).length;
-                }
-                const baseName = baseFilterNames[filterType] || filterType;
-                btn.innerText = `${baseName} (${count})`;
-            });
-
+            buildCountryDropdown();
             renderProperties();
         });
 
-        // Global Filters Logic
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                // Clear active states
-                filterBtns.forEach(b => {
-                    b.className = "filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-white text-gray-500 hover:text-brand-blue hover:bg-gray-50 border border-gray-200 transition-all whitespace-nowrap";
-                });
-                // Set active style on clicked
-                e.target.className = "filter-btn px-6 py-2.5 rounded-full text-sm font-semibold bg-gray-900 text-white shadow-md transition-all whitespace-nowrap";
+        function getCount(country, state) {
+            let filtered = allProperties.filter(p => p.status !== 'Off-Market');
+            if (country !== 'All') {
+                filtered = filtered.filter(p => p.location && p.location.includes(country));
+            }
+            if (state && state !== 'All') {
+                filtered = filtered.filter(p => p.location && p.location.includes(state));
+            }
+            return filtered.length;
+        }
 
-                currentFilter = e.target.getAttribute('data-filter');
+        function createOption(label, count, value, isSelected, onClick) {
+            const div = document.createElement('div');
+            div.className = `px-6 py-3 cursor-pointer transition-colors ${isSelected ? 'bg-brand-magenta text-white font-bold' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}`;
+            div.innerHTML = `<span>${label}</span> <span class="ml-2 text-xs opacity-70">(${count})</span>`;
+            div.addEventListener('click', () => { onClick(value, label, count); });
+            return div;
+        }
+
+        function buildCountryDropdown() {
+            countryMenuContainer.innerHTML = '';
+            countriesList.forEach(c => {
+                const count = getCount(c, null);
+                const label = c === "All" ? "Globally (All Countries)" : c;
+                const isSelected = (c === currentCountryFilter);
+
+                if (isSelected) countryText.innerHTML = `${label} <span class="opacity-70 ml-1">(${count})</span>`;
+
+                const opt = createOption(label, count, c, isSelected, (val, dispLabel, dispCount) => {
+                    currentCountryFilter = val;
+                    currentStateFilter = 'All';
+                    countryText.innerHTML = `${dispLabel} <span class="opacity-70 ml-1">(${dispCount})</span>`;
+                    toggleMenu(countryMenu, countryIcon);
+                    buildStateDropdown();
+                    renderProperties();
+                    buildCountryDropdown();
+                });
+                countryMenuContainer.appendChild(opt);
+            });
+            buildStateDropdown();
+        }
+
+        function buildStateDropdown() {
+            stateMenuContainer.innerHTML = '';
+
+            if (currentCountryFilter !== 'All' && locationData[currentCountryFilter]) {
+                stateBtn.disabled = false;
+                stateBtn.className = "w-full flex items-center justify-between px-6 py-3.5 bg-gray-900 text-white border border-gray-800 rounded-xl hover:border-brand-magenta focus:outline-none transition-all shadow-md font-semibold text-sm";
+
+                const statesList = ["All"].concat(locationData[currentCountryFilter]);
+
+                statesList.forEach(s => {
+                    const count = getCount(currentCountryFilter, s);
+                    const label = s === "All" ? "All States / Cities" : s;
+                    const isSelected = (s === currentStateFilter);
+
+                    if (isSelected) stateText.innerHTML = `${label} <span class="opacity-70 ml-1">(${count})</span>`;
+
+                    const opt = createOption(label, count, s, isSelected, (val, dispLabel, dispCount) => {
+                        currentStateFilter = val;
+                        stateText.innerHTML = `${dispLabel} <span class="opacity-70 ml-1">(${dispCount})</span>`;
+                        toggleMenu(stateMenu, stateIcon);
+                        renderProperties();
+                        buildStateDropdown();
+                    });
+                    stateMenuContainer.appendChild(opt);
+                });
+            } else {
+                stateBtn.disabled = true;
+                stateBtn.className = "w-full flex items-center justify-between px-6 py-3.5 bg-gray-800 text-gray-500 border border-gray-700 rounded-xl cursor-not-allowed transition-all shadow-md font-semibold text-sm";
+                stateText.innerHTML = `All States / Cities <span class="opacity-70 ml-1">(0)</span>`;
+            }
+        }
+
+        // --- Global State ---
+        window.globalPropertiesCache = [];
+        
+        // Price Filter State
+        let currentMinPrice = 0;
+        let currentMaxPrice = Infinity;
+
+        // Text Search State
+        let currentTextSearch = '';
+        const textSearchInput = document.getElementById('text-search-input');
+        if (textSearchInput) {
+            textSearchInput.addEventListener('input', (e) => {
+                currentTextSearch = e.target.value.toLowerCase().trim();
+                currentPage = 1;
+                renderProperties();
+            });
+        }
+
+        const gridView = document.getElementById('live-property-grid');
+        const paginationControls = document.getElementById('pagination-controls');
+
+        // Price Dropdown Logic
+        const priceBtn = document.getElementById('price-dropdown-btn');
+        const priceText = document.getElementById('price-dropdown-text');
+        const priceMenu = document.getElementById('price-dropdown-menu');
+        const priceIcon = document.getElementById('price-dropdown-icon');
+        const priceOptions = document.querySelectorAll('#price-menu-options div');
+
+        document.addEventListener('click', (e) => {
+            if (priceBtn && priceMenu && !priceBtn.contains(e.target) && !priceMenu.contains(e.target)) {
+                priceMenu.classList.add('hidden');
+                priceMenu.classList.remove('flex');
+                if (priceIcon) priceIcon.classList.remove('rotate-180');
+            }
+        });
+
+        if (priceBtn) {
+            priceBtn.addEventListener('click', () => {
+                priceMenu.classList.toggle('hidden');
+                priceMenu.classList.toggle('flex');
+                priceIcon.classList.toggle('rotate-180');
+            });
+        }
+
+        priceOptions.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                priceOptions.forEach(o => o.className = 'px-5 py-3 cursor-pointer transition-colors text-gray-600 hover:bg-gray-50 hover:text-brand-blue');
+                opt.className = 'px-5 py-3 cursor-pointer transition-colors bg-brand-magenta text-white font-bold';
+                
+                currentMinPrice = Number(opt.getAttribute('data-min'));
+                currentMaxPrice = Number(opt.getAttribute('data-max'));
+                priceText.innerText = opt.innerText;
+                
+                priceMenu.classList.add('hidden');
+                priceMenu.classList.remove('flex');
+                priceIcon.classList.remove('rotate-180');
+                
+                currentPage = 1;
                 renderProperties();
             });
         });
 
-        window.globalPropertiesCache = [];
+        // Smart Price Extractor
+        function getPropPrice(p) {
+            if (p.units && Array.isArray(p.units) && p.units.length > 0 && p.units[0].price > 0) return p.units[0].price;
+            if (p.price && p.price > 0) return p.price;
+            return 0; // Price on request
+        }
 
+        // --- Core Rendering Engine ---
         function renderProperties() {
-            propertyGrid.innerHTML = ''; // clear grid
+            gridView.innerHTML = '';
             window.globalPropertiesCache = [];
 
-            let filtered = allProperties;
-            // Exclude Off-Market properties immediately from the frontend UI
-            filtered = filtered.filter(p => p.status !== 'Off-Market');
+            let filtered = allProperties.filter(p => p.status !== 'Off-Market');
 
-            if (currentFilter !== 'All') {
-                filtered = filtered.filter(p => p.location && p.location.includes(currentFilter));
+            // 2. Map & Location Filters
+            if (currentCountryFilter !== 'All') {
+                filtered = filtered.filter(p => p.location && p.location.includes(currentCountryFilter));
+            }
+            if (currentStateFilter !== 'All') {
+                filtered = filtered.filter(p => p.location && p.location.includes(currentStateFilter));
             }
 
+            // 2.5 Text & Neighborhood Search (Fallback Logic)
+            if (currentTextSearch !== '') {
+                filtered = filtered.filter(p => {
+                    const titleMatch = p.title && p.title.toLowerCase().includes(currentTextSearch);
+                    const locMatch = p.location && p.location.toLowerCase().includes(currentTextSearch);
+                    const neighborMatch = p.neighborhood && p.neighborhood.toLowerCase().includes(currentTextSearch);
+                    return titleMatch || locMatch || neighborMatch;
+                });
+            }
+
+            // 3. Tab State Filters (Sale, Rent, AirBnB, Land)
+            filtered = filtered.filter(p => {
+                if (!p) return false;
+                const propTypeStr = p.propertyType ? String(p.propertyType).toLowerCase() : '';
+                const typeStr = p.type ? String(p.type).toLowerCase() : '';
+                
+                if (activeTab === 'sale') return (propTypeStr === 'sale' && !typeStr.includes('land'));
+                if (activeTab === 'rent') return (propTypeStr === 'rent' && !typeStr.includes('land'));
+                if (activeTab === 'airbnb') return (propTypeStr.includes('airbnb') || propTypeStr.includes('short-let') || propTypeStr.includes('shortlet'));
+                if (activeTab === 'land') return typeStr.includes('land');
+                return true;
+            });
+
+            // 4. Dynamic Range Pricing Filter
+            filtered = filtered.filter(p => {
+                const pPrice = getPropPrice(p);
+                if (pPrice === 0) return true; // Keep "Price on Request" items
+                return pPrice >= currentMinPrice && pPrice <= currentMaxPrice;
+            });
+
             if (filtered.length === 0) {
-                propertyGrid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 font-medium tracking-wide">No top-tier properties currently available matching this region.</div>';
+                gridView.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 font-medium tracking-wide">No top-tier properties currently available matching this filter.</div>';
+                renderPagination(0);
                 return;
             }
 
-            // Unlimited database render for true all-listings
             window.globalPropertiesCache = filtered;
 
-            filtered.forEach((property, index) => {
+            // Grid Engine Sync
+            const totalPages = Math.ceil(filtered.length / propertiesPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * propertiesPerPage;
+            const endIndex = startIndex + propertiesPerPage;
+            const currentProperties = filtered.slice(startIndex, endIndex);
+
+            currentProperties.forEach((property, index) => {
                 const currency = property.currency || '₦';
-
-                // 1. Smart Pricing Logic
                 let priceDisplay = 'Price on Request';
-
-                if (property.units && Array.isArray(property.units) && property.units.length > 0) {
-                    const firstUnit = property.units[0];
-                    if (firstUnit.price && firstUnit.price > 0) {
-                        const formatted = new Intl.NumberFormat('en-US').format(firstUnit.price);
-                        priceDisplay = `<span class='font-bold text-sm text-gray-500 mr-2 uppercase tracking-wider'>Starting from</span>${currency}${formatted}`;
-                    }
-                } else if (property.price && property.price > 0) {
-                    const formattedPrice = new Intl.NumberFormat('en-US').format(property.price);
-                    priceDisplay = `${currency}${formattedPrice}`;
+                const pPrice = getPropPrice(property);
+                if (pPrice > 0) {
+                    priceDisplay = `<span class='font-bold text-sm text-gray-500 mr-2 uppercase tracking-wider'>Starting from</span> ${currency}${new Intl.NumberFormat('en-US').format(pPrice)}`;
                 }
 
-                // 2. Smart Thumbnail Engine
                 let imgSource = "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80";
-
-                function localExtractYouTubeId(url) {
-                    if (!url) return null;
-                    const regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\/shorts\/)([^#\&\?]*).*/;
-                    const match = url.match(regex);
-                    return (match && match[2].length === 11) ? match[2] : null;
-                }
-                const ytId = localExtractYouTubeId(property.youtubeUrl);
-
                 if (property.imageUrl && property.imageUrl.trim() !== "") {
                     imgSource = property.imageUrl;
-                } else if (ytId) {
-                    imgSource = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
                 }
 
-                // Dynamic Badge Rendering Logic
                 let tagColor = 'bg-brand-magenta';
                 let tagText = property.status || 'Active';
                 if (property.status === 'Recently Sold' || property.status === 'Sold') {
@@ -524,35 +821,23 @@
                     tagText = 'Sold';
                 }
 
-                propertyGrid.innerHTML += `
+                gridView.innerHTML += `
                     <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col">
-                        <a href="details.html?id=${property.id}" class="relative h-64 overflow-hidden bg-gray-100 block">
-                            <img src="${imgSource}"
-                                alt="${property.title}"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute top-4 right-4 ${tagColor} text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                ${tagText}
-                            </div>
+                        <a href="details.html#${property.id}" class="relative h-64 overflow-hidden bg-gray-100 block">
+                            <img src="${imgSource}" alt="${property.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute top-4 right-4 ${tagColor} text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">${tagText}</div>
                         </a>
                         <div class="p-6 flex flex-col flex-grow items-start">
-                            <a href="details.html?id=${property.id}" class="flex items-start justify-between mb-2 transition-colors hover:text-brand-magenta w-full">
+                            <a href="details.html#${property.id}" class="flex items-start justify-between mb-2 transition-colors hover:text-brand-magenta w-full">
                                 <h3 class="text-xl font-bold text-brand-blue">${property.title || 'Exclusive Listing'}</h3>
                             </a>
                             <div class="flex items-center text-gray-500 text-sm mb-6">
-                                <svg class="w-4 h-4 mr-1 text-brand-magenta" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.242-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <svg class="w-4 h-4 mr-1 text-brand-magenta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.242-4.243a8 8 0 1111.314 0z"></path></svg>
                                 ${property.location || 'Global Real Estate'}
                             </div>
-
-                            <div class="mb-4">
-                                <span class="text-2xl font-black text-gray-900">${priceDisplay}</span>
-                            </div>
-
+                            <div class="mb-4"><span class="text-2xl font-black text-gray-900">${priceDisplay}</span></div>
                             <div class="mt-auto pt-5 border-t border-gray-100 flex items-center w-full">
-                                <!-- Secure Inter-Page Routing CTA -->
-                                <a href="details.html?id=${property.id}"
-                                    class="inline-flex items-center justify-center w-full px-5 py-3.5 text-sm font-semibold text-white transition-all duration-300 bg-gray-900 rounded-xl hover:bg-brand-magenta shadow-lg hover:shadow-xl hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-                                    title="View Property Details">
+                                <a href="details.html#${property.id}" class="inline-flex items-center justify-center w-full px-5 py-3.5 text-sm font-semibold text-white transition-all duration-300 bg-gray-900 rounded-xl hover:bg-brand-magenta shadow-lg hover:shadow-xl hover:-translate-y-1 focus:outline-none">
                                     View Details
                                     <svg class="w-4 h-4 ml-2 opacity-70 group-hover:opacity-100 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                 </a>
@@ -561,7 +846,63 @@
                     </div>
                 `;
             });
+            renderPagination(totalPages);
         }
+
+
+        // Pagination UI
+        function renderPagination(totalPages) {
+            const paginationContainer = document.getElementById('pagination-controls');
+            if (!paginationContainer) return;
+            paginationContainer.innerHTML = '';
+            if (totalPages <= 1) return;
+
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '&lt; Prev';
+            prevBtn.className = `px-4 py-2 rounded-lg text-sm font-bold transition-colors ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-brand-blue hover:bg-gray-100'}`;
+            prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; renderProperties(); window.scrollTo(0, 500); } };
+            paginationContainer.appendChild(prevBtn);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.innerText = i;
+                pageBtn.className = `w-10 h-10 rounded-lg text-sm font-bold transition-colors ${currentPage === i ? 'bg-brand-blue text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'}`;
+                pageBtn.onclick = () => { currentPage = i; renderProperties(); window.scrollTo(0, 500); };
+                paginationContainer.appendChild(pageBtn);
+            }
+
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = 'Next &gt;';
+            nextBtn.className = `px-4 py-2 rounded-lg text-sm font-bold transition-colors ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-brand-blue hover:bg-gray-100'}`;
+            nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage++; renderProperties(); window.scrollTo(0, 500); } };
+            paginationContainer.appendChild(nextBtn);
+        }
+
+        // --- Master Tab Switching Logic ---
+        const tabs = [
+            { id: 'tab-sales', val: 'sale' },
+            { id: 'tab-rentals', val: 'rent' },
+            { id: 'tab-airbnb', val: 'airbnb' },
+            { id: 'tab-land', val: 'land' }
+        ];
+
+        tabs.forEach(t => {
+            const btn = document.getElementById(t.id);
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    activeTab = t.val;
+                    currentPage = 1;
+                    // Reset all
+                    tabs.forEach(x => {
+                        const xbtn = document.getElementById(x.id);
+                        if (xbtn) xbtn.className = 'pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue';
+                    });
+                    // Activate this
+                    btn.className = 'pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-brand-magenta text-brand-blue';
+                    renderProperties();
+                });
+            }
+        });
     </script>
 
     <!-- Luxury Quick-View Modal -->

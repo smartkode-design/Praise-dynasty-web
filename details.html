@@ -3,15 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- favicon -->
-<link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
-<link rel="shortcut icon" href="favicon/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
-<link rel="manifest" href="favicon/site.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Exclusive Property Details | Praise Dynasty Real Estate</title>
+    <meta name="description" content="View detailed information, galleries, and specifications for our exclusive luxury properties.">
+    <link rel="canonical" href="https://www.praisedynastyrealty.com/details.html" />
+    <meta property="og:title" content="Exclusive Property Details | Praise Dynasty Real Estate" />
+    <meta property="og:description" content="View detailed information, galleries, and specifications for our exclusive luxury properties." />
+    <meta property="og:image" content="https://www.praisedynastyrealty.com/images/logo-light.jpg" />
+    <meta property="og:url" content="https://www.praisedynastyrealty.com/details.html" />
+    <meta property="og:type" content="website" />
 
-    <title>Praise Dynasty | Exclusive Property Details</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
     <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -36,6 +41,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CSMJ74EREW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-CSMJ74EREW');
+    </script>
+    <!-- Leaflet Mapping JS & CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 
 <body class="bg-gray-50 font-sans text-gray-800 antialiased font-medium">
@@ -95,6 +112,8 @@
                     <h2 class="text-2xl font-bold text-brand-blue mb-6 border-b border-gray-100 pb-4">Executive Brief
                     </h2>
                     <p id="detail-desc" class="text-gray-600 leading-relaxed text-lg whitespace-pre-line"></p>
+                    
+                    <div id="detail-map" class="mt-10 w-full h-72 lg:h-96 rounded-2xl hidden shadow-inner border border-gray-200 z-10 relative"></div>
                 </section>
 
                 <!-- 4. Video Tour Section (Hidden by default) -->
@@ -208,9 +227,13 @@
 
         async function initPropertyDetails() {
             try {
-                // Parse the URL parameter (?id=property123)
+                // Parse the URL parameter (?id=property123) or hash fragment (#property123)
                 const urlParams = new URLSearchParams(window.location.search);
-                const propertyId = urlParams.get('id');
+                let propertyId = urlParams.get('id');
+
+                if (!propertyId && window.location.hash) {
+                    propertyId = window.location.hash.substring(1); // Extract from #ID
+                }
 
                 if (!propertyId) {
                     throw new Error("No Property ID Supplied.");
@@ -308,6 +331,73 @@
                     waBtn.href = `https://wa.me/2348081975967?text=${encodeURIComponent(messageDraft)}`;
                 }
 
+                // --- Phase 2: Dual Map Leaflet Engine (Local Viewer) ---
+                const districtCoords = {
+                    'asokoro': [9.0385, 7.5255],
+                    'maitama': [9.0833, 7.4950],
+                    'wuse 2': [9.0768, 7.4725],
+                    'wuse': [9.0667, 7.4667],
+                    'katampe': [9.1000, 7.4500],
+                    'gwarinpa': [9.1167, 7.4000],
+                    'lugbe': [8.9667, 7.3667],
+                    'jabi': [9.0667, 7.4167],
+                    'guzape': [9.0200, 7.5100],
+                    'apo': [9.0067, 7.4833],
+                    'garki': [9.0333, 7.4833],
+                    'life camp': [9.0667, 7.4000],
+                    'durumi': [9.0000, 7.4500],
+                    'mabushi': [9.0667, 7.4333],
+                    'dawaki': [9.1333, 7.3833],
+                    'lokogoma': [8.9667, 7.4500],
+                    'galadimawa': [8.9667, 7.4167],
+                    'karmo': [9.0500, 7.3833],
+                    'kado': [9.0833, 7.4333],
+                    'utako': [9.0667, 7.4333],
+                    'orji': [5.5167, 7.0333],
+                    'owerri': [5.4833, 7.0333],
+                    'lekki': [6.4698, 3.5852],
+                    'ikoyi': [6.4531, 3.4346],
+                    'victoria island': [6.4281, 3.4219],
+                    'ikeja': [6.6018, 3.3515],
+                    'abuja': [9.0579, 7.4951]
+                };
+
+                let pLat = property.lat;
+                let pLng = property.lng;
+
+                if (!pLat || !pLng) {
+                    const searchStr = `${property.title || ''} ${property.location || ''} ${property.description || ''}`.toLowerCase();
+                    for (const [key, coords] of Object.entries(districtCoords)) {
+                        if (searchStr.includes(key)) {
+                            pLat = coords[0];
+                            pLng = coords[1];
+                            break;
+                        }
+                    }
+                }
+
+                if (pLat && pLng) {
+                    const mapContainer = document.getElementById('detail-map');
+                    mapContainer.classList.remove('hidden');
+                    // Delay slightly longer to ensure DOM finishes transition height expansions
+                    setTimeout(() => {
+                        const localMap = L.map('detail-map').setView([pLat, pLng], 16);
+                        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                            attribution: '&copy; OpenStreetMap',
+                            maxZoom: 20
+                        }).addTo(localMap);
+                        const customIcon = L.divIcon({
+                            className: 'custom-pin',
+                            html: `<div class="bg-[#FFD700] text-gray-900 font-extrabold text-lg px-3 py-1 rounded-full border-4 border-white shadow-[0_10px_20px_rgba(0,0,0,0.5)] flex items-center justify-center">📍</div>`,
+                            iconSize: [0, 0],
+                            iconAnchor: [25, 20],
+                            popupAnchor: [0, -15]
+                        });
+                        L.marker([pLat, pLng], {icon: customIcon}).addTo(localMap).bindPopup('<strong class="text-brand-blue">Verified Neighborhood</strong>').openPopup();
+                    }, 800);
+                }
+
+
                 // Re-enable UI Engine Gracefully
                 setTimeout(() => {
                     loadingState.classList.add('opacity-0');
@@ -322,7 +412,7 @@
                 document.body.innerHTML = `
                     <div class="min-h-screen bg-gray-50 flex flex-col justify-center items-center text-center p-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
                         <svg class="w-16 h-16 text-gray-400 mb-6 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                        <h1 class="text-3xl font-extrabold text-brand-blue mb-2 tracking-tight">Portfolio Unavailable</h1>
+                        <h2 class="text-3xl font-extrabold text-brand-blue mb-2 tracking-tight">Portfolio Unavailable</h2>
                         <p class="text-gray-500 max-w-md font-medium tracking-wide leading-relaxed">${error.message === "No Property ID Supplied." ? "Invalid property parameters." : "The requested property has been removed from the database or the link is expired."}</p>
                         <a href="index.html" class="mt-8 bg-brand-magenta text-white font-bold py-3.5 px-8 rounded-xl hover:bg-rose-600 transition-all duration-300 shadow-[0_4px_15px_rgba(224,0,94,0.3)] hover:shadow-brand-magenta/40 hover:-translate-y-0.5 tracking-wider uppercase text-sm">Return to Global Feed</a>
                     </div>
