@@ -1340,7 +1340,20 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="h-10 w-10 flex-shrink-0 bg-gray-200 rounded overflow-hidden">
-                                    <img src="${articleData.imageUrl}" alt="" class="h-full w-full object-cover">
+                                    
+                                    ${(() => {
+                                        const fallbacks = [
+                                            "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                                            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                                            "https://images.unsplash.com/photo-1600607687931-cecebd80d0d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                                            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                                            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                        ];
+                                        let hash = 0;
+                                        for (let i = 0; i < key.length; i++) hash = key.charCodeAt(i) + ((hash << 5) - hash);
+                                        const fallbackImg = fallbacks[Math.abs(hash) % fallbacks.length];
+                                        return `<img src="${articleData.imageUrl ? articleData.imageUrl : fallbackImg}" alt="" class="h-full w-full object-cover">`;
+                                    })()}
                                 </div>
                                 <div class="ml-4 font-bold text-gray-900 leading-tight">${articleData.title}</div>
                             </div>
@@ -1372,6 +1385,19 @@
                         } catch (err) {
                             alert("Error removing: " + err.message);
                         }
+                    }
+                }
+                const editBtn = e.target.closest('.edit-article-btn');
+                if (editBtn) {
+                    const id = editBtn.getAttribute('data-id');
+                    const article = window.adminArticlesCache[id];
+                    if (article) {
+                        editingArticleId = id;
+                        articleTitleInput.value = article.title || '';
+                        articleAuthorInput.value = article.author || '';
+                        articleBodyInput.value = article.body || '';
+                        publishArticleBtn.querySelector('span').innerText = 'Update Article';
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                 }
             });
