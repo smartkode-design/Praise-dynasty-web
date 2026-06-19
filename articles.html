@@ -348,7 +348,7 @@
                 const imgSource = article.imageUrl ? article.imageUrl : fallbackImg;
 
                 articlesGrid.innerHTML += `
-                    <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col">
+                    <a href="article-details.html#${article.id}" class="group bg-white rounded-2xl cursor-pointer block overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col">
                         <div class="relative h-56 overflow-hidden bg-gray-200">
                             <img src="${imgSource}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                         </div>
@@ -356,64 +356,19 @@
                             <span class="text-xs text-brand-magenta font-bold tracking-widest uppercase mb-4 block">Insights &bull; ${formattedDate} &bull; ${article.author || 'Admin'}</span>
                             <h3 class="text-2xl font-bold text-brand-blue mb-6 leading-snug group-hover:text-brand-magenta transition-colors">${article.title}</h3>
                             <div class="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
-                                <button onclick="openArticleModal('${article.id}')" class="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-brand-magenta transition-colors uppercase tracking-widest focus:outline-none">
+                                <div class="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-brand-magenta transition-colors uppercase tracking-widest focus:outline-none">
                                     Read Article
                                     <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                                </button>
+                                </div>
                             </div>
                         </div>
-                    </article>
+                    </a>
                 `;
             });
             window.globalArticlesCache = allArticles;
         });
 
-        const articleModal = document.getElementById('article-modal');
-        const modalImg = document.getElementById('article-modal-img');
-        const modalTitle = document.getElementById('article-modal-title');
-        const modalMeta = document.getElementById('article-modal-meta');
-        const modalBody = document.getElementById('article-modal-body');
-
         
-        window.shareArticle = async function (id, title) {
-            const url = window.location.origin + window.location.pathname + '?article=' + id;
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'Praise Dynasty | ' + title,
-                        text: 'Check out this market insight from Praise Dynasty Real Estate: ' + title,
-                        url: url
-                    });
-                } catch (err) {
-                    console.log('Share canceled or failed', err);
-                }
-            } else {
-                navigator.clipboard.writeText(url).then(() => {
-                    alert('Article link copied to clipboard!');
-                });
-            }
-        };
-
-        window.openArticleModal = function (id) {
-            const article = window.globalArticlesCache.find(a => a.id === id);
-            if (!article) return;
-
-            modalTitle.innerText = article.title;
-            const d = new Date(article.createdAt || Date.now());
-            modalMeta.innerHTML = `Published on ${d.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} &bull; By ${article.author}`;
-            modalBody.innerHTML = article.body; // Render HTML
-
-            const fallbackImg = "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
-            modalImg.src = article.imageUrl ? article.imageUrl : fallbackImg;
-
-            articleModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        };
-
-        window.closeArticleModal = function () {
-            articleModal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        };
     </script>
 
     <!-- Article Reader Modal -->
