@@ -992,10 +992,12 @@
                 
                 // Reveal Admin tabs and panels
                 document.getElementById('tab-btn-staff').classList.remove('hidden');
-                document.getElementById('tab-btn-content-admin').classList.remove('hidden');
                 document.getElementById('admin-announcement-card').classList.remove('hidden');
                 document.getElementById('assign-task-form').classList.remove('hidden');
                 document.getElementById('add-resource-form').classList.remove('hidden');
+
+                const adminUploadForm = document.getElementById('add-general-content-form');
+                if (adminUploadForm) adminUploadForm.classList.remove('hidden');
                 
                 // Pre-fill profile settings inputs
                 document.getElementById('profile-name-input').value = displayName;
@@ -1019,7 +1021,7 @@
             onValue(ref(db, `agencyStaff/${user.uid}`), (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
-                    currentUserRole = data.role;
+                    currentUserRole = data.role ? data.role.trim().toLowerCase() : "";
                     currentUserStatus = data.status;
                     currentUserProfile = data;
                     
@@ -1042,13 +1044,21 @@
                         document.getElementById('admin-announcement-card').classList.add('hidden');
                         document.getElementById('assign-task-form').classList.add('hidden');
                         
-                        // PA or Marketing can upload files/images and manage Content Planner
+                        // Resource Assets: PA and Marketing can upload resource files
                         if (currentUserRole === 'pa' || currentUserRole === 'marketing') {
                             document.getElementById('add-resource-form').classList.remove('hidden');
-                            document.getElementById('tab-btn-content-admin').classList.remove('hidden');
                         } else {
                             document.getElementById('add-resource-form').classList.add('hidden');
-                            document.getElementById('tab-btn-content-admin').classList.add('hidden');
+                        }
+
+                        // General Content Templates upload form (strictly admin or pa)
+                        const genUploadForm = document.getElementById('add-general-content-form');
+                        if (genUploadForm) {
+                            if (currentUserRole === 'admin' || currentUserRole === 'pa') {
+                                genUploadForm.classList.remove('hidden');
+                            } else {
+                                genUploadForm.classList.add('hidden');
+                            }
                         }
 
                         // Apply role specific UI filters
