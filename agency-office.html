@@ -211,7 +211,12 @@
                     Profile & Settings
                 </button>
 
-                <button onclick="switchTab('staff')" id="tab-btn-staff" class="tab-btn hidden w-full flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors border-t border-gray-800 mt-4 pt-4 group text-xs">
+                <button onclick="switchTab('content-admin')" id="tab-btn-content-admin" class="tab-btn hidden w-full flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group text-xs border-t border-gray-800 mt-4 pt-4">
+                    <svg class="w-5 h-5 mr-3 group-hover:text-brand-magenta transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    Content Planner Admin
+                </button>
+
+                <button onclick="switchTab('staff')" id="tab-btn-staff" class="tab-btn hidden w-full flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group text-xs mt-2">
                     <svg class="w-5 h-5 mr-3 group-hover:text-brand-magenta transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /></svg>
                     Staff Management (Admin)
                 </button>
@@ -711,6 +716,77 @@
                     </div>
                 </div>
 
+                <!-- 10. TAB: CONTENT PLANNER ADMIN -->
+                <div id="tab-content-admin-view" class="tab-view hidden space-y-6">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm">
+                        <h2 class="text-lg font-bold text-brand-blue mb-1">Content Planner Manager</h2>
+                        <p class="text-xs text-gray-400 mb-6">Schedule and publish content calendar entries directly to the Praise Dynasty Content Planner board.</p>
+
+                        <!-- Add Content Card Form -->
+                        <form id="add-content-form" class="space-y-4 bg-gray-50 p-6 rounded-2xl border border-gray-200 mb-8">
+                            <h4 class="text-xs font-bold text-brand-magenta uppercase tracking-wider border-b border-gray-200 pb-2 mb-4">Add Content Calendar Entry</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Social Channel</label>
+                                    <select id="content-channel" required class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                                        <option value="agencyInstagramPlanner">Instagram Page</option>
+                                        <option value="agencyGooglePlanner">Google Business Profile</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Week Number</label>
+                                    <input type="number" id="content-week" required min="1" placeholder="e.g. 1" class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Posting Day</label>
+                                    <input type="text" id="content-day" required placeholder="e.g. Monday (Week 1)" class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Content Type / Tag</label>
+                                    <input type="text" id="content-type" required placeholder="e.g. Listing Showcase" class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Post Title / Topic</label>
+                                    <input type="text" id="content-title" required placeholder="e.g. Maitama Penthouse Tour" class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Image URL</label>
+                                    <input type="url" id="content-image" required placeholder="https://images.unsplash.com/..." class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Caption & hashtags</label>
+                                <textarea id="content-caption" rows="4" required placeholder="Write the caption or post body details here..." class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 leading-relaxed"></textarea>
+                            </div>
+                            <button type="submit" class="px-6 py-3 bg-brand-magenta hover:bg-brand-magenta/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm">
+                                Save Content Post
+                            </button>
+                        </form>
+
+                        <!-- Scheduled Content List -->
+                        <div class="flex flex-col gap-4">
+                            <h4 class="text-xs font-bold text-brand-blue uppercase tracking-wider border-b border-gray-100 pb-2 mb-2">Scheduled Content Listings</h4>
+                            <div class="overflow-x-auto border border-gray-100 rounded-xl">
+                                <table class="w-full text-left text-xs bg-white">
+                                    <thead>
+                                        <tr class="bg-gray-50 border-b border-gray-100 text-gray-400 font-bold uppercase tracking-wider">
+                                            <th class="py-3.5 px-4">Channel</th>
+                                            <th class="py-3.5 px-4">Day / Week</th>
+                                            <th class="py-3.5 px-4">Type</th>
+                                            <th class="py-3.5 px-4">Title</th>
+                                            <th class="py-3.5 px-4 text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="content-admin-tbody" class="divide-y divide-gray-100 text-gray-700">
+                                        <!-- Injected dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
             </div>
         </main>
     </div>
@@ -930,6 +1006,7 @@
                 
                 // Reveal Admin tabs and panels
                 document.getElementById('tab-btn-staff').classList.remove('hidden');
+                document.getElementById('tab-btn-content-admin').classList.remove('hidden');
                 document.getElementById('admin-announcement-card').classList.remove('hidden');
                 document.getElementById('assign-task-form').classList.remove('hidden');
                 document.getElementById('add-resource-form').classList.remove('hidden');
@@ -979,11 +1056,13 @@
                         document.getElementById('admin-announcement-card').classList.add('hidden');
                         document.getElementById('assign-task-form').classList.add('hidden');
                         
-                        // PA or Marketing can upload files/images too
+                        // PA or Marketing can upload files/images and manage Content Planner
                         if (currentUserRole === 'pa' || currentUserRole === 'marketing') {
                             document.getElementById('add-resource-form').classList.remove('hidden');
+                            document.getElementById('tab-btn-content-admin').classList.remove('hidden');
                         } else {
                             document.getElementById('add-resource-form').classList.add('hidden');
+                            document.getElementById('tab-btn-content-admin').classList.add('hidden');
                         }
 
                         // Apply role specific UI filters
@@ -1090,6 +1169,7 @@
             loadLeadsPipeline();
             loadTasks();
             loadResourcesLibrary();
+            loadContentPlannerAdmin();
         }
 
         function triggerToast(message) {
@@ -1204,6 +1284,7 @@
                         <div class="flex items-center justify-end gap-2">
                             <button onclick="updateStaffStatus('${staff.uid}', 'approved')" class="px-2.5 py-1.5 bg-green-50 hover:bg-green-500 text-green-700 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-green-200">Approve</button>
                             <button onclick="updateStaffStatus('${staff.uid}', 'declined')" class="px-2.5 py-1.5 bg-red-50 hover:bg-brand-magenta text-red-700 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-red-200">Decline</button>
+                            <button onclick="deleteStaff('${staff.uid}')" class="px-2.5 py-1.5 bg-gray-50 hover:bg-red-550 text-gray-600 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-gray-200">Delete</button>
                         </div>
                     </td>
                 `;
@@ -1790,6 +1871,107 @@
             if (hrs < 24) return `${hrs}h ago`;
             return new Date(timestamp).toLocaleDateString();
         }
+
+        // --- STAFF MEMBER DELETION ---
+        window.deleteStaff = function(uid) {
+            if (confirm("Are you sure you want to delete this staff profile? They will instantly lose portal access.")) {
+                remove(ref(db, `agencyStaff/${uid}`)).then(() => {
+                    triggerToast("Staff profile deleted!");
+                });
+            }
+        };
+
+        // --- CONTENT PLANNER ENGINE ---
+        function loadContentPlannerAdmin() {
+            const tbody = document.getElementById('content-admin-tbody');
+            if (!tbody) return;
+
+            const updateTable = () => {
+                tbody.innerHTML = "";
+                
+                // Read instagram planner once to get snapshot
+                onValue(ref(db, 'agencyInstagramPlanner'), (igSnap) => {
+                    // Read google planner inside to render unified list
+                    onValue(ref(db, 'agencyGooglePlanner'), (gSnap) => {
+                        tbody.innerHTML = "";
+                        let entries = [];
+
+                        if (igSnap.exists()) {
+                            Object.entries(igSnap.val()).forEach(([key, post]) => {
+                                entries.push({ key, ...post, channel: 'agencyInstagramPlanner', channelLabel: 'Instagram' });
+                            });
+                        }
+                        if (gSnap.exists()) {
+                            Object.entries(gSnap.val()).forEach(([key, post]) => {
+                                entries.push({ key, ...post, channel: 'agencyGooglePlanner', channelLabel: 'Google Business' });
+                            });
+                        }
+
+                        if (entries.length === 0) {
+                            tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-gray-400 italic">No scheduled content cards found.</td></tr>`;
+                            return;
+                        }
+
+                        // Sort by week
+                        entries.sort((a, b) => (a.week || 0) - (b.week || 0));
+
+                        entries.forEach(post => {
+                            const row = document.createElement('tr');
+                            row.className = "border-b border-gray-100 hover:bg-gray-50 transition-colors text-gray-700";
+                            row.innerHTML = `
+                                <td class="py-4 px-4 font-bold text-[10px] uppercase tracking-wider text-brand-magenta">${post.channelLabel}</td>
+                                <td class="py-4 px-4 font-semibold text-gray-800">${post.day || `Week ${post.week}`}</td>
+                                <td class="py-4 px-4 font-semibold text-blue-700 uppercase text-[10px] tracking-wider">${post.type || 'Post'}</td>
+                                <td class="py-4 px-4 text-gray-500 truncate max-w-[200px]" title="${post.title}">${post.title}</td>
+                                <td class="py-4 px-4 text-right">
+                                    <button onclick="deleteContentPost('${post.key}', '${post.channel}')" class="px-2.5 py-1.5 bg-red-50 hover:bg-brand-magenta text-red-700 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-red-200">Delete</button>
+                                </td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }, { onlyOnce: true });
+                }, { onlyOnce: true });
+            };
+
+            // Setup listeners for both nodes to trigger redraws
+            onValue(ref(db, 'agencyInstagramPlanner'), () => updateTable());
+            onValue(ref(db, 'agencyGooglePlanner'), () => updateTable());
+        }
+
+        window.deleteContentPost = function(key, channel) {
+            if (confirm("Are you sure you want to remove this post from the Content Planner?")) {
+                remove(ref(db, `${channel}/${key}`)).then(() => {
+                    triggerToast("Post deleted from Content Planner!");
+                });
+            }
+        };
+
+        document.getElementById('add-content-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const channel = document.getElementById('content-channel').value;
+            const week = parseInt(document.getElementById('content-week').value);
+            const day = document.getElementById('content-day').value.trim();
+            const type = document.getElementById('content-type').value.trim();
+            const title = document.getElementById('content-title').value.trim();
+            const imageUrl = document.getElementById('content-image').value.trim();
+            const caption = document.getElementById('content-caption').value.trim();
+
+            const payload = {
+                week: week,
+                day: day,
+                type: type,
+                title: title,
+                imageUrl: imageUrl,
+                caption: caption,
+                createdAt: Date.now()
+            };
+
+            const refNew = push(ref(db, channel));
+            set(refNew, payload).then(() => {
+                document.getElementById('add-content-form').reset();
+                triggerToast("Content post added to Planner!");
+            });
+        });
     </script>
 </body>
 
