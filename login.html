@@ -187,7 +187,14 @@
 
                 // Micro-delay for visual UI feedback
                 setTimeout(() => {
-                    window.location.href = 'admin.html';
+                    const emailLower = email.toLowerCase();
+                    const adminEmails = ["admin@praisedynasty.com", "praisedynastyrealestate@gmail.com", "praisedynastyrealty@gmail.com"];
+                    const isAdmin = adminEmails.includes(emailLower) || emailLower.includes('smartkode');
+                    if (isAdmin) {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'agency-office.html';
+                    }
                 }, 800);
 
             } catch (error) {

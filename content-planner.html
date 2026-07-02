@@ -310,26 +310,8 @@
     </div>
 
     <!-- Data Definition & Script Logic -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDJBGi_WKLDU493eOrH4Emx7xx_li7wzoY",
-            authDomain: "praise-dynasty-hni.firebaseapp.com",
-            projectId: "praise-dynasty-hni",
-            storageBucket: "praise-dynasty-hni.firebasestorage.app",
-            messagingSenderId: "702909860929",
-            appId: "1:702909860929:web:7c9d2a3c899df3dbf0cac0"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        let calendarData = [];
-        let googleCalendarData = [];
-
-        const defaultInstagramCalendar = [
+    <script>
+        const calendarData = [
             {
                 week: 1,
                 day: "Monday (Week 1)",
@@ -337,7 +319,7 @@
                 title: "Capital Preservation vs. Cash",
                 imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 imagePrompt: "Luxury contemporary estate exterior on clean, sunny grounds.",
-                caption: `With currency fluctuations and rising inflation, holding idle cash is a silent portfolio killer.\n\nSmart wealth preservation in Nigeria has historically relied on one bulletproof asset: physical real estate in restricted luxury zones.\n\nA luxury block in Asokoro or Maitama maintains its intrinsic value and yields consistent, dollar-hedged returns.\n\nDM us to receive our exclusive off-market list.\n\n#PraiseDynasty #AbujaRealEstate #CapitalPreservation #HNWI #MaitamaProperties`
+                caption: `With currency fluctuations and rising inflation, holding idle cash is a silent portfolio killer.\n\nSmart wealth preservation in Nigeria has historically relied on one bulletproof asset: prime physical real estate in restricted luxury zones.\n\nA luxury block in Asokoro or Maitama maintains its intrinsic value and yields consistent, dollar-hedged returns. Secure your wealth where it cannot devalue.\n\nDM us to receive our exclusive off-market preservation list.\n\n#PraiseDynasty #AbujaRealEstate #CapitalPreservation #HNWI #NigeriaRealEstate #WealthManagement #MaitamaProperties`
             },
             {
                 week: 1,
@@ -346,7 +328,7 @@
                 title: "Asokoro Diplomatic Zone Security",
                 imageUrl: "https://images.unsplash.com/photo-1600607687931-cecebd80d0d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 imagePrompt: "Secure contemporary villa with high gates and luxury design details.",
-                caption: `Why does the world’s elite choose Asokoro?\n\nAs the host to international embassies, foreign missions, and top government residences, Asokoro is Abuja’s ultimate high-security sanctuary. Properties here carry a premium status, ensuring high liquidity and reliable tenancies.\n\nClick the link in our bio to book a private tour.\n\n#AsokoroRealEstate #AbujaDiplomaticZone #LuxuryVilla #SecureInvestment #PraiseDynasty`
+                caption: `Why does the world’s elite choose Asokoro?\n\nAs the host to international embassies, foreign missions, and top government residences, Asokoro is Abuja’s ultimate high-security sanctuary. Properties here carry a premium status, ensuring high liquidity and reliable tenancies.\n\nIf you value absolute privacy and institutional-grade security, Asokoro remains the peak residential choice.\n\nClick the link in our bio to book a private tour of our unlisted villas.\n\n#AsokoroRealEstate #AbujaDiplomaticZone #LuxuryVilla #SecureInvestment #AbujaProperty #RealEstateNigeria`
             },
             {
                 week: 1,
@@ -355,7 +337,7 @@
                 title: "Jabi Lakefront Penthouses",
                 imageUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 imagePrompt: "Stunning penthouse rooftop deck with private pool overlooking the horizon.",
-                caption: `Redefining urban luxury at the edge of the water.\n\nWaterfront living remains one of the rarest status symbols in Abuja. Our exclusive collection of penthouses at Jabi Lake features wrap-around glass terraces, private elevators, and direct access to lakeside recreation.\n\nSend us a DM for VIP off-market pricing.\n\n#JabiLakefront #AbujaPenthouses #WaterfrontLuxury #PraiseDynasty #ResortStyleLiving`
+                caption: `Redefining urban luxury at the edge of the water.\n\nWaterfront living remains one of the rarest status symbols in Abuja. Our exclusive collection of penthouses at Jabi Lake features wrap-around glass terraces, private elevators, and direct access to lakeside recreation.\n\nStep into a home that feels like a private resort every single day.\n\nSend us a DM for VIP off-market pricing on our Jabi penthouses.\n\n#JabiLakefront #AbujaPenthouses #WaterfrontLuxury #PraiseDynasty #ResortStyleLiving #ExecutiveProperty`
             },
             {
                 week: 2,
@@ -389,7 +371,7 @@
                         imagePrompt: "Luxury rooftop pool area, final call to action."
                     }
                 ],
-                caption: `Traditional lease vs. Luxury shortlet: Where is the yield?\n\nIn Wuse II, a yearly traditional rent on a 3-bedroom apartment averages ₦12 Million. The same luxury unit configured as a premium shortlet at ₦100,000/night at a conservative 70% occupancy generates over ₦25.5 Million gross.\n\nEven after operations, your net cash flow is increased by up to 27%.\n\n#RealEstateROI #ShortletInvestment #Wuse2Apartments #HighYieldRealEstate #PraiseDynasty`
+                caption: `Traditional lease vs. Luxury shortlet: Where is the yield?\n\nIn Wuse II, a yearly traditional rent on a 3-bedroom apartment averages ₦12 Million. The same luxury unit configured as a premium shortlet at ₦100,000/night at a conservative 70% occupancy generates over ₦25.5 Million gross.\n\nEven after deducting operations, your net cash flow is increased by up to 27%. Build property assets that pay you active yields.\n\nRegister for our Saturday Google Meet briefing (link in bio) to learn how we manage portfolios for hands-off owners.\n\n#RealEstateROI #ShortletInvestment #Wuse2Apartments #HighYieldRealEstate #RealEstateMathematics #PraiseDynasty`
             },
             {
                 week: 2,
@@ -398,7 +380,7 @@
                 title: "Guzape Phase 2 Appreciation",
                 imageUrl: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 imagePrompt: "Strategic high-value properties constructed around scenic elevations.",
-                caption: `Guzape Phase 2 is currently Abuja's fastest-growing capital appreciation corridor.\n\nWith new high-grade infrastructure rolling out, land and off-plan duplexes in this zone are seeing up to 60% value growth in as little as 24 months. Buying early in Guzape Phase 2 is the ultimate goldmine for smart developers.\n\nComment your budget below to get started.\n\n#GuzapeAbuja #GuzapePhase2 #CapitalAppreciation #AbujaLand #PraiseDynasty`
+                caption: `Guzape Phase 2 is currently Abuja's fastest-growing capital appreciation corridor.\n\nWith new high-grade infrastructure rolling out, land and off-plan duplexes in this zone are seeing up to 60% value growth in as little as 24 months. Buying early in Guzape Phase 2 is the ultimate goldmine for smart developers.\n\nSecure your position before prices match Phase 1.\n\nComment your budget below and we will match you with prime developers.\n\n#GuzapeAbuja #GuzapePhase2 #CapitalAppreciation #AbujaLand #RealEstateGrowth #NigeriaInvestors`
             },
             {
                 week: 2,
@@ -407,7 +389,7 @@
                 title: "Smart Duplex Architecture",
                 imageUrl: "https://images.unsplash.com/photo-1558036117-15d82a90b9b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 imagePrompt: "Luxury illuminated modern duplex exterior showing sleek architectural lines.",
-                caption: `Contemporary lines meet biometric intelligence.\n\nThis Asokoro masterpiece represents the design standard: cantilevers, massive double-glazed glass facades, floating stairs, and fully automated voice/climate controls. It's security, efficiency, and beauty in one structure.\n\nDM us to request the private walkthrough video.\n\n#ContemporaryArchitecture #SmartHomesNigeria #ModernDuplex #AsokoroMansion #PraiseDynasty`
+                caption: `Contemporary lines meet biometric intelligence.\n\nThis Asokoro masterpiece represents the 2026 design standard: cantilevers, massive double-glazed glass facades, floating stairs, and fully automated voice/climate controls. It's security, efficiency, and beauty in one structure.\n\nDM us to request the private walkthrough video.\n\n#ContemporaryArchitecture #SmartHomesNigeria #ModernDuplex #AsokoroMansion #LuxuryInterior #PraiseDynasty`
             },
             {
                 week: 3,
@@ -441,7 +423,7 @@
                         imagePrompt: "Polished corporate desk space, final slide."
                     }
                 ],
-                caption: `A cheap land offer is often the most expensive trap.\n\nIn Abuja, property disputes arise because buyers skip coordinate checks and due diligence. Never purchase property without running a formal search at AGIS to verify C of O authenticity, land use, and active encumbrances.\n\nAt Praise Dynasty, our in-house legal team handles 100% of the verification process.\n\n#AbujaLandSearch #AGIS #CertificateOfOccupancy #NigeriaPropertyLaw #PraiseDynasty`
+                caption: `A cheap land offer is often the most expensive trap.\n\nIn Abuja, property disputes arise because buyers skip coordinate checks and due diligence. Never purchase property without running a formal search at AGIS (Abuja Geographic Information Systems) to verify C of O authenticity, land use, and active encumbrances.\n\nAt Praise Dynasty, our in-house legal team handles 100% of the verification process so you invest with peace of mind.\n\nSave this post for your next acquisition, and send us a DM to verify land offers.\n\n#AbujaLandSearch #AGIS #CertificateOfOccupancy #NigeriaPropertyLaw #SafeInvesting #PraiseDynasty`
             },
             {
                 week: 3,
@@ -450,7 +432,7 @@
                 title: "Katampe Extension: Hillside Luxury",
                 imageUrl: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 imagePrompt: "Sleek hillside villas nestled in scenic, peaceful residential valleys.",
-                caption: `Looking for Maitama views with diplomat-grade security?\n\nKatampe Extension is the hillside zone rapidly becoming the preferred choice for embassies and international agencies. Free from commercial noise and offering panoramic vistas of the capital, it represents peaceful luxury.\n\nClick the link in our bio to view available plots.\n\n#KatampeExtension #DiplomaticSanctuary #HillsideVillas #AbujaInvestment #PraiseDynasty`
+                caption: `Looking for Maitama views with diplomat-grade security?\n\nKatampe Extension is the hillside zone rapidly becoming the preferred choice for embassies and international agencies. Free from commercial noise and offering panoramic vistas of the capital, it represents peaceful luxury.\n\nInvest in a secure hillside estate built for the future.\n\nClick the link in our bio to view available plots and custom villas in Katampe.\n\n#KatampeExtension #DiplomaticSanctuary #HillsideVillas #AbujaInvestment #PremiumProperty`
             },
             {
                 week: 3,
@@ -459,7 +441,7 @@
                 title: "Designing for Diplomatic Tenants",
                 imageUrl: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 imagePrompt: "Luxury double-height lounge interior with marble tiling and tall glass windows.",
-                caption: `To secure high-yield UN or foreign embassy leases, your property must meet strict diplomatic standards.\n\nFrom bullet-resistant safe zones and double-walled perimeters to backup power grids and independent water filtration, embassy leases require infrastructural redundancy.\n\nDM us to consult with our Expat Lease Specialist.\n\n#ExpatLeases #EmbassyApproved #AsokoroRentals #PraiseDynasty`
+                caption: `To secure high-yield UN or foreign embassy leases, your property must meet strict diplomatic standards.\n\nFrom bullet-resistant safe zones and double-walled perimeters to backup power grids and independent water filtration, embassy leases require infrastructural redundancy. We guide landlords to structure portfolios to easily pass embassy inspections.\n\nDM us to consult with our Expat Lease Specialist.\n\n#ExpatLeases #EmbassyApproved #AsokoroRentals #LuxuryLandlord #RealEstateAbuja #YieldInvesting`
             },
             {
                 week: 4,
@@ -468,7 +450,7 @@
                 title: "What is an Off-Market Deal?",
                 imageUrl: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 imagePrompt: "Side angle close up of contemporary luxury villa design.",
-                caption: `Why do the best properties never reach public listings?\n\nThe premium buyers in Abuja prefer absolute privacy. High-value estates, distressed corporate packages, and VIP assets are traded quietly behind closed doors.\n\nDM us directly with your target investment budget to enter our private database.\n\n#OffMarketDeals #VIPRealEstate #PrivateAcquisitions #PraiseDynasty`
+                caption: `Why do the best properties never reach public listings?\n\nThe premium buyers in Abuja prefer absolute privacy. High-value estates, distressed corporate packages, and VIP assets are traded quietly behind closed doors.\n\nOur off-market brokerage matches serious investors to exclusive sellers directly, avoiding public bidding wars and premium markups.\n\nDM us directly with your target investment budget to enter our private database.\n\n#OffMarketDeals #VIPRealEstate #PrivateAcquisitions #AbujaHNWI #SecretDeals #PraiseDynasty`
             },
             {
                 week: 4,
@@ -501,7 +483,7 @@
                         imagePrompt: "Modern boardroom shaking hands, slide 4."
                     }
                 ],
-                caption: `For decades, Asokoro and Maitama have stood as the undisputed dual crowns of real estate luxury in Abuja.\n\nAsokoro: Home to international embassies and the Presidential Villa, Asokoro represents institutional power and low commercial presence.\n\nMaitama: Represents vibrant prestige hosting top hotels, boutiques, and Gana Street cafes.\n\n#AsokoroRealEstate #MaitamaLuxury #AbujaMansion #PraiseDynasty`
+                caption: `For decades, Asokoro and Maitama have stood as the undisputed dual crowns of real estate luxury in Nigeria's capital. While both represent the pinnacle of wealth, prestige, and power, they cater to distinct lifestyles and investment profiles.\n\nAsokoro: Home to international embassies and the Presidential Villa, Asokoro represents institutional power and low commercial presence. Preferred by foreign diplomats and senior officials prioritizing absolute privacy.\n\nMaitama: Represents vibrant prestige hosting top hotels, boutiques, and Gana Street cafes. Commmands slightly higher secondary market liquidity.\n\nDM us to consult with our advisory board.\n\n#AsokoroRealEstate #MaitamaLuxury #AbujaMansion #RealEstateComparison #PreservedWealth #CorporateLeases`
             },
             {
                 week: 4,
@@ -510,18 +492,19 @@
                 title: "The Charm of Rooftop Terraces",
                 imageUrl: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
                 imagePrompt: "Luxury outdoor terrace dining lounge overlooking city silhouettes during sunset.",
-                caption: `Elevated living is the ultimate lifestyle upgrade.\n\nNothing defines modern Abuja status like a private rooftop terrace. Designed for hosting exclusive soirées or relaxing after a busy day, our duplex collections feature paved sky lounges with views of Maitama and Asokoro.\n\nClick the link in our bio to book your viewing.\n\n#SkyLounge #RooftopTerrace #PraiseDynasty #MaitamaLuxury`
+                caption: `Elevated living is the ultimate lifestyle upgrade.\n\nNothing defines modern Abuja status like a private rooftop terrace. Designed for hosting exclusive soirées or relaxing after a busy day, our duplex collections feature paved sky lounges with views of Maitama and Asokoro.\n\nDiscover the height of luxury. Click the link in our bio to book your viewing.\n\n#SkyLounge #RooftopTerrace #PraiseDynasty #MaitamaLuxury #StatusSymbol #AbujaExecutive`
             }
         ];
 
-        const defaultGoogleCalendar = [
+        // Google Business Post Calendar (3 per week, Mon/Wed/Fri, under 1500 chars)
+        const googleCalendarData = [
             {
                 week: 1,
                 day: "Monday (Week 1)",
                 type: "Offer / Deal",
-                title: "Maitama Verified Land Plots",
+                title: "Maitama Land Acquisitions",
                 imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Premium Verified Land Plots in Maitama, Abuja\n\nLooking to secure institutional land assets in Abuja's commercial core? Praise Dynasty offers prime residential and commercial plots directly in Maitama, fully verified at AGIS.\n\nAvoid overlaps and purchase with absolute security under our leading agency guidance. Ground lease and C of O documents are clean and ready for legal transfer.\n\n👉 Contact our acquisitions desk. Visit praisedynastyrealty.com or call +234 808 197 5967."
+                caption: "Premium Verified Land Plots in Maitama, Abuja\n\nLooking to secure institutional land assets in Abuja's commercial core? Praise Dynasty offers prime residential and commercial plots directly in Maitama, fully verified at AGIS (Abuja Geographic Information Systems).\n\nAvoid overlaps and purchase with absolute security under our leading agency guidance. ground lease and C of O documents are clean and ready for legal transfer.\n\n👉 Contact our Maitama acquisitions desk today. Visit praisedynastyrealty.com or call +234 808 197 5967."
             },
             {
                 week: 1,
@@ -529,7 +512,7 @@
                 type: "Event / Briefing",
                 title: "Saturday Investment Briefing",
                 imageUrl: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Exclusive Abuja Real Estate Investment Briefing (This Saturday)\n\nProtect your wealth from inflation. Join Praise Dynasty's private Google Meet session this Saturday at 4:00 PM WAT. We will review unlisted high-yield duplexes and hillside lands in Maitama, Asokoro, and Katampe.\n\n👉 RSVP now to secure your Google Meet link: praisedynastyrealty.com/rsvp.html or send a WhatsApp message."
+                caption: "Exclusive Abuja Real Estate Investment Briefing (This Saturday)\n\nProtect your wealth from inflation. Join Praise Dynasty's private Google Meet session this Saturday at 4:00 PM WAT. We will review unlisted high-yield duplexes and hillside lands in Maitama, Asokoro, and Katampe.\n\nLearn how to structure portfolios for 8% rental yield and 14% occupancy returns.\n\n👉 RSVP now to secure your Google Meet link: praisedynastyrealty.com/rsvp.html or send a WhatsApp message."
             },
             {
                 week: 1,
@@ -537,7 +520,7 @@
                 type: "What's New",
                 title: "Asokoro Luxury Duplexes",
                 imageUrl: "https://images.unsplash.com/photo-1600607687931-cecebd80d0d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Unlisted Contemporary 5-Bedroom Duplexes in Asokoro\n\nPraise Dynasty is thrilled to introduce a premium collection of unlisted duplexes in Abuja's safest diplomatic zone. Featuring cantilevers, massive glass facades, rooftop lounge areas, and integrated solar backup energy grids.\n\n👉 Learn more and schedule a private viewing. Call +234 808 197 5967 or visit praisedynastyrealty.com."
+                caption: "Unlisted Contemporary 5-Bedroom Duplexes in Asokoro\n\nPraise Dynasty is thrilled to introduce a premium collection of unlisted duplexes in Abuja's safest diplomatic zone. Featuring cantilevers, massive glass facades, rooftop lounge areas, and integrated solar backup energy grids.\n\nIdeal for diplomat executive leases generating high-yield foreign currency returns.\n\n👉 Learn more and schedule a private viewing. Call +234 808 197 5967 or visit praisedynastyrealty.com."
             },
             {
                 week: 2,
@@ -545,7 +528,7 @@
                 type: "Offer / Deal",
                 title: "Wuse II Mixed-Use Assets",
                 imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "High-Yield Commercial & Mixed-Use Assets in Wuse II\n\nWuse II remains Abuja's commercial powerhouse. Praise Dynasty offers a strategic commercial building featuring ground-floor retail showroom space and executive shortlet apartments above.\n\n👉 Review the private details sheet. Visit praisedynastyrealty.com or send a WhatsApp message."
+                caption: "High-Yield Commercial & Mixed-Use Assets in Wuse II\n\nWuse II remains Abuja's commercial powerhouse. Praise Dynasty offers a strategic commercial building featuring ground-floor retail showroom space and executive shortlet apartments above.\n\nCommand premium rental rates with dual commercial-residential cash flows. Fully verified AGIS titles.\n\n👉 Review the private details sheet. Visit praisedynastyrealty.com or send a WhatsApp message."
             },
             {
                 week: 2,
@@ -553,7 +536,7 @@
                 type: "What's New",
                 title: "Hedge Against Inflation",
                 imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Safeguard Your Wealth: Real Estate vs Inflation\n\nHolding idle cash in a volatile economy devalues your purchasing power. Abuja's premium luxury real estate in Asokoro and Maitama acts as a bulletproof container for capital, consistently outperforming inflation.\n\n👉 Contact Praise Dynasty's wealth advisory desk at praisedynastyrealty.com or call +234 808 197 5967."
+                caption: "Safeguard Your Wealth: Real Estate vs Inflation\n\nHolding idle cash in a volatile economy devalues your purchasing power. Abuja's premium luxury real estate in Asokoro and Maitama acts as a bulletproof container for capital, consistently outperforming inflation.\n\nPreserve your family's generational assets with tangible, physical property investments.\n\n👉 Contact Praise Dynasty's wealth advisory desk at praisedynastyrealty.com or call +234 808 197 5967."
             },
             {
                 week: 2,
@@ -561,7 +544,7 @@
                 type: "What's New",
                 title: "Jabi Lakefront Penthouses",
                 imageUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Resort-Style Penthouses on Jabi Lakefront\n\nExperience resort living in the center of Abuja. Praise Dynasty presents Waterfront Penthouses overlooking Jabi Lake, featuring wrap-around balconies, private elevators, and boat club access.\n\n👉 Schedule a private walk-through. Visit praisedynastyrealty.com or connect on WhatsApp."
+                caption: "Resort-Style Penthouses on Jabi Lakefront\n\nExperience resort living in the center of Abuja. Praise Dynasty presents Waterfront Penthouses overlooking Jabi Lake, featuring wrap-around balconies, private elevators, and boat club access.\n\nThese high-demand waterfront properties command premium rents from expatriates and corporate executives.\n\n👉 Schedule a private walk-through. Visit praisedynastyrealty.com or connect on WhatsApp."
             },
             {
                 week: 3,
@@ -569,7 +552,7 @@
                 type: "Offer / Deal",
                 title: "AGIS Land Title Check",
                 imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Free Land Title Verification Consultations\n\nNever buy land in Abuja without running an official coordinate check at AGIS. Confirm the Certificate of Occupancy (C of O) details and check for encumbrances.\n\nPraise Dynasty's legal department offers comprehensive search and validation services.\n\n👉 Request a free land search consultation. Call +234 808 197 5967 or visit praisedynastyrealty.com."
+                caption: "Free Land Title Verification Consultations\n\nNever buy land in Abuja without running an official coordinate check at AGIS (Abuja Geographic Information Systems). Confirm the Certificate of Occupancy (C of O) details and check for encumbrances.\n\nPraise Dynasty's legal department offers comprehensive search and validation services for our clients, ensuring clean property transfers.\n\n👉 Request a free land search consultation. Call +234 808 197 5967 or visit praisedynastyrealty.com."
             },
             {
                 week: 3,
@@ -577,7 +560,7 @@
                 type: "Event / Briefing",
                 title: "Saturday Briefing RSVP",
                 imageUrl: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Abuja Real Estate Briefing: Saturday 4:00 PM WAT\n\nJoin Praise Dynasty online this Saturday. Our directors will share exclusive, unlisted duplexes and premium land plots in high-appreciation Abuja corridors.\n\n👉 Register now: praisedynastyrealty.com/rsvp.html or send a DM."
+                caption: "Abuja Real Estate Briefing: Saturday 4:00 PM WAT\n\nJoin Praise Dynasty online this Saturday. Our directors will share exclusive, unlisted duplexes and premium land plots in high-appreciation Abuja corridors.\n\nDiscover how to secure executive expat leases and leverage property cash flow. RSVP to receive your Google Meet access details.\n\n👉 Register now: praisedynastyrealty.com/rsvp.html or send a DM."
             },
             {
                 week: 3,
@@ -585,7 +568,7 @@
                 type: "What's New",
                 title: "Guzape Smart Home Mansions",
                 imageUrl: "https://images.unsplash.com/photo-1558036117-15d82a90b9b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Sleek Automated Mansions in Guzape, Abuja\n\nPraise Dynasty presents newly built 5-bedroom smart duplexes in Guzape. Fully integrated with climate control, automated lighting, biometric entry gates, and rooftop sky decks.\n\n👉 View layouts and video tours. Call +234 808 197 5967 or check praisedynastyrealty.com."
+                caption: "Sleek Automated Mansions in Guzape, Abuja\n\nPraise Dynasty presents newly built 5-bedroom smart duplexes in Guzape. Fully integrated with climate control, automated lighting, biometric entry gates, and rooftop entertainment sky decks.\n\nSmart properties command 18% higher rental premiums from corporate leaders in Abuja.\n\n👉 View layouts and video tours. Call +234 808 197 5967 or check praisedynastyrealty.com."
             },
             {
                 week: 4,
@@ -593,7 +576,7 @@
                 type: "Offer / Deal",
                 title: "Confidential Off-Market Duplexes",
                 imageUrl: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Confidential Off-Market Duplexes in Asokoro & Maitama\n\nAbuja's premier properties are traded silently. Praise Dynasty provides private listings of luxury duplexes from motivated sellers before they reach the public market, protecting your privacy.\n\n👉 Register your budget with our director. Call +234 808 197 5967 or visit praisedynastyrealty.com."
+                caption: " confindential Off-Market Duplexes in Asokoro & Maitama\n\nAbuja's premier properties are traded silently. Praise Dynasty provides private listings of luxury duplexes from motivated sellers before they reach the public market, protecting your privacy and saving markup costs.\n\nAccess verified luxury estates behind closed doors.\n\n👉 Register your budget with our director. Call +234 808 197 5967 or visit praisedynastyrealty.com."
             },
             {
                 week: 4,
@@ -601,7 +584,7 @@
                 type: "What's New",
                 title: "Katampe Hillside Investment",
                 imageUrl: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Katampe Extension: Hillside Diplomatic Sanctuary\n\nInvest in Katampe Extension, the hillside neighborhood preferred by foreign embassies and UN missions. Free from commercial noise, offering panoramic vistas of Abuja.\n\n👉 View active hillside listings. Visit praisedynastyrealty.com or call +234 808 197 5967."
+                caption: "Katampe Extension: Hillside Diplomatic Sanctuary\n\nInvest in Katampe Extension, the hillside neighborhood preferred by foreign embassies and UN missions. Free from commercial noise, offering panoramic vistas of Abuja, and protected by diplomatic security networks.\n\nSecure hillside land plots and modern villas built for stable returns.\n\n👉 View active hillside listings. Visit praisedynastyrealty.com or call +234 808 197 5967."
             },
             {
                 week: 4,
@@ -609,41 +592,27 @@
                 type: "What's New",
                 title: "Rooftop Sky Lounges",
                 imageUrl: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-                caption: "Luxury Penthouses with Rooftop Sky Lounges\n\nElevate your lifestyle. Praise Dynasty presents penthouses featuring private plunge pools, paved rooftop bars, and stunning skylight views of Asokoro and Maitama.\n\n👉 Speak to our listing team today. Visit praisedynastyrealty.com or send a WhatsApp message."
+                caption: "Luxury Penthouses with Rooftop Sky Lounges\n\nElevate your lifestyle. Praise Dynasty presents penthouses featuring private plunge pools, paved rooftop bars, and stunning skylight views of Asokoro and Maitama.\n\nHighly liquid properties with high returns on shortlet platforms.\n\n👉 Speak to our listing team today. Visit praisedynastyrealty.com or send a WhatsApp message."
             }
         ];
 
-        // 1. Fetch Instagram Planner
-        onValue(ref(db, 'agencyInstagramPlanner'), (snapshot) => {
-            if (!snapshot.exists()) {
-                defaultInstagramCalendar.forEach(item => {
-                    const refNew = push(ref(db, 'agencyInstagramPlanner'));
-                    set(refNew, item);
-                });
-                return;
+        const googlePosts = {
+            briefing: {
+                title: "Real Estate Briefing Event Post",
+                imageUrl: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                body: `Exclusive Abuja Real Estate Investment Briefing (Saturday 4:00 PM WAT)\n\nAre you looking to protect your capital against rising inflation? Join Praise Dynasty, Abuja's premier property agency, for a private Google Meet briefing. We will review high-yield off-market property listings in Maitama, Asokoro, and Wuse II.\n\nLearn how to structure properties for 8% rental yields and up to 14% net returns in high-occupancy shortlet segments. Spots are strictly limited to ensure an interactive session.\n\n👉 RSVP now to receive your private Google Meet access link. Click 'Sign Up' below or visit praisedynastyrealty.com/rsvp.html`
+            },
+            listings: {
+                title: "Luxury Duplexes Listings Update",
+                imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                body: `Unlisted Off-Market Luxury Mansions in Asokoro & Maitama, Abuja\n\nPraise Dynasty is pleased to introduce a private collection of contemporary 5-bedroom duplexes in Abuja's most exclusive diplomatic zones. Featuring cantilevers, massive glass facades, rooftop lounge areas, and integrated solar backup energy grids.\n\nPerfect for expatriate leases and long-term capital preservation in a volatile market. Price details and layouts are reserved exclusively for qualified buyers.\n\n👉 Learn more and schedule a private viewing. Click 'Learn More' or call +234 808 197 5967.`
+            },
+            consult: {
+                title: "Free AGIS Land Search Consultation",
+                imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                body: `Abuja Real Estate: Verify Land Titles Before Buying\n\nProtect your investment capital. Property fraud can be completely avoided through strict coordinate searches at AGIS (Abuja Geographic Information Systems). Learn how to verify Certificates of Occupancy (C of O) and Rights of Occupancy (R of O) to secure your legal title.\n\nPraise Dynasty offers complete legal advisory and verification services for HNWIs. Invest with zero worries.\n\n👉 Book your free land title consultation today. Click 'Call Now' or message us directly on WhatsApp at +234 808 197 5967.`
             }
-            const data = snapshot.val();
-            calendarData = Object.values(data).sort((a, b) => a.week - b.week);
-            initCalendar();
-        });
-
-        // 2. Fetch Google Planner
-        onValue(ref(db, 'agencyGooglePlanner'), (snapshot) => {
-            if (!snapshot.exists()) {
-                defaultGoogleCalendar.forEach(item => {
-                    const refNew = push(ref(db, 'agencyGooglePlanner'));
-                    set(refNew, item);
-                });
-                return;
-            }
-            const data = snapshot.val();
-            googleCalendarData = Object.values(data).sort((a, b) => a.week - b.week);
-            
-            // Re-render Google Calendar if currently visible
-            if (!document.getElementById('tab-google-content').classList.contains('hidden')) {
-                initGoogleCalendar();
-            }
-        });
+        };
 
         // Switch modes between Instagram and GoogleMyBusiness
         function switchMode(mode) {
@@ -685,7 +654,6 @@
         // Renders the Calendar on Load
         function initCalendar() {
             const container = document.getElementById('calendar-container');
-            if (!container) return;
             container.innerHTML = "";
 
             calendarData.forEach((item, index) => {
@@ -697,7 +665,7 @@
                 if (item.type === "Abuja Spotlight") typeBadgeColor = "bg-blue-500/10 text-blue-600 border-blue-200";
                 if (item.type === "Listing Showcase") typeBadgeColor = "bg-green-500/10 text-green-600 border-green-200";
 
-                const filename = `praise_dynasty_post_w${item.week}_d${(index % 3) + 1}.jpg`;
+                const filename = `praise_dynasty_post_w${item.week}_d${index%3 + 1}.jpg`;
 
                 // If this is a carousel post, render the carousel UI
                 if (item.isCarousel) {
@@ -790,14 +758,14 @@
                                 </div>
                             </div>
                             
-                            <!-- Media & Actions -->
+                            <!-- Media & Copy Actions -->
                             <div class="md:col-span-5 flex flex-col justify-between gap-3 bg-white rounded-xl p-4 border border-gray-200/50">
                                 <div>
                                     <h4 class="text-[10px] font-bold text-gray-400 uppercase mb-2">Aesthetic Post Photo:</h4>
                                     <div class="relative h-40 rounded-lg overflow-hidden border border-gray-100 shadow-inner mb-2 bg-gray-50">
                                         <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-full object-cover">
                                     </div>
-                                    <p class="text-[9px] text-gray-500 leading-relaxed italic"><strong class="uppercase text-[8px] not-italic text-brand-magenta font-bold">Vibe:</strong> ${item.imagePrompt || 'Luxury Asset Visual'}</p>
+                                    <p class="text-[9px] text-gray-500 leading-relaxed italic"><strong class="uppercase text-[8px] not-italic text-brand-magenta font-bold">Vibe:</strong> ${item.imagePrompt}</p>
                                 </div>
                                 <button onclick="downloadImage('${item.imageUrl}', '${filename}')" class="w-full py-2.5 bg-green-500 hover:bg-green-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
@@ -807,60 +775,6 @@
                         </div>
                     `;
                 }
-                container.appendChild(card);
-            });
-        }
-
-        function initGoogleCalendar() {
-            const container = document.getElementById('google-calendar-container');
-            if (!container) return;
-            container.innerHTML = "";
-
-            googleCalendarData.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = "bg-gray-50 rounded-2xl p-5 sm:p-6 border border-gray-100 flex flex-col gap-4";
-                
-                const filename = `praise_dynasty_gmb_w${item.week}_d${(index % 3) + 1}.jpg`;
-
-                card.innerHTML = `
-                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-200/60 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">${item.day}</span>
-                            <span class="text-[10px] font-bold border px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 border-blue-200">${item.type}</span>
-                        </div>
-                        <span class="text-sm font-bold text-brand-blue font-outfit">${item.title}</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-                        <!-- Caption Display -->
-                        <div class="md:col-span-7 bg-white rounded-xl p-4 border border-gray-200/50 flex flex-col justify-between">
-                            <div>
-                                <h4 class="text-[10px] font-bold text-gray-400 uppercase mb-2">Google My Business Post Body:</h4>
-                                <p class="text-xs text-gray-700 whitespace-pre-line leading-relaxed select-all" id="gmb-caption-${index}">${item.caption}</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
-                                <button onclick="copyText('gmb-caption-${index}')" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-blue hover:bg-brand-magenta text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors shadow-sm">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                                    Copy Post Body
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Media & Actions -->
-                        <div class="md:col-span-5 flex flex-col justify-between gap-3 bg-white rounded-xl p-4 border border-gray-200/50">
-                            <div>
-                                <h4 class="text-[10px] font-bold text-gray-400 uppercase mb-2">Google Maps Photo:</h4>
-                                <div class="relative h-40 rounded-lg overflow-hidden border border-gray-100 shadow-inner mb-2 bg-gray-50">
-                                    <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-full object-cover">
-                                </div>
-                            </div>
-                            <button onclick="downloadImage('${item.imageUrl}', '${filename}')" class="w-full py-2.5 bg-green-500 hover:bg-green-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                                Download Image
-                            </button>
-                        </div>
-                    </div>
-                `;
                 container.appendChild(card);
             });
         }
@@ -1093,6 +1007,80 @@
             const outputCard = document.getElementById('generation-output-card');
             outputCard.classList.remove('hidden');
             outputCard.scrollIntoView({ behavior: 'smooth' });
+        function initGoogleCalendar() {
+            const container = document.getElementById('google-calendar-container');
+            if (!container) return;
+            container.innerHTML = "";
+
+            googleCalendarData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-gray-50 rounded-2xl p-5 sm:p-6 border border-gray-100 flex flex-col gap-4";
+                
+                const filename = `praise_dynasty_gmb_w${item.week}_d${(index % 3) + 1}.jpg`;
+
+                card.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-200/60 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">${item.day}</span>
+                            <span class="text-[10px] font-bold border px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 border-blue-200">${item.type}</span>
+                        </div>
+                        <span class="text-sm font-bold text-brand-blue font-outfit">${item.title}</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+                        <!-- Caption Display -->
+                        <div class="md:col-span-7 bg-white rounded-xl p-4 border border-gray-200/50 flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-[10px] font-bold text-gray-400 uppercase mb-2">Google My Business Post Body:</h4>
+                                <p class="text-xs text-gray-700 whitespace-pre-line leading-relaxed select-all" id="gmb-caption-${index}">${item.caption}</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
+                                <button onclick="copyText('gmb-caption-${index}')" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-blue hover:bg-brand-magenta text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors shadow-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                                    Copy Post Body
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Media & Actions -->
+                        <div class="md:col-span-5 flex flex-col justify-between gap-3 bg-white rounded-xl p-4 border border-gray-200/50">
+                            <div>
+                                <h4 class="text-[10px] font-bold text-gray-400 uppercase mb-2">Google Maps Photo:</h4>
+                                <div class="relative h-40 rounded-lg overflow-hidden border border-gray-100 shadow-inner mb-2 bg-gray-50">
+                                    <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                            <button onclick="downloadImage('${item.imageUrl}', '${filename}')" class="w-full py-2.5 bg-green-500 hover:bg-green-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                Download Image
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function generateReviewMessage() {
+            const name = document.getElementById('review-client-name').value.trim();
+            const link = document.getElementById('review-google-link').value.trim();
+            if (!name) {
+                alert("Please enter the client's name first!");
+                return;
+            }
+            const body = `Hello ${name},\n\nThank you for choosing Praise Dynasty Realty. It was a pleasure assisting you with your property journey.\n\nWe would appreciate it if you could take 30 seconds to leave us a 5-star review on Google. Your feedback helps us continue providing executive services:\n\n🔗 Review Link: ${link}\n\nThank you again!\n- Mr. Praise, CEO`;
+            document.getElementById('review-whatsapp-body').innerText = body;
+        }
+
+        function copyReviewMessage() {
+            const text = document.getElementById('review-whatsapp-body').innerText;
+            if (text.startsWith("Input a client name")) {
+                alert("Please generate the message first!");
+                return;
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            });
         }
 
         // Run calendar initialization on page load

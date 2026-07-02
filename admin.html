@@ -702,6 +702,14 @@
             if (!user) {
                 // Not authenticated, kick client natively out of the dashboard
                 window.location.replace('login.html');
+                return;
+            }
+            const emailLower = user.email ? user.email.toLowerCase() : "";
+            const adminEmails = ["admin@praisedynasty.com", "praisedynastyrealestate@gmail.com", "praisedynastyrealty@gmail.com"];
+            const isAdmin = adminEmails.includes(emailLower) || emailLower.includes('smartkode');
+            if (!isAdmin) {
+                // Unauthorized staff member, redirect to their Virtual Office
+                window.location.replace('agency-office.html');
             }
         });
 
