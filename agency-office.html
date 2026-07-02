@@ -257,22 +257,40 @@
                 <!-- 1. TAB: OVERVIEW DASHBOARD -->
                 <div id="tab-dashboard-view" class="tab-view space-y-6">
                     <!-- Stats Blocks -->
+                    <!-- Welcome Header Banner -->
+                    <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <h2 class="text-xl font-bold text-brand-blue" id="welcome-message">Welcome to Praise Dynasty!</h2>
+                            <p class="text-xs text-gray-400 mt-1" id="welcome-subtext">Access your tools and track daily activities below.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stats Blocks -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between">
+                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between" id="card-stat-leads">
                             <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Total Leads</span>
                             <span class="text-3xl font-bold text-brand-blue mt-2" id="stat-leads">0</span>
                         </div>
-                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between">
+                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between" id="card-stat-pending">
                             <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Pending Approvals</span>
                             <span class="text-3xl font-bold text-yellow-600 mt-2" id="stat-pending">0</span>
                         </div>
-                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between">
+                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between" id="card-stat-staff">
                             <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Active Staff</span>
                             <span class="text-3xl font-bold text-blue-600 mt-2" id="stat-staff">0</span>
                         </div>
-                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between">
+                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between" id="card-stat-videos">
                             <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Videos Uploaded</span>
                             <span class="text-3xl font-bold text-green-600 mt-2" id="stat-videos">0</span>
+                        </div>
+                        <!-- Staff specific stats -->
+                        <div class="hidden bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between" id="card-stat-mytasks">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">My Assigned Tasks</span>
+                            <span class="text-3xl font-bold text-brand-magenta mt-2" id="stat-mytasks">0</span>
+                        </div>
+                        <div class="hidden bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between" id="card-stat-myhours">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">My Logged Hours (Total)</span>
+                            <span class="text-3xl font-bold text-brand-blue mt-2" id="stat-myhours">0</span>
                         </div>
                     </div>
 
@@ -723,6 +741,7 @@
         let approvedStaffList = [];
         let allStaff = {};
         let allTrackerLogs = [];
+        let currentUserProfile = null;
 
         // Global functions mapped to window object for HTML access
         window.toggleAuthTab = function(tab) {
@@ -754,9 +773,16 @@
             // Hide all tab panels
             document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
             
-            // Set inactive styling on all navigation buttons
+            // Set inactive styling on all navigation buttons (toggling class list instead of overwriting)
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.className = "tab-btn w-full flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group text-xs";
+                // If it is the staff management button and the user is not admin, ensure it stays hidden
+                if (btn.id === 'tab-btn-staff' && currentUserRole !== 'admin') {
+                    btn.classList.add('hidden');
+                }
+                
+                btn.classList.remove('text-white', 'bg-brand-magenta/10', 'border-brand-magenta/20', 'shadow-inner', 'font-semibold');
+                btn.classList.add('text-gray-400');
+                
                 const svg = btn.querySelector('svg');
                 if (svg) {
                     svg.setAttribute('class', "w-5 h-5 mr-3 group-hover:text-brand-magenta transition-colors");
@@ -770,7 +796,8 @@
             // Apply active styling to the clicked button
             const currentBtn = document.getElementById(`tab-btn-${target}`);
             if (currentBtn) {
-                currentBtn.className = "tab-btn w-full flex items-center px-4 py-3 text-white bg-brand-magenta/10 rounded-lg transition-colors border border-brand-magenta/20 shadow-inner group font-semibold text-xs";
+                currentBtn.classList.remove('text-gray-400');
+                currentBtn.classList.add('text-white', 'bg-brand-magenta/10', 'border-brand-magenta/20', 'shadow-inner', 'font-semibold');
                 const svg = currentBtn.querySelector('svg');
                 if (svg) {
                     svg.setAttribute('class', "w-5 h-5 mr-3 text-brand-magenta");
@@ -895,6 +922,7 @@
                 
                 const isSmartKode = user.email.toLowerCase().includes('smartkode');
                 const displayName = isSmartKode ? "SmartKode Partner" : "Mr. Praise (CEO)";
+                currentUserProfile = { name: displayName, role: 'admin' };
                 
                 document.getElementById('sidebar-profile-name').innerText = displayName;
                 document.getElementById('sidebar-profile-role').innerText = isSmartKode ? "SmartKode Tech" : "Executive Admin";
@@ -930,6 +958,7 @@
                 if (data) {
                     currentUserRole = data.role;
                     currentUserStatus = data.status;
+                    currentUserProfile = data;
                     
                     document.getElementById('sidebar-profile-name').innerText = data.name;
                     document.getElementById('sidebar-profile-role').innerText = `${data.role.toUpperCase()}`;
@@ -995,8 +1024,24 @@
 
         // --- ROLE FILTER UI ADJUSTMENTS ---
         function applyRoleFilters() {
+            const welcomeMsg = document.getElementById('welcome-message');
+            const welcomeSubText = document.getElementById('welcome-subtext');
+            const welcomeName = currentUserProfile ? currentUserProfile.name : (currentUser ? currentUser.email.split('@')[0] : "Staff User");
+
             // If the user is Admin (Mr. Praise), we hide input forms meant only for staff
             if (currentUserRole === 'admin') {
+                if (welcomeMsg) welcomeMsg.innerText = "Welcome back, Mr. Praise (CEO)!";
+                if (welcomeSubText) welcomeSubText.innerText = "Monitoring Praise Dynasty operations, tech updates, and staff timesheets.";
+
+                // Show Admin stats cards
+                document.getElementById('card-stat-leads').classList.remove('hidden');
+                document.getElementById('card-stat-pending').classList.remove('hidden');
+                document.getElementById('card-stat-staff').classList.remove('hidden');
+                document.getElementById('card-stat-videos').classList.remove('hidden');
+                // Hide Staff stats cards
+                document.getElementById('card-stat-mytasks').classList.add('hidden');
+                document.getElementById('card-stat-myhours').classList.add('hidden');
+
                 // Hide input forms
                 document.getElementById('daily-log-form').classList.add('hidden');
                 document.getElementById('video-submit-form').classList.add('hidden');
@@ -1007,6 +1052,18 @@
                 document.querySelector('#tab-tracker-view p.text-gray-400').innerText = "Monitoring reports submitted by agents, PAs and media creators below.";
                 document.querySelector('#tab-tiktok-view p.text-gray-400').innerText = "Review submitted TikTok draft submissions. Approve drafts or leave feedback comments below.";
             } else {
+                if (welcomeMsg) welcomeMsg.innerText = `Welcome, ${welcomeName}!`;
+                if (welcomeSubText) welcomeSubText.innerText = "Access your tasks, resources, and submit your daily activity log below.";
+
+                // Hide Admin stats cards
+                document.getElementById('card-stat-leads').classList.add('hidden');
+                document.getElementById('card-stat-pending').classList.add('hidden');
+                document.getElementById('card-stat-staff').classList.add('hidden');
+                // Show Staff stats cards
+                document.getElementById('card-stat-mytasks').classList.remove('hidden');
+                document.getElementById('card-stat-myhours').classList.remove('hidden');
+                document.getElementById('card-stat-videos').classList.add('hidden');
+
                 // If it is standard staff, we hide the Admin panels but show the inputs
                 document.getElementById('daily-log-form').classList.remove('hidden');
                 document.getElementById('video-submit-form').classList.remove('hidden');
@@ -1223,6 +1280,10 @@
                     allTrackerLogs = [];
                     logsList.innerHTML = `<p class="text-xs text-gray-400 italic text-center py-6">No activity logs recorded yet.</p>`;
                     feed.innerHTML = `<p class="text-xs text-gray-400 italic text-center py-10">No recent logs today.</p>`;
+                    
+                    const statHoursEl = document.getElementById('stat-myhours');
+                    if (statHoursEl) statHoursEl.innerText = "0 hrs";
+
                     renderStaffList();
                     return;
                 }
@@ -1230,6 +1291,14 @@
                 const data = snapshot.val();
                 allTrackerLogs = Object.values(data);
                 const sortedLogs = [...allTrackerLogs].sort((a, b) => b.createdAt - a.createdAt);
+
+                // Calculate My Logged Hours (Total)
+                if (currentUser) {
+                    const myLogs = allTrackerLogs.filter(log => log.uid === currentUser.uid || log.email === currentUser.email);
+                    const totalHours = myLogs.reduce((sum, log) => sum + parseFloat(log.hours || 0), 0);
+                    const statHoursEl = document.getElementById('stat-myhours');
+                    if (statHoursEl) statHoursEl.innerText = `${totalHours} hrs`;
+                }
 
                 // Build full list
                 sortedLogs.forEach(log => {
@@ -1521,12 +1590,25 @@
                     dashTasksList.innerHTML = `<p class="text-xs text-gray-400 italic text-center py-10">All tasks caught up!</p>`;
                     document.getElementById('pending-tasks-count').innerText = 0;
                     document.getElementById('completed-tasks-count').innerText = 0;
+                    
+                    const statTasksEl = document.getElementById('stat-mytasks');
+                    if (statTasksEl) statTasksEl.innerText = 0;
                     return;
                 }
 
                 const data = snapshot.val();
                 let pendingCount = 0;
                 let completedCount = 0;
+
+                // Calculate My Assigned Tasks Count (pending)
+                if (currentUser) {
+                    const myPendingTasks = Object.values(data).filter(task => {
+                        const isAssignee = task.assigneeUid === currentUser.uid || (task.assigneeUid === 'smartkode' && currentUser.email.toLowerCase().includes('smartkode'));
+                        return isAssignee && task.status === 'pending';
+                    });
+                    const statTasksEl = document.getElementById('stat-mytasks');
+                    if (statTasksEl) statTasksEl.innerText = myPendingTasks.length;
+                }
 
                 Object.entries(data).forEach(([key, task]) => {
                     // Filter tasks: if current user is not admin and task is not assigned to them, hide it
