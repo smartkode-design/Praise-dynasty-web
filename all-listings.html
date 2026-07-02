@@ -111,6 +111,18 @@
 <body
     class="bg-gray-50 font-sans tracking-wide selection:bg-brand-magenta selection:text-white relative overflow-x-hidden min-h-screen flex flex-col flex-1">
 
+    <!-- Top Sticky Promo Banner for Google Meet RSVP -->
+    <div id="promo-banner" class="bg-brand-blue text-white text-xs sm:text-sm font-semibold py-3 px-4 border-b border-brand-magenta flex justify-between items-center relative z-50 animate-fade-up hidden">
+        <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 flex-wrap text-center pr-8">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-brand-magenta text-[9px] uppercase tracking-wider font-bold">Live Briefing</span>
+            <span>Join our next Abuja Real Estate Google Meet in: <span id="banner-timer" class="font-bold text-brand-magenta">00d : 00h : 00m</span>.</span>
+            <a href="rsvp.html" class="underline hover:text-brand-magenta transition-colors font-bold ml-1">Secure Your Spot Now →</a>
+        </div>
+        <button id="close-promo-btn" class="absolute right-4 text-white/70 hover:text-white hover:bg-white/10 rounded p-1 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    </div>
+
     <!-- Premium Particles Background -->
     <div id="particles-js" class="fixed inset-0 z-40 pointer-events-none"></div>
 
@@ -524,6 +536,15 @@
         };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+
+        const briefingSettingsRef = ref(db, 'articles/briefingSettings');
+        onValue(briefingSettingsRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                window.praiseBriefingSettings = data;
+                document.dispatchEvent(new CustomEvent('briefingSettingsLoaded', { detail: data }));
+            }
+        });
 
         const propertyGrid = document.getElementById('live-property-grid');
 
@@ -1053,7 +1074,147 @@
             propertyModal.classList.add('hidden');
             document.body.style.overflow = 'auto';
         };
+
+        // Initialize additions on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initPromoBanner();
+            initSocialProof();
+            initWhatsAppChat();
+        });
+
+        function initPromoBanner() {
+            const banner = document.getElementById('promo-banner');
+            const timerSpan = document.getElementById('banner-timer');
+            const closeBtn = document.getElementById('close-promo-btn');
+
+            if (localStorage.getItem('hidePraiseBriefingPromo') === 'true') {
+                return; // Stays hidden
+            }
+
+            function startTimer(settings) {
+                if (!settings || settings.active === false || !settings.eventDate) {
+                    banner.classList.add('hidden');
+                    return;
+                }
+
+                banner.classList.remove('hidden');
+                const targetTime = new Date(settings.eventDate).getTime();
+
+                if (window.promoBannerInterval) clearInterval(window.promoBannerInterval);
+
+                window.promoBannerInterval = setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = targetTime - now;
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                    timerSpan.innerHTML = `${days}d : ${String(hours).padStart(2, '0')}h : ${String(minutes).padStart(2, '0')}m`;
+
+                    if (distance < 0) {
+                        clearInterval(window.promoBannerInterval);
+                        timerSpan.innerHTML = "0d : 00h : 00m";
+                    }
+                }, 1000);
+            }
+
+            if (window.praiseBriefingSettings) {
+                startTimer(window.praiseBriefingSettings);
+            }
+
+            document.addEventListener('briefingSettingsLoaded', (e) => {
+                startTimer(e.detail);
+            });
+
+            closeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                banner.classList.add('hidden');
+                localStorage.setItem('hidePraiseBriefingPromo', 'true');
+            });
+        }
+
+        // Social Proof Toast Widget
+        function initSocialProof() {
+            const notifications = [
+                "🔥 An investor from Lagos just requested the VIP Property List.",
+                "📅 Private viewing booked for a 5-Bedroom Duplex in Asokoro.",
+                "⏳ Only 4 spots remaining for the Abuja Real Estate Briefing.",
+                "🔥 An investor from Abuja just made an offer on an off-market duplex.",
+                "📅 Call scheduled with a US-based client for Maitama luxury land."
+            ];
+
+            const toast = document.createElement('div');
+            toast.id = 'social-proof-toast';
+            toast.className = 'fixed bottom-24 left-6 z-50 max-w-xs bg-brand-blue border-l-4 border-brand-magenta text-white text-xs py-3.5 px-4 rounded-r-xl shadow-2xl transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none';
+            document.body.appendChild(toast);
+
+            let index = 0;
+            function showNotification() {
+                toast.innerHTML = notifications[index];
+                toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+                toast.classList.add('translate-y-0', 'opacity-100');
+                
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                    toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                    index = (index + 1) % notifications.length;
+                }, 6000);
+            }
+
+            setTimeout(() => {
+                showNotification();
+                setInterval(showNotification, 22000);
+            }, 8000);
+        }
+
+        // Interactive WhatsApp Agent Chat
+        function initWhatsAppChat() {
+            const widget = document.getElementById('whatsapp-agent-widget');
+            const closeBtn = document.getElementById('close-agent-btn');
+            
+            let timer = setTimeout(() => {
+                widget.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+                widget.classList.add('translate-y-0', 'opacity-100');
+            }, 6000);
+
+            closeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                widget.classList.remove('translate-y-0', 'opacity-100');
+                widget.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                clearTimeout(timer);
+            });
+        }
     </script>
+
+    <!-- Sliding WhatsApp Agent Widget -->
+    <div id="whatsapp-agent-widget" class="fixed bottom-24 right-6 z-50 max-w-xs bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none">
+        <div class="bg-brand-blue text-white p-4 flex items-center gap-3">
+            <div class="relative">
+                <img src="./images/logo-light.jpg" alt="Agent" class="w-10 h-10 rounded-full object-cover bg-white">
+                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-brand-blue rounded-full"></span>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs">Praise Dynasty</h4>
+                <p class="text-[9px] text-gray-300">Typically replies instantly</p>
+            </div>
+            <button id="close-agent-btn" class="ml-auto text-white/70 hover:text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <div class="p-4 bg-gray-50 text-left">
+            <p class="text-xs text-gray-600 bg-white p-3 rounded-xl shadow-sm inline-block leading-relaxed">
+                Hi there! Looking for exclusive off-market duplexes or investment plots in Abuja? Let's chat directly on WhatsApp.
+            </p>
+        </div>
+        <div class="p-3 bg-white text-center border-t border-gray-100">
+            <a href="https://wa.me/2348081975967?text=Hi%20Praise%20Dynasty%2C%20I%20am%20visiting%20your%20website%20and%20would%20like%20to%20speak%20to%20a%20director." 
+               target="_blank" id="agent-chat-btn"
+               class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-green-500 hover:bg-green-600 text-white font-bold text-xs uppercase tracking-wider transition-colors">
+                Start Chat
+            </a>
+        </div>
+    </div>
 
     <!-- Glowing Floating WhatsApp Button -->
     <a href="https://wa.me/2348081975967" target="_blank" rel="noopener noreferrer"

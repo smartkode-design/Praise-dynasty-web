@@ -135,6 +135,16 @@
                 </svg>
                 Manage Articles
             </a>
+            <a href="#" id="nav-briefing-settings"
+                class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group">
+                <svg class="w-5 h-5 mr-3 group-hover:text-brand-magenta transition-colors" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z">
+                    </path>
+                </svg>
+                Briefing Timer
+            </a>
         </nav>
 
         <!-- Profile & Logout -->
@@ -576,6 +586,45 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- Briefing Timer Settings Section -->
+        <div id="briefing-settings-view" class="p-6 lg:p-10 max-w-6xl mx-auto w-full space-y-10 hidden">
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="p-8">
+                    <form class="space-y-8" id="briefing-upload-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                            <div class="md:col-span-2 pb-2 border-b border-gray-100">
+                                <h4 class="text-lg font-bold text-gray-900">Briefing & Timer Configurations</h4>
+                                <p class="text-xs text-gray-500 mt-1">Configure the Google Meet countdown timer date and toggle visibility of promo banners across the site.</p>
+                            </div>
+                            
+                            <!-- Timer Active Toggle -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Display Timer & Promo Banners?</label>
+                                <select id="briefing-active" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all text-gray-900 font-medium cursor-pointer">
+                                    <option value="true">YES - Show Banners and Active Countdown</option>
+                                    <option value="false">NO - Hide Banners and Countdown</option>
+                                </select>
+                            </div>
+
+                            <!-- Target Date Time Input -->
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Briefing Date & Time <span class="text-red-500">*</span></label>
+                                <input id="briefing-date" type="datetime-local" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all text-gray-900 font-medium">
+                                <p class="text-xs text-gray-500 mt-2">Specify the date and starting time of the briefing. The countdown will tick down to this exact minute.</p>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4 border-t border-gray-100 flex justify-end">
+                            <button id="save-briefing-btn" type="submit" class="px-8 py-3.5 bg-brand-magenta hover:bg-brand-blue text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all duration-300 shadow-lg shadow-brand-magenta/25 hover:shadow-brand-blue/25">
+                                Save Briefing Settings
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </section>
         </div>
@@ -1247,6 +1296,7 @@
         const articleCount = document.getElementById('article-count');
 
         let editingArticleId = null;
+        let editingArticleImageUrl = "";
 
         if (publishArticleBtn) {
             publishArticleBtn.addEventListener('click', async () => {
@@ -1326,9 +1376,12 @@
                 articlesList.innerHTML = '';
                 let count = 0;
 
+                window.adminArticlesCache = {};
                 snapshot.forEach((childSnapshot) => {
                     const key = childSnapshot.key;
+                    if (key === 'briefingSettings') return; // Skip settings node
                     const articleData = childSnapshot.val();
+                    window.adminArticlesCache[key] = articleData;
                     count++;
                     
                     const d = new Date(articleData.createdAt || Date.now());
@@ -1406,16 +1459,57 @@
             });
         }
 
+        // --- Briefing Timer Settings Firebase Bindings ---
+        const briefingActiveSelect = document.getElementById('briefing-active');
+        const briefingDateInput = document.getElementById('briefing-date');
+        const briefingForm = document.getElementById('briefing-upload-form');
+        const briefingSettingsRef = ref(db, 'articles/briefingSettings');
+
+        // Read settings from Firebase on load
+        onValue(briefingSettingsRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                if (briefingActiveSelect) briefingActiveSelect.value = String(data.active ?? false);
+                if (briefingDateInput && data.eventDate) {
+                    briefingDateInput.value = data.eventDate.substring(0, 16);
+                }
+            }
+        });
+
+        // Save settings to Firebase
+        if (briefingForm) {
+            briefingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const active = briefingActiveSelect.value === 'true';
+                const eventDate = briefingDateInput.value; // "YYYY-MM-DDTHH:MM"
+
+                try {
+                    await set(briefingSettingsRef, {
+                        active: active,
+                        eventDate: eventDate
+                    });
+                    window.showToast('Briefing settings saved successfully!', 'success');
+                } catch (err) {
+                    console.error("Save error:", err);
+                    window.showToast('Failed to save settings: ' + err.message, 'error');
+                }
+            });
+        }
+    </script>
+
+    <script>
         // ==========================
         // TAB SWITCHING LOGIC
         // ==========================
         const navAddProperty = document.getElementById('nav-add-property');
         const navManageVideos = document.getElementById('nav-manage-videos');
         const navManageArticles = document.getElementById('nav-manage-articles');
+        const navBriefingSettings = document.getElementById('nav-briefing-settings');
 
         const propertiesView = document.getElementById('properties-view');
         const videosView = document.getElementById('videos-view');
         const articlesView = document.getElementById('articles-view');
+        const briefingSettingsView = document.getElementById('briefing-settings-view');
 
         const pageTitle = document.getElementById('page-title');
         const pageDesc = document.getElementById('page-desc');
@@ -1424,30 +1518,33 @@
         const inactiveClasses = ['text-gray-400', 'hover:bg-gray-800', 'hover:text-white', 'border-transparent'];
 
         function setTab(activeTab) {
-            if (!navAddProperty || !navManageVideos || !navManageArticles) return;
+            if (!navAddProperty || !navManageVideos || !navManageArticles || !navBriefingSettings) return;
 
             // Reset all tabs
             activeClasses.forEach(c => {
                 navAddProperty.classList.remove(c);
                 navManageVideos.classList.remove(c);
                 navManageArticles.classList.remove(c);
+                navBriefingSettings.classList.remove(c);
             });
             inactiveClasses.forEach(c => {
                 navAddProperty.classList.add(c);
                 navManageVideos.classList.add(c);
                 navManageArticles.classList.add(c);
+                navBriefingSettings.classList.add(c);
             });
 
             // Set active
             let activeNav = navAddProperty;
             if (activeTab === 'videos') activeNav = navManageVideos;
             if (activeTab === 'articles') activeNav = navManageArticles;
+            if (activeTab === 'briefing') activeNav = navBriefingSettings;
             
             inactiveClasses.forEach(c => activeNav.classList.remove(c));
             activeClasses.forEach(c => activeNav.classList.add(c));
 
             // Adjust SVGs
-            [navAddProperty, navManageVideos, navManageArticles].forEach(nav => {
+            [navAddProperty, navManageVideos, navManageArticles, navBriefingSettings].forEach(nav => {
                 nav.querySelector('svg').classList.remove('text-brand-magenta');
                 nav.querySelector('svg').classList.add('group-hover:text-brand-magenta');
             });
@@ -1457,6 +1554,7 @@
             if (propertiesView) propertiesView.classList.add('hidden');
             if (videosView) videosView.classList.add('hidden');
             if (articlesView) articlesView.classList.add('hidden');
+            if (briefingSettingsView) briefingSettingsView.classList.add('hidden');
 
             if (activeTab === 'videos') {
                 if (videosView) videosView.classList.remove('hidden');
@@ -1466,6 +1564,10 @@
                 if (articlesView) articlesView.classList.remove('hidden');
                 if (pageTitle) pageTitle.innerText = "Manage Articles";
                 if (pageDesc) pageDesc.innerText = "Publish insights directly to the public Articles feed.";
+            } else if (activeTab === 'briefing') {
+                if (briefingSettingsView) briefingSettingsView.classList.remove('hidden');
+                if (pageTitle) pageTitle.innerText = "Briefing Timer Settings";
+                if (pageDesc) pageDesc.innerText = "Manage event date and countdown banner state.";
             } else {
                 if (propertiesView) propertiesView.classList.remove('hidden');
                 if (pageTitle) pageTitle.innerText = "Upload Property";
@@ -1489,6 +1591,12 @@
             navAddProperty.addEventListener('click', (e) => {
                 e.preventDefault();
                 setTab('properties');
+            });
+        }
+        if (navBriefingSettings) {
+            navBriefingSettings.addEventListener('click', (e) => {
+                e.preventDefault();
+                setTab('briefing');
             });
         }
 
