@@ -4,29 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Praise Dynasty | Content Planner</title>
-    <!-- Tailwind CSS (Premium Styling Integration) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Compiled Tailwind CSS Stylesheet -->
+    <link rel="stylesheet" href="css/tailwind.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'brand-blue': '#0A192F',
-                        'brand-magenta': '#E91E63',
-                        'brand-slate': '#8892B0',
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        outfit: ['Outfit', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         .glass-panel {
             background: rgba(255, 255, 255, 0.75);
@@ -713,7 +696,7 @@
                                         </div>
                                     </div>
                                     <div class="relative h-44 rounded-lg overflow-hidden border border-gray-100 shadow-inner mb-2 bg-gray-50 flex items-center justify-center">
-                                        <img id="carousel-img-${index}" src="${item.slides[0].imageUrl}" alt="${item.title}" class="w-full h-full object-cover">
+                                        <img id="carousel-img-${index}" src="${item.slides[0].imageUrl}" alt="${item.title}" loading="lazy" class="w-full h-full object-cover">
                                         <!-- Simulated Text Overlay -->
                                         <div id="carousel-overlay-${index}" class="absolute inset-0 bg-black/60 flex items-center justify-center p-4 text-center">
                                             <p class="text-white text-[11px] font-extrabold uppercase tracking-wide leading-relaxed font-outfit" id="carousel-overlay-text-${index}">
@@ -763,7 +746,7 @@
                                 <div>
                                     <h4 class="text-[10px] font-bold text-gray-400 uppercase mb-2">Aesthetic Post Photo:</h4>
                                     <div class="relative h-40 rounded-lg overflow-hidden border border-gray-100 shadow-inner mb-2 bg-gray-50">
-                                        <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-full object-cover">
+                                        <img src="${item.imageUrl}" alt="${item.title}" loading="lazy" class="w-full h-full object-cover">
                                     </div>
                                     <p class="text-[9px] text-gray-500 leading-relaxed italic"><strong class="uppercase text-[8px] not-italic text-brand-magenta font-bold">Vibe:</strong> ${item.imagePrompt}</p>
                                 </div>
@@ -1049,7 +1032,7 @@
                             <div>
                                 <h4 class="text-[10px] font-bold text-gray-400 uppercase mb-2">Google Maps Photo:</h4>
                                 <div class="relative h-40 rounded-lg overflow-hidden border border-gray-100 shadow-inner mb-2 bg-gray-50">
-                                    <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-full object-cover">
+                                    <img src="${item.imageUrl}" alt="${item.title}" loading="lazy" class="w-full h-full object-cover">
                                 </div>
                             </div>
                             <button onclick="downloadImage('${item.imageUrl}', '${filename}')" class="w-full py-2.5 bg-green-500 hover:bg-green-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm">

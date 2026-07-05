@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #0B1B3D;
+  --color-brand-magenta: #E0005E;
+  --color-brand-light: #F8F9FA;
+  --font-sans: "Outfit", sans-serif;
+}
+
+/* Custom styling utilities shared across pages */
+.hero-pattern {
+    background-image: 
+        linear-gradient(to bottom, rgba(11, 27, 61, 0.7), rgba(0, 0, 0, 0.8)),
+        url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.animate-fade-up {
+    animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+
+@media (min-width: 768px) {
+    .hero-pattern {
+        background-image: 
+            linear-gradient(to bottom, rgba(11, 27, 61, 0.7), rgba(0, 0, 0, 0.8)),
+            url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

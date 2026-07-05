@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Praise Dynasty | Agency Virtual Office</title>
     
     <!-- Google Fonts: Outfit -->
@@ -11,26 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS (via CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            blue: '#0B1B3D',    /* Deep Royal Blue */
-                            magenta: '#E0005E', /* Bold Magenta/Pink */
-                            light: '#F8F9FA'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Compiled Tailwind CSS Stylesheet -->
+    <link rel="stylesheet" href="css/tailwind.css">
     <style>
         /* Custom scrollbar matching administrative panel */
         ::-webkit-scrollbar {
@@ -1949,7 +1932,7 @@
 
                             <!-- Preview Carousel Container -->
                             <div class="relative h-48 rounded-xl overflow-hidden border border-gray-100 shadow-inner bg-gray-900 group">
-                                <img id="gen-slide-img-${index}" src="${res.imageUrl}" class="w-full h-full object-cover select-none pointer-events-none transition-all duration-300">
+                                <img id="gen-slide-img-${index}" src="${res.imageUrl}" loading="lazy" class="w-full h-full object-cover select-none pointer-events-none transition-all duration-300">
                                 <div class="absolute top-2 right-2 bg-black/60 text-[9px] text-white px-2 py-0.5 rounded font-bold uppercase" id="gen-slide-badge-${index}">Slide 1 / ${slides.length}</div>
                             </div>
                             ${dotsHtml}

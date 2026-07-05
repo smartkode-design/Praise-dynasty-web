@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="robots" content="noindex, nofollow">
     <title>Admin Dashboard | Praise Dynasty</title>
     <meta name="description" content="Praise Dynasty real estate management dashboard.">
     <link rel="canonical" href="https://www.praisedynastyrealty.com/admin.html" />
@@ -19,26 +20,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS (via CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            blue: '#0B1B3D',    /* Deep Royal Blue */
-                            magenta: '#E0005E', /* Bold Magenta/Pink */
-                            light: '#F8F9FA'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Compiled Tailwind CSS Stylesheet -->
+    <link rel="stylesheet" href="css/tailwind.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
@@ -1044,7 +1027,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="h-12 w-16 flex-shrink-0 bg-gray-200 rounded overflow-hidden">
-                                <img src="${property.imageUrl || 'https://via.placeholder.com/150'}" alt="Thumbnail" class="h-full w-full object-cover">
+                                <img src="${property.imageUrl || 'https://via.placeholder.com/150'}" alt="Thumbnail" loading="lazy" class="h-full w-full object-cover">
                             </div>
                             <div class="ml-4">
                                 <div class="font-bold text-gray-900 leading-tight">${property.title}</div>
@@ -1416,7 +1399,7 @@
                                         let hash = 0;
                                         for (let i = 0; i < key.length; i++) hash = key.charCodeAt(i) + ((hash << 5) - hash);
                                         const fallbackImg = fallbacks[Math.abs(hash) % fallbacks.length];
-                                        return `<img src="${articleData.imageUrl ? articleData.imageUrl : fallbackImg}" alt="" class="h-full w-full object-cover">`;
+                                        return `<img src="${articleData.imageUrl ? articleData.imageUrl : fallbackImg}" alt="" loading="lazy" class="h-full w-full object-cover">`;
                                     })()}
                                 </div>
                                 <div class="ml-4 font-bold text-gray-900 leading-tight">${articleData.title}</div>

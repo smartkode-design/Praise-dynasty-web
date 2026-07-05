@@ -1,0 +1,25 @@
+{
+  "name": "praise-dynasty",
+  "version": "1.0.0",
+  "description": "",
+  "main": "check_h1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartkode-design/Praise-dynasty-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/smartkode-design/Praise-dynasty-web/issues"
+  },
+  "homepage": "https://github.com/smartkode-design/Praise-dynasty-web#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.2",
+    "tailwindcss": "^4.3.2"
+  }
+}

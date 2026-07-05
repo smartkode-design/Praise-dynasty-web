@@ -36,64 +36,8 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"></noscript>
 
-    <!-- Tailwind CSS (via CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            blue: '#0B1B3D',
-                            magenta: '#E0005E',
-                            light: '#F8F9FA'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-    @layer utilities {
-        .hero-pattern {
-            background-image: 
-                linear-gradient(to bottom, rgba(11, 27, 61, 0.7), rgba(0, 0, 0, 0.8)),
-                url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .animate-fade-up {
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-        }
-        .delay-100 { animation-delay: 100ms; }
-        .delay-200 { animation-delay: 200ms; }
-        .delay-300 { animation-delay: 300ms; }
-    }
-
-    @media (min-width: 768px) {
-        .hero-pattern {
-            background-image: 
-                linear-gradient(to bottom, rgba(11, 27, 61, 0.7), rgba(0, 0, 0, 0.8)),
-                url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-        }
-    }
-    
-    @keyframes fadeUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
+    <!-- Compiled Tailwind CSS Stylesheet -->
+    <link rel="stylesheet" href="css/tailwind.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CSMJ74EREW"></script>
     <script>
@@ -1197,6 +1141,7 @@
                         <a href="details.html#${property.id}" class="relative h-64 overflow-hidden bg-gray-100 block">
                             <img src="${imgSource}"
                                 alt="${property.title}"
+                                loading="lazy"
                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             <div class="absolute top-4 right-4 ${tagColor} text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                                 ${tagText}
@@ -1335,7 +1280,7 @@
                         newsGrid.innerHTML += `
             <article class="w-[85vw] sm:w-[50vw] lg:w-[350px] xl:w-[400px] flex-shrink-0 group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col cursor-pointer" onclick="window.open('${article.url}', '_blank')">
                 <div class="relative h-48 overflow-hidden bg-gray-200">
-                    <img src="${imageUrl}" alt="News Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
+                    <img src="${imageUrl}" alt="News Image" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <span class="text-xs text-brand-magenta font-bold tracking-widest uppercase mb-4 block">${sourceName} &bull; ${dateString}</span>
@@ -1366,7 +1311,7 @@
                 newsGrid.innerHTML = `
             <article class="w-[85vw] sm:w-[50vw] lg:w-[350px] xl:w-[400px] flex-shrink-0 group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col">
                 <div class="relative h-48 overflow-hidden bg-gray-200">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <span class="text-xs text-brand-magenta font-bold tracking-widest uppercase mb-4 block">Insights &bull; Just Now</span>
@@ -1375,7 +1320,7 @@
             </article>
             <article class="w-[85vw] sm:w-[50vw] lg:w-[350px] xl:w-[400px] flex-shrink-0 group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col">
                 <div class="relative h-48 overflow-hidden bg-gray-200">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <span class="text-xs text-brand-magenta font-bold tracking-widest uppercase mb-4 block">News &bull; Today</span>
@@ -1384,7 +1329,7 @@
             </article>
             <article class="w-[85vw] sm:w-[50vw] lg:w-[350px] xl:w-[400px] flex-shrink-0 group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col">
                 <div class="relative h-48 overflow-hidden bg-gray-200">
-                    <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
+                    <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&q=80" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
                 </div>
                 <div class="p-8 flex flex-col flex-grow">
                     <span class="text-xs text-brand-magenta font-bold tracking-widest uppercase mb-4 block">Analysis &bull; Recent</span>
