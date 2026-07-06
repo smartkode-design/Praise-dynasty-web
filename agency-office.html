@@ -409,37 +409,6 @@
                             </button>
                         </form>
 
-                        <!-- Homepage Promo Banner Controller (Visible to Admin/SmartKode only) -->
-                        <div id="promo-banner-controller-card" class="bg-gray-50 p-6 rounded-2xl border border-gray-200 mb-8">
-                            <h4 class="text-xs font-bold text-brand-magenta uppercase tracking-wider border-b border-gray-200 pb-2 mb-4">Homepage Promo Banner Manager</h4>
-                            <form id="promo-banner-form" class="space-y-4">
-                                <div class="flex items-center gap-3 bg-white p-3.5 rounded-xl border border-gray-200">
-                                    <input type="checkbox" id="banner-active" class="w-4.5 h-4.5 accent-brand-magenta cursor-pointer">
-                                    <div>
-                                        <label for="banner-active" class="block text-xs font-bold text-brand-blue cursor-pointer">Activate Promo Banner on Homepage</label>
-                                        <p class="text-[10px] text-gray-400 font-medium">Toggle this to instantly publish or remove the urgent sale banner on the frontpage.</p>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">PC / Desktop Banner Image URL</label>
-                                        <input type="text" id="banner-pc-url" required value="images/banner pc size.jpeg" class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
-                                    </div>
-                                    <div>
-                                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Mobile Banner Image URL</label>
-                                        <input type="text" id="banner-mobile-url" required value="images/banner mobile .jpeg" class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Banner Click Redirection URL (e.g. WhatsApp support link)</label>
-                                    <input type="url" id="banner-target-url" required value="https://wa.me/2348081975967?text=Hi%20Praise%20Dynasty%2C%20I%20am%20interested%20in%20the%20urgent%20land%20sale%20offer%20at%20Idu%20slashed%20to%20%E2%82%A61%20Billion.%20Please%20provide%20more%20details." class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800">
-                                </div>
-                                <button type="submit" class="px-6 py-3 bg-brand-blue hover:bg-brand-blue/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm">
-                                    Update Promo Banner Settings
-                                </button>
-                            </form>
-                        </div>
-
                         <!-- smartkode logs feed -->
                         <div class="flex flex-col gap-4">
                             <h4 class="text-xs font-bold text-brand-blue uppercase tracking-wider border-b border-gray-100 pb-2 mb-2">Technical & Marketing Logs Archive</h4>
@@ -660,10 +629,41 @@
 
                 <!-- 7B. TAB: EMAIL MARKETING HUB -->
                 <div id="tab-email-hub-view" class="tab-view hidden space-y-6">
+                    <!-- Homepage Promo Banner Controller (Visible to Admin/SmartKode only) -->
+                    <div id="promo-banner-controller-card" class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm">
+                        <h4 class="text-xs font-bold text-brand-magenta uppercase tracking-wider border-b border-gray-200 pb-2 mb-4">Homepage Promo Banner Manager</h4>
+                        <form id="promo-banner-form" class="space-y-4">
+                            <div class="flex items-center gap-3 bg-gray-50 p-3.5 rounded-xl border border-gray-200">
+                                <input type="checkbox" id="banner-active" class="w-4.5 h-4.5 accent-brand-magenta cursor-pointer">
+                                <div>
+                                    <label for="banner-active" class="block text-xs font-bold text-brand-blue cursor-pointer">Activate Promo Banner on Homepage</label>
+                                    <p class="text-[10px] text-gray-400 font-medium">Toggle this to instantly publish or remove the urgent sale banner on the frontpage.</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">PC / Desktop Banner Image URL</label>
+                                    <input type="text" id="banner-pc-url" required value="images/banner pc size.jpeg" class="w-full bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Mobile Banner Image URL</label>
+                                    <input type="text" id="banner-mobile-url" required value="images/banner mobile .jpeg" class="w-full bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Banner Click Redirection URL (e.g. WhatsApp support link)</label>
+                                <input type="url" id="banner-target-url" required value="https://wa.me/2348081975967?text=Hi%20Praise%20Dynasty%2C%20I%20am%20interested%20in%20the%20urgent%20land%20sale%20offer%20at%20Idu%20slashed%20to%20%E2%82%A61%20Billion.%20Please%20provide%20more%20details." class="w-full bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800">
+                            </div>
+                            <button type="submit" class="px-6 py-3 bg-brand-blue hover:bg-brand-blue/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm">
+                                Update Promo Banner Settings
+                            </button>
+                        </form>
+                    </div>
+
                     <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-100 pb-6 mb-6">
                             <div>
-                                <h2 class="text-lg font-bold text-brand-blue mb-1">Email Marketing Hub</h2>
+                                <h2 class="text-lg font-bold text-brand-blue mb-1">Email Templates / Campaigns</h2>
                                 <p class="text-xs text-gray-400">Manage, preview, copy, and create branded email templates for Zoho Mail marketing campaigns.</p>
                             </div>
                             <button onclick="openEmailModal()" class="px-5 py-2.5 bg-brand-magenta hover:bg-brand-magenta/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center gap-1.5 self-start">
@@ -673,8 +673,51 @@
                         </div>
 
                         <!-- Email Templates Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="email-templates-grid">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10" id="email-templates-grid">
                             <!-- Dynamic email templates from Firebase -->
+                        </div>
+
+                        <!-- Subscriber Database Section -->
+                        <div class="border-t border-gray-200 pt-8">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 mb-6">
+                                <div>
+                                    <h3 class="text-sm font-bold text-brand-blue uppercase tracking-wider">Mailing List Subscriber Database</h3>
+                                    <p class="text-[11px] text-gray-400">Store and manage your marketing contacts. Copy all emails with a single click to paste directly into Zoho.</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button onclick="copyAllSubscriberEmails()" class="px-4 py-2 bg-green-50 hover:bg-green-500 text-green-700 hover:text-white border border-green-200 text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
+                                        <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                                        Copy All Emails
+                                    </button>
+                                    <button onclick="openSubscriberModal()" class="px-4 py-2 bg-brand-blue hover:bg-brand-blue/90 text-white text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
+                                        <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                        Add Subscriber
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Search bar -->
+                            <div class="mb-4">
+                                <input type="text" id="subscriber-search" oninput="filterSubscribers()" placeholder="Search subscribers by name, email, or notes..." class="w-full sm:max-w-md bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl px-4 py-2.5 text-xs focus:outline-none transition-colors text-gray-800">
+                            </div>
+
+                            <!-- Table of Subscribers -->
+                            <div class="overflow-x-auto rounded-xl border border-gray-200 bg-gray-50/50 shadow-inner">
+                                <table class="w-full text-left border-collapse text-xs">
+                                    <thead>
+                                        <tr class="bg-gray-150 text-brand-blue font-bold uppercase tracking-wider text-[9px] border-b border-gray-200">
+                                            <th class="p-3.5">Name</th>
+                                            <th class="p-3.5">Email</th>
+                                            <th class="p-3.5">Notes</th>
+                                            <th class="p-3.5">Added</th>
+                                            <th class="p-3.5 text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="subscribers-table-body" class="divide-y divide-gray-200 bg-white">
+                                        <!-- Hydrated dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1226,6 +1269,7 @@
             loadGeneralContent();
             loadEmailTemplates();
             loadPromoBannerSettings();
+            loadSubscribers();
         }
 
         function triggerToast(message) {
@@ -1865,7 +1909,7 @@
                 if (snapshot.exists()) {
                     const data = snapshot.val();
                     Object.values(data).forEach(res => {
-                        if (res.type !== 'content' && res.type !== 'email' && res.type !== 'banner') {
+                        if (res.type !== 'content' && res.type !== 'email' && res.type !== 'banner' && res.type !== 'subscriber') {
                             renderCard(res, false);
                         }
                     });
@@ -2531,6 +2575,174 @@
                 alert("Error updating promo banner: " + err.message);
             });
         });
+
+        // --- MAILING LIST SUBSCRIBER DATABASE LOGIC ---
+        let subscribersCache = {};
+
+        window.openSubscriberModal = function(id = "") {
+            document.getElementById('subscriber-id').value = id;
+            if (id && subscribersCache[id]) {
+                const sub = subscribersCache[id];
+                document.getElementById('subscriber-modal-title').innerText = "Edit Subscriber";
+                document.getElementById('subscriber-name').value = sub.name || "";
+                document.getElementById('subscriber-email').value = sub.email || "";
+                document.getElementById('subscriber-notes').value = sub.notes || "";
+            } else {
+                document.getElementById('subscriber-modal-title').innerText = "Add Subscriber";
+                document.getElementById('subscriber-form').reset();
+                document.getElementById('subscriber-id').value = "";
+            }
+            document.getElementById('subscriber-modal').classList.remove('hidden');
+        };
+
+        window.closeSubscriberModal = function() {
+            document.getElementById('subscriber-modal').classList.add('hidden');
+        };
+
+        window.deleteSubscriber = function(key) {
+            if (confirm("Are you sure you want to permanently delete this subscriber?")) {
+                remove(ref(db, `agencyResources/${key}`)).then(() => {
+                    triggerToast("Subscriber deleted successfully!");
+                }).catch(err => {
+                    alert("Delete failed: " + err.message);
+                });
+            }
+        };
+
+        window.copyAllSubscriberEmails = function() {
+            const emails = [];
+            Object.values(subscribersCache).forEach(sub => {
+                if (sub.email) emails.push(sub.email);
+            });
+            if (emails.length === 0) {
+                triggerToast("No email addresses to copy.");
+                return;
+            }
+            const copyText = emails.join(", ");
+            navigator.clipboard.writeText(copyText).then(() => {
+                triggerToast(`Copied ${emails.length} email addresses to clipboard!`);
+            }).catch(err => {
+                alert("Failed to copy: " + err);
+            });
+        };
+
+        // Form Submit
+        document.getElementById('subscriber-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('subscriber-id').value;
+            const name = document.getElementById('subscriber-name').value.trim();
+            const email = document.getElementById('subscriber-email').value.trim();
+            const notes = document.getElementById('subscriber-notes').value.trim();
+
+            const payload = {
+                name: name,
+                email: email,
+                notes: notes,
+                type: 'subscriber',
+                createdAt: id && subscribersCache[id] ? subscribersCache[id].createdAt : Date.now()
+            };
+
+            if (id) {
+                set(ref(db, `agencyResources/${id}`), payload).then(() => {
+                    closeSubscriberModal();
+                    triggerToast("Subscriber updated successfully!");
+                }).catch(err => {
+                    alert("Error saving: " + err.message);
+                });
+            } else {
+                const newRef = push(ref(db, 'agencyResources'));
+                set(newRef, payload).then(() => {
+                    closeSubscriberModal();
+                    triggerToast("Subscriber added successfully!");
+                }).catch(err => {
+                    alert("Error saving: " + err.message);
+                });
+            }
+        });
+
+        // Load & Render Subscribers list
+        window.loadSubscribers = function() {
+            onValue(ref(db, 'agencyResources'), (snapshot) => {
+                const tbody = document.getElementById('subscribers-table-body');
+                tbody.innerHTML = '';
+                subscribersCache = {};
+
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400 italic bg-white">No subscribers found. Click Add Subscriber to start your mailing list.</td></tr>`;
+                    return;
+                }
+
+                const data = snapshot.val();
+                let hasSubscribers = false;
+
+                Object.entries(data).forEach(([key, val]) => {
+                    if (val.type === 'subscriber') {
+                        hasSubscribers = true;
+                        subscribersCache[key] = val;
+                    }
+                });
+
+                if (!hasSubscribers) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400 italic bg-white">No subscribers found. Click Add Subscriber to start your mailing list.</td></tr>`;
+                    return;
+                }
+
+                // Render matching rows
+                renderSubscriberRows(subscribersCache);
+            });
+        };
+
+        function renderSubscriberRows(subs) {
+            const tbody = document.getElementById('subscribers-table-body');
+            tbody.innerHTML = '';
+            
+            Object.entries(subs).forEach(([key, val]) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 border-b border-gray-150 transition-colors";
+                
+                const dateStr = new Date(val.createdAt || Date.now()).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-brand-blue truncate max-w-[150px]">${val.name}</td>
+                    <td class="p-3 font-mono text-gray-650 truncate max-w-[200px]">${val.email}</td>
+                    <td class="p-3 text-gray-500 truncate max-w-[200px]">${val.notes || '<span class="italic text-gray-300">None</span>'}</td>
+                    <td class="p-3 text-gray-400 font-medium shrink-0">${dateStr}</td>
+                    <td class="p-3 text-right shrink-0">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <button onclick="navigator.clipboard.writeText('${val.email}').then(() => triggerToast('Email copied!'))" class="px-2 py-1 bg-white hover:bg-gray-100 border border-gray-200 text-gray-600 rounded-lg text-[10px] font-bold uppercase transition-all shadow-sm">Copy</button>
+                            <button onclick="openSubscriberModal('${key}')" class="px-2 py-1 bg-white hover:bg-gray-100 border border-gray-200 text-brand-magenta rounded-lg text-[10px] font-bold uppercase transition-all shadow-sm">Edit</button>
+                            <button onclick="deleteSubscriber('${key}')" class="px-2 py-1 bg-red-50 hover:bg-brand-magenta hover:text-white border border-red-100 text-red-700 rounded-lg text-[10px] font-bold uppercase transition-all shadow-sm">Delete</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.filterSubscribers = function() {
+            const query = document.getElementById('subscriber-search').value.toLowerCase().trim();
+            if (!query) {
+                renderSubscriberRows(subscribersCache);
+                return;
+            }
+
+            const filtered = {};
+            Object.entries(subscribersCache).forEach(([key, val]) => {
+                const name = (val.name || "").toLowerCase();
+                const email = (val.email || "").toLowerCase();
+                const notes = (val.notes || "").toLowerCase();
+
+                if (name.includes(query) || email.includes(query) || notes.includes(query)) {
+                    filtered[key] = val;
+                }
+            });
+
+            renderSubscriberRows(filtered);
+        };
     </script>
 
     <!-- Add/Edit Email Template Modal -->
@@ -2590,6 +2802,38 @@
                     Close
                 </button>
             </div>
+    <!-- Add/Edit Subscriber Modal -->
+    <div id="subscriber-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl border border-gray-100 m-4 text-left">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+                <h3 class="text-sm font-bold text-brand-blue uppercase tracking-wider" id="subscriber-modal-title">Add Subscriber</h3>
+                <button onclick="closeSubscriberModal()" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <form id="subscriber-form" class="space-y-4">
+                <input type="hidden" id="subscriber-id">
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Subscriber Name</label>
+                    <input type="text" id="subscriber-name" required placeholder="e.g. John Doe" class="w-full bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Email Address</label>
+                    <input type="email" id="subscriber-email" required placeholder="e.g. client@domain.com" class="w-full bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Notes / Tags</label>
+                    <input type="text" id="subscriber-notes" placeholder="e.g. Interested in Maitama Duplex" class="w-full bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800">
+                </div>
+                <div class="pt-2 flex justify-end gap-3">
+                    <button type="button" onclick="closeSubscriberModal()" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 bg-brand-magenta hover:bg-brand-magenta/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm">
+                        Save Subscriber
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
