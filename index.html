@@ -830,7 +830,7 @@
 
         // Hydrate dynamic Homepage Promotion Banner
         const bannerContainer = document.getElementById('urgent-sale-banner-container');
-        onValue(ref(db, 'urgentSaleBanner'), (snapshot) => {
+        onValue(ref(db, 'articles/urgentSaleBanner'), (snapshot) => {
             if (snapshot.exists()) {
                 const banner = snapshot.val();
                 if (banner && banner.active) {

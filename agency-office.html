@@ -1865,7 +1865,7 @@
                 if (snapshot.exists()) {
                     const data = snapshot.val();
                     Object.values(data).forEach(res => {
-                        if (res.type !== 'content') {
+                        if (res.type !== 'content' && res.type !== 'email' && res.type !== 'banner') {
                             renderCard(res, false);
                         }
                     });
@@ -2374,7 +2374,7 @@
 
         window.deleteEmailTemplate = function(key) {
             if (confirm("Are you sure you want to permanently delete this email template?")) {
-                remove(ref(db, `agencyEmails/${key}`)).then(() => {
+                remove(ref(db, `agencyResources/${key}`)).then(() => {
                     triggerToast("Email template deleted successfully!");
                 }).catch(err => {
                     alert("Delete failed: " + err.message);
@@ -2394,18 +2394,19 @@
                 name: name,
                 subject: subject,
                 htmlContent: htmlContent,
+                type: 'email',
                 createdAt: id && emailTemplatesCache[id] ? emailTemplatesCache[id].createdAt : Date.now()
             };
 
             if (id) {
-                set(ref(db, `agencyEmails/${id}`), payload).then(() => {
+                set(ref(db, `agencyResources/${id}`), payload).then(() => {
                     closeEmailModal();
                     triggerToast("Email template updated successfully!");
                 }).catch(err => {
                     alert("Error saving: " + err.message);
                 });
             } else {
-                const newRef = push(ref(db, 'agencyEmails'));
+                const newRef = push(ref(db, 'agencyResources'));
                 set(newRef, payload).then(() => {
                     closeEmailModal();
                     triggerToast("Email template added successfully!");
@@ -2415,75 +2416,87 @@
             }
         });
 
-        function loadEmailTemplates() {
-            onValue(ref(db, 'agencyEmails'), (snapshot) => {
+        window.loadEmailTemplates = function() {
+            onValue(ref(db, 'agencyResources'), (snapshot) => {
                 const grid = document.getElementById('email-templates-grid');
                 grid.innerHTML = '';
                 emailTemplatesCache = {};
 
-                if (!snapshot.exists()) {
+                let emailsCount = 0;
+                let data = {};
+                if (snapshot.exists()) {
+                    data = snapshot.val();
+                    Object.entries(data).forEach(([key, val]) => {
+                        if (val.type === 'email') {
+                            emailsCount++;
+                        }
+                    });
+                }
+
+                if (emailsCount === 0) {
                     // Seed the default Idu price slash template automatically!
-                    const seedRef = push(ref(db, 'agencyEmails'));
+                    const seedRef = push(ref(db, 'agencyResources'));
                     set(seedRef, {
                         name: "Idu Property Slashed to ₦1 Billion",
                         subject: "MASSIVE DISCOUNT: Abuja Idu Industrial / Residential Plot Slashed to ₦1 Billion!",
                         htmlContent: iduEmailBoilerplate,
+                        type: 'email',
                         createdAt: Date.now()
                     });
                     return;
                 }
 
-                snapshot.forEach((child) => {
-                    const key = child.key;
-                    const val = child.val();
-                    emailTemplatesCache[key] = val;
+                Object.entries(data).forEach(([key, val]) => {
+                    if (val.type === 'email') {
+                        emailTemplatesCache[key] = val;
 
-                    const card = document.createElement('div');
-                    card.className = "bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm space-y-4";
+                        const card = document.createElement('div');
+                        card.className = "bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm space-y-4 text-left";
 
-                    let editButtons = "";
-                    if (currentUserRole === 'admin' || currentUserRole === 'pa' || currentUserRole === 'marketing') {
-                        editButtons = `
-                            <button onclick="openEmailModal('${key}')" class="px-2.5 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-gray-200">Edit</button>
-                            <button onclick="deleteEmailTemplate('${key}')" class="px-2.5 py-1.5 bg-red-50 hover:bg-brand-magenta text-red-700 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-red-200">Delete</button>
+                        let editButtons = "";
+                        if (currentUserRole === 'admin' || currentUserRole === 'pa' || currentUserRole === 'marketing') {
+                            editButtons = `
+                                <button onclick="openEmailModal('${key}')" class="px-2.5 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-gray-200">Edit</button>
+                                <button onclick="deleteEmailTemplate('${key}')" class="px-2.5 py-1.5 bg-red-50 hover:bg-brand-magenta text-red-700 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-red-200">Delete</button>
+                            `;
+                        }
+
+                        card.innerHTML = `
+                            <div class="flex items-center justify-between gap-2 border-b border-gray-250 pb-2">
+                                <h3 class="text-xs font-extrabold text-brand-blue uppercase tracking-wide truncate max-w-[70%]">${val.name}</h3>
+                                <span class="text-[9px] text-gray-400 font-bold uppercase shrink-0">${timeAgo(val.createdAt)}</span>
+                            </div>
+                            <div class="space-y-1">
+                                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Subject Line:</span>
+                                <div class="flex items-center justify-between gap-2 bg-white px-3 py-2 rounded-xl border border-gray-200">
+                                    <p class="text-xs text-gray-700 truncate font-semibold">${val.subject}</p>
+                                    <button onclick="copyEmailTemplateSubject('${key}')" class="text-[10px] text-brand-magenta hover:text-brand-blue font-extrabold uppercase shrink-0">Copy</button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between gap-2 pt-2">
+                                <button onclick="previewEmailTemplate('${key}')" class="px-3 py-1.5 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm">Preview Email</button>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="copyEmailTemplateHtml('${key}')" class="px-3 py-1.5 bg-green-50 hover:bg-green-500 text-green-700 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors border border-green-200 flex items-center gap-1">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                                        Copy Code
+                                    </button>
+                                    ${editButtons}
+                                </div>
+                            </div>
                         `;
+
+                        grid.appendChild(card);
                     }
-
-                    card.innerHTML = `
-                        <div class="flex items-center justify-between gap-2 border-b border-gray-250 pb-2">
-                            <h3 class="text-xs font-extrabold text-brand-blue uppercase tracking-wide truncate max-w-[70%]">${val.name}</h3>
-                            <span class="text-[9px] text-gray-400 font-bold uppercase shrink-0">${timeAgo(val.createdAt)}</span>
-                        </div>
-                        <div class="space-y-1">
-                            <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Subject Line:</span>
-                            <div class="flex items-center justify-between gap-2 bg-white px-3 py-2 rounded-xl border border-gray-200">
-                                <p class="text-xs text-gray-700 truncate font-semibold">${val.subject}</p>
-                                <button onclick="copyEmailTemplateSubject('${key}')" class="text-[10px] text-brand-magenta hover:text-brand-blue font-extrabold uppercase shrink-0">Copy</button>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between gap-2 pt-2">
-                            <button onclick="previewEmailTemplate('${key}')" class="px-3 py-1.5 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm">Preview Email</button>
-                            <div class="flex items-center gap-2">
-                                <button onclick="copyEmailTemplateHtml('${key}')" class="px-3 py-1.5 bg-green-50 hover:bg-green-500 text-green-700 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors border border-green-200 flex items-center gap-1">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-                                    Copy Code
-                                </button>
-                                ${editButtons}
-                            </div>
-                        </div>
-                    `;
-
-                    grid.appendChild(card);
                 });
             });
-        }
+        };
 
         // --- HOMEPAGE PROMO BANNER MANAGER LOGIC ---
-        function loadPromoBannerSettings() {
-            onValue(ref(db, 'urgentSaleBanner'), (snapshot) => {
+        window.loadPromoBannerSettings = function() {
+            onValue(ref(db, 'articles/urgentSaleBanner'), (snapshot) => {
                 if (!snapshot.exists()) {
                     // Seed the default urgent sale banner
-                    set(ref(db, 'urgentSaleBanner'), {
+                    set(ref(db, 'articles/urgentSaleBanner'), {
                         active: true,
                         pcBannerUrl: "images/banner pc size.jpeg",
                         mobileBannerUrl: "images/banner mobile .jpeg",
@@ -2498,7 +2511,7 @@
                 document.getElementById('banner-mobile-url').value = banner.mobileBannerUrl || "images/banner mobile .jpeg";
                 document.getElementById('banner-target-url').value = banner.targetUrl || "";
             });
-        }
+        };
 
         document.getElementById('promo-banner-form').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -2507,7 +2520,7 @@
             const mobileUrl = document.getElementById('banner-mobile-url').value.trim();
             const targetUrl = document.getElementById('banner-target-url').value.trim();
 
-            set(ref(db, 'urgentSaleBanner'), {
+            set(ref(db, 'articles/urgentSaleBanner'), {
                 active: active,
                 pcBannerUrl: pcUrl,
                 mobileBannerUrl: mobileUrl,
