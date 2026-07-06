@@ -189,6 +189,11 @@
                     Resource Assets Library
                 </button>
 
+                <button onclick="switchTab('email-hub')" id="tab-btn-email-hub" class="tab-btn w-full flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group text-xs">
+                    <svg class="w-5 h-5 mr-3 group-hover:text-brand-magenta transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    Email Marketing Hub
+                </button>
+
                 <button onclick="switchTab('profile')" id="tab-btn-profile" class="tab-btn w-full flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group text-xs">
                     <svg class="w-5 h-5 mr-3 group-hover:text-brand-magenta transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                     Profile & Settings
@@ -404,6 +409,37 @@
                             </button>
                         </form>
 
+                        <!-- Homepage Promo Banner Controller (Visible to Admin/SmartKode only) -->
+                        <div id="promo-banner-controller-card" class="bg-gray-50 p-6 rounded-2xl border border-gray-200 mb-8">
+                            <h4 class="text-xs font-bold text-brand-magenta uppercase tracking-wider border-b border-gray-200 pb-2 mb-4">Homepage Promo Banner Manager</h4>
+                            <form id="promo-banner-form" class="space-y-4">
+                                <div class="flex items-center gap-3 bg-white p-3.5 rounded-xl border border-gray-200">
+                                    <input type="checkbox" id="banner-active" class="w-4.5 h-4.5 accent-brand-magenta cursor-pointer">
+                                    <div>
+                                        <label for="banner-active" class="block text-xs font-bold text-brand-blue cursor-pointer">Activate Promo Banner on Homepage</label>
+                                        <p class="text-[10px] text-gray-400 font-medium">Toggle this to instantly publish or remove the urgent sale banner on the frontpage.</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">PC / Desktop Banner Image URL</label>
+                                        <input type="text" id="banner-pc-url" required value="images/banner pc size.jpeg" class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Mobile Banner Image URL</label>
+                                        <input type="text" id="banner-mobile-url" required value="images/banner mobile .jpeg" class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Banner Click Redirection URL (e.g. WhatsApp support link)</label>
+                                    <input type="url" id="banner-target-url" required value="https://wa.me/2348081975967?text=Hi%20Praise%20Dynasty%2C%20I%20am%20interested%20in%20the%20urgent%20land%20sale%20offer%20at%20Idu%20slashed%20to%20%E2%82%A61%20Billion.%20Please%20provide%20more%20details." class="w-full bg-white border border-gray-200 focus:border-brand-magenta rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800">
+                                </div>
+                                <button type="submit" class="px-6 py-3 bg-brand-blue hover:bg-brand-blue/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm">
+                                    Update Promo Banner Settings
+                                </button>
+                            </form>
+                        </div>
+
                         <!-- smartkode logs feed -->
                         <div class="flex flex-col gap-4">
                             <h4 class="text-xs font-bold text-brand-blue uppercase tracking-wider border-b border-gray-100 pb-2 mb-2">Technical & Marketing Logs Archive</h4>
@@ -618,6 +654,27 @@
                         <!-- Resource Drive Links -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="library-assets-grid">
                             <!-- Seeded resources + Dynamic files -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7B. TAB: EMAIL MARKETING HUB -->
+                <div id="tab-email-hub-view" class="tab-view hidden space-y-6">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-100 pb-6 mb-6">
+                            <div>
+                                <h2 class="text-lg font-bold text-brand-blue mb-1">Email Marketing Hub</h2>
+                                <p class="text-xs text-gray-400">Manage, preview, copy, and create branded email templates for Zoho Mail marketing campaigns.</p>
+                            </div>
+                            <button onclick="openEmailModal()" class="px-5 py-2.5 bg-brand-magenta hover:bg-brand-magenta/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center gap-1.5 self-start">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                Add Template
+                            </button>
+                        </div>
+
+                        <!-- Email Templates Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="email-templates-grid">
+                            <!-- Dynamic email templates from Firebase -->
                         </div>
                     </div>
                 </div>
@@ -857,6 +914,7 @@
                 leads: "Leads Pipeline Tracker",
                 tasks: "Assigned Tasks Board",
                 library: "Resource Assets Library",
+                'email-hub': "Email Marketing Hub",
                 profile: "Profile & Settings",
                 'general-content': "General Content Templates",
                 staff: "Staff Management"
@@ -979,6 +1037,9 @@
                 document.getElementById('assign-task-form').classList.remove('hidden');
                 document.getElementById('add-resource-form').classList.remove('hidden');
 
+                const promoBannerCard = document.getElementById('promo-banner-controller-card');
+                if (promoBannerCard) promoBannerCard.classList.remove('hidden');
+
                 const adminUploadForm = document.getElementById('add-general-content-form');
                 if (adminUploadForm) adminUploadForm.classList.remove('hidden');
                 
@@ -1026,6 +1087,9 @@
                         document.getElementById('tab-btn-staff').classList.add('hidden');
                         document.getElementById('admin-announcement-card').classList.add('hidden');
                         document.getElementById('assign-task-form').classList.add('hidden');
+                        
+                        const promoBannerCard = document.getElementById('promo-banner-controller-card');
+                        if (promoBannerCard) promoBannerCard.classList.add('hidden');
                         
                         // Resource Assets: PA and Marketing can upload resource files
                         if (currentUserRole === 'pa' || currentUserRole === 'marketing') {
@@ -1085,11 +1149,17 @@
             const welcomeMsg = document.getElementById('welcome-message');
             const welcomeSubText = document.getElementById('welcome-subtext');
             const welcomeName = currentUserProfile ? currentUserProfile.name : (currentUser ? currentUser.email.split('@')[0] : "Staff User");
+            const isSmartKode = currentUser && currentUser.email && currentUser.email.toLowerCase().includes('smartkode');
 
             // If the user is Admin (Mr. Praise), we hide input forms meant only for staff
             if (currentUserRole === 'admin') {
-                if (welcomeMsg) welcomeMsg.innerText = "Welcome back, Mr. Praise (CEO)!";
-                if (welcomeSubText) welcomeSubText.innerText = "Monitoring Praise Dynasty operations, tech updates, and staff timesheets.";
+                if (isSmartKode) {
+                    if (welcomeMsg) welcomeMsg.innerText = "Welcome back, SmartKode Partner!";
+                    if (welcomeSubText) welcomeSubText.innerText = "Monitoring Praise Dynasty operations, logging platform and SEO health updates.";
+                } else {
+                    if (welcomeMsg) welcomeMsg.innerText = "Welcome back, Mr. Praise (CEO)!";
+                    if (welcomeSubText) welcomeSubText.innerText = "Monitoring Praise Dynasty operations, tech updates, and staff timesheets.";
+                }
 
                 // Show Admin stats cards
                 document.getElementById('card-stat-leads').classList.remove('hidden');
@@ -1103,10 +1173,15 @@
                 // Hide input forms
                 document.getElementById('daily-log-form').classList.add('hidden');
                 document.getElementById('video-submit-form').classList.add('hidden');
-                document.getElementById('smartkode-log-form').classList.add('hidden');
                 
-                // Show tech log instructions message for Admin instead
-                document.querySelector('#tab-smartkode-view p.text-gray-400').innerText = "Technical and platform log registry submitted by SmartKode. Read updates below.";
+                if (isSmartKode) {
+                    document.getElementById('smartkode-log-form').classList.remove('hidden');
+                    document.querySelector('#tab-smartkode-view p.text-gray-400').innerText = "Register technical, SEO, and property uploads below.";
+                } else {
+                    document.getElementById('smartkode-log-form').classList.add('hidden');
+                    document.querySelector('#tab-smartkode-view p.text-gray-400').innerText = "Technical and platform log registry submitted by SmartKode. Read updates below.";
+                }
+                
                 document.querySelector('#tab-tracker-view p.text-gray-400').innerText = "Monitoring reports submitted by agents, PAs and media creators below.";
                 document.querySelector('#tab-tiktok-view p.text-gray-400').innerText = "Review submitted TikTok draft submissions. Approve drafts or leave feedback comments below.";
             } else {
@@ -1149,6 +1224,8 @@
             loadTasks();
             loadResourcesLibrary();
             loadGeneralContent();
+            loadEmailTemplates();
+            loadPromoBannerSettings();
         }
 
         function triggerToast(message) {
@@ -2056,7 +2133,452 @@
                 alert("Error publishing template: " + err.message);
             });
         });
+
+        // --- EMAIL MARKETING HUB LOGIC ---
+        let emailTemplatesCache = {};
+
+        const defaultBrandedBoilerplate = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praise Dynasty Real Estate</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F4F6F9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #F4F6F9; padding: 40px 10px;">
+        <tr>
+            <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #FFFFFF; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #E5E7EB;">
+                    <tr>
+                        <td align="center" style="background-color: #FFFFFF; padding: 30px 20px; border-bottom: 2px solid #F1F5F9;">
+                            <img src="https://www.praisedynastyrealty.com/images/logo-light.jpg" alt="Praise Dynasty Real Estate" width="150" style="display: block; border: 0; max-width: 100%; height: auto;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 40px 35px; color: #374151;">
+                            <h2 style="margin-top: 0; margin-bottom: 20px; font-size: 19px; font-weight: 700; color: #0A192F; font-family: Arial, sans-serif; letter-spacing: -0.3px;">
+                                Hi [Client Name],
+                            </h2>
+                            <p style="margin-top: 0; margin-bottom: 20px; font-size: 14px; line-height: 1.6; color: #4B5563; font-family: Arial, sans-serif;">
+                                We are pleased to bring you a premium update regarding our exclusive real estate portfolio in Abuja.
+                            </p>
+                            <p style="margin-bottom: 35px; font-size: 14px; line-height: 1.6; color: #4B5563; font-family: Arial, sans-serif;">
+                                [Add your text body here]
+                            </p>
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 35px;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="https://wa.me/2348081975967" target="_blank" style="display: inline-block; background-color: #D92662; color: #FFFFFF; font-size: 13px; font-weight: bold; text-decoration: none; padding: 16px 40px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(217, 38, 98, 0.2); font-family: Arial, sans-serif;">
+                                            Contact Partner
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="margin-bottom: 5px; font-size: 14px; font-weight: bold; color: #0A192F; font-family: Arial, sans-serif;">
+                                Your property partner,
+                            </p>
+                            <p style="margin-top: 0; font-size: 14px; font-weight: bold; color: #D92662; font-family: Arial, sans-serif;">
+                                Praise Dynasty Realty
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="background-color: #F8FAFC; padding: 35px 25px; border-top: 1px solid #E2E8F0; text-align: center;">
+                            <table border="0" cellpadding="0" cellspacing="0" align="center" style="margin-bottom: 25px;">
+                                <tr>
+                                    <td align="center" style="padding: 0 15px;">
+                                        <a href="https://www.instagram.com/praisedynasty" target="_blank" style="text-decoration: none; color: #475569; font-size: 12px; font-family: Arial, sans-serif; font-weight: 500;">
+                                            <img src="https://img.icons8.com/ios-filled/40/D92662/instagram-new.png" width="18" height="18" alt="Instagram" style="vertical-align: middle; margin-right: 5px; border: 0;">
+                                            <span style="vertical-align: middle;">@praisedynasty</span>
+                                        </a>
+                                    </td>
+                                    <td align="center" style="padding: 0 15px;">
+                                        <a href="https://wa.me/2348081975967" target="_blank" style="text-decoration: none; color: #475569; font-size: 12px; font-family: Arial, sans-serif; font-weight: 500;">
+                                            <img src="https://img.icons8.com/ios-filled/40/D92662/whatsapp.png" width="18" height="18" alt="WhatsApp" style="vertical-align: middle; margin-right: 5px; border: 0;">
+                                            <span style="vertical-align: middle;">+234 808 197 5967</span>
+                                        </a>
+                                    </td>
+                                    <td align="center" style="padding: 0 15px;">
+                                        <a href="https://www.praisedynastyrealty.com" target="_blank" style="text-decoration: none; color: #475569; font-size: 12px; font-family: Arial, sans-serif; font-weight: 500;">
+                                            <img src="https://img.icons8.com/ios-filled/40/D92662/domain.png" width="18" height="18" alt="Website" style="vertical-align: middle; margin-right: 5px; border: 0;">
+                                            <span style="vertical-align: middle;">Website</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="margin: 0; font-size: 11px; line-height: 1.6; color: #94A3B8; font-family: Arial, sans-serif;">
+                                This email was sent by Praise Dynasty Realty. You are receiving this because you signed up on our website or requested property brochures from our team.
+                            </p>
+                            <p style="margin-top: 6px; margin-bottom: 0; font-size: 11px; color: #94A3B8; font-family: Arial, sans-serif;">
+                                If you wish to stop receiving updates, you can <a href="mailto:info@praisedynastyrealty.com?subject=Unsubscribe" style="color: #D92662; text-decoration: underline;">unsubscribe here</a>.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>`;
+
+        const iduEmailBoilerplate = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praise Dynasty Real Estate</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F4F6F9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #F4F6F9; padding: 40px 10px;">
+        <tr>
+            <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #FFFFFF; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #E5E7EB;">
+                    <tr>
+                        <td align="center" style="background-color: #FFFFFF; padding: 30px 20px; border-bottom: 2px solid #F1F5F9;">
+                            <img src="https://www.praisedynastyrealty.com/images/logo-light.jpg" alt="Praise Dynasty Real Estate" width="150" style="display: block; border: 0; max-width: 100%; height: auto;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 40px 35px; color: #374151;">
+                            <h2 style="margin-top: 0; margin-bottom: 20px; font-size: 19px; font-weight: 700; color: #0A192F; font-family: Arial, sans-serif; letter-spacing: -0.3px;">
+                                Hi Partner,
+                            </h2>
+                            <p style="margin-top: 0; margin-bottom: 20px; font-size: 14px; line-height: 1.6; color: #4B5563; font-family: Arial, sans-serif;">
+                                We are writing to inform you of a price update regarding the prime property at Idu, Abuja.
+                            </p>
+                            <p style="margin-top: 0; margin-bottom: 20px; font-size: 14px; line-height: 1.6; color: #4B5563; font-family: Arial, sans-serif;">
+                                The vendor has reduced the price from the initial <strong>₦1.3 Billion</strong> to a <strong>₦1 Billion asking price</strong>. This represents a massive discount and a prime investment window in one of Abuja's fastest-developing industrial and residential corridors.
+                            </p>
+                            <p style="margin-bottom: 35px; font-size: 14px; line-height: 1.6; color: #4B5563; font-family: Arial, sans-serif;">
+                                Could you please relay this new pricing to all clients or contacts you have previously briefed on this property? Thank you for your assistance.
+                            </p>
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 35px;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="https://wa.me/2348081975967?text=Hi%20Praise%20Dynasty%2C%20I%20am%20interested%20in%20the%20urgent%20land%20sale%20offer%20at%20Idu%20slashed%20to%20%E2%82%A61%20Billion." target="_blank" style="display: inline-block; background-color: #D92662; color: #FFFFFF; font-size: 13px; font-weight: bold; text-decoration: none; padding: 16px 40px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(217, 38, 98, 0.2); font-family: Arial, sans-serif;">
+                                            Discuss on WhatsApp
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="margin-bottom: 5px; font-size: 14px; font-weight: bold; color: #0A192F; font-family: Arial, sans-serif;">
+                                Your property partner,
+                            </p>
+                            <p style="margin-top: 0; font-size: 14px; font-weight: bold; color: #D92662; font-family: Arial, sans-serif;">
+                                Praise Dynasty Realty
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="background-color: #F8FAFC; padding: 35px 25px; border-top: 1px solid #E2E8F0; text-align: center;">
+                            <table border="0" cellpadding="0" cellspacing="0" align="center" style="margin-bottom: 25px;">
+                                <tr>
+                                    <td align="center" style="padding: 0 15px;">
+                                        <a href="https://www.instagram.com/praisedynasty" target="_blank" style="text-decoration: none; color: #475569; font-size: 12px; font-family: Arial, sans-serif; font-weight: 500;">
+                                            <img src="https://img.icons8.com/ios-filled/40/D92662/instagram-new.png" width="18" height="18" alt="Instagram" style="vertical-align: middle; margin-right: 5px; border: 0;">
+                                            <span style="vertical-align: middle;">@praisedynasty</span>
+                                        </a>
+                                    </td>
+                                    <td align="center" style="padding: 0 15px;">
+                                        <a href="https://wa.me/2348081975967" target="_blank" style="text-decoration: none; color: #475569; font-size: 12px; font-family: Arial, sans-serif; font-weight: 500;">
+                                            <img src="https://img.icons8.com/ios-filled/40/D92662/whatsapp.png" width="18" height="18" alt="WhatsApp" style="vertical-align: middle; margin-right: 5px; border: 0;">
+                                            <span style="vertical-align: middle;">+234 808 197 5967</span>
+                                        </a>
+                                    </td>
+                                    <td align="center" style="padding: 0 15px;">
+                                        <a href="https://www.praisedynastyrealty.com" target="_blank" style="text-decoration: none; color: #475569; font-size: 12px; font-family: Arial, sans-serif; font-weight: 500;">
+                                            <img src="https://img.icons8.com/ios-filled/40/D92662/domain.png" width="18" height="18" alt="Website" style="vertical-align: middle; margin-right: 5px; border: 0;">
+                                            <span style="vertical-align: middle;">Website</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="margin: 0; font-size: 11px; line-height: 1.6; color: #94A3B8; font-family: Arial, sans-serif;">
+                                This email was sent by Praise Dynasty Realty. You are receiving this because you signed up on our website or requested property brochures from our team.
+                            </p>
+                            <p style="margin-top: 6px; margin-bottom: 0; font-size: 11px; color: #94A3B8; font-family: Arial, sans-serif;">
+                                If you wish to stop receiving updates, you can <a href="mailto:info@praisedynastyrealty.com?subject=Unsubscribe" style="color: #D92662; text-decoration: underline;">unsubscribe here</a>.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>`;
+
+        window.openEmailModal = function(id = '') {
+            const form = document.getElementById('email-template-form');
+            form.reset();
+            document.getElementById('email-template-id').value = id;
+            
+            if (id) {
+                document.getElementById('email-modal-title').innerText = "Edit Email Template";
+                const temp = emailTemplatesCache[id];
+                if (temp) {
+                    document.getElementById('email-template-name').value = temp.name || '';
+                    document.getElementById('email-template-subject').value = temp.subject || '';
+                    document.getElementById('email-template-html').value = temp.htmlContent || '';
+                }
+            } else {
+                document.getElementById('email-modal-title').innerText = "Add Email Template";
+            }
+            
+            document.getElementById('email-modal').classList.remove('hidden');
+        };
+
+        window.closeEmailModal = function() {
+            document.getElementById('email-modal').classList.add('hidden');
+        };
+
+        window.loadDefaultEmailBoilerplate = function() {
+            document.getElementById('email-template-html').value = defaultBrandedBoilerplate;
+        };
+
+        window.copyEmailTemplateHtml = function(key) {
+            const temp = emailTemplatesCache[key];
+            if (temp && temp.htmlContent) {
+                navigator.clipboard.writeText(temp.htmlContent).then(() => {
+                    triggerToast("HTML Template copied successfully!");
+                }).catch(err => {
+                    alert("Copy failed: " + err.message);
+                });
+            }
+        };
+
+        window.copyEmailTemplateSubject = function(key) {
+            const temp = emailTemplatesCache[key];
+            if (temp && temp.subject) {
+                navigator.clipboard.writeText(temp.subject).then(() => {
+                    triggerToast("Subject line copied successfully!");
+                }).catch(err => {
+                    alert("Copy failed: " + err.message);
+                });
+            }
+        };
+
+        window.previewEmailTemplate = function(key) {
+            const temp = emailTemplatesCache[key];
+            if (temp && temp.htmlContent) {
+                document.getElementById('email-preview-title').innerText = `Preview: ${temp.name}`;
+                const frame = document.getElementById('email-preview-frame');
+                frame.srcdoc = temp.htmlContent;
+                document.getElementById('email-preview-modal').classList.remove('hidden');
+            }
+        };
+
+        window.closeEmailPreviewModal = function() {
+            document.getElementById('email-preview-modal').classList.add('hidden');
+        };
+
+        window.deleteEmailTemplate = function(key) {
+            if (confirm("Are you sure you want to permanently delete this email template?")) {
+                remove(ref(db, `agencyEmails/${key}`)).then(() => {
+                    triggerToast("Email template deleted successfully!");
+                }).catch(err => {
+                    alert("Delete failed: " + err.message);
+                });
+            }
+        };
+
+        // Form Submission
+        document.getElementById('email-template-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('email-template-id').value;
+            const name = document.getElementById('email-template-name').value.trim();
+            const subject = document.getElementById('email-template-subject').value.trim();
+            const htmlContent = document.getElementById('email-template-html').value.trim();
+
+            const payload = {
+                name: name,
+                subject: subject,
+                htmlContent: htmlContent,
+                createdAt: id && emailTemplatesCache[id] ? emailTemplatesCache[id].createdAt : Date.now()
+            };
+
+            if (id) {
+                set(ref(db, `agencyEmails/${id}`), payload).then(() => {
+                    closeEmailModal();
+                    triggerToast("Email template updated successfully!");
+                }).catch(err => {
+                    alert("Error saving: " + err.message);
+                });
+            } else {
+                const newRef = push(ref(db, 'agencyEmails'));
+                set(newRef, payload).then(() => {
+                    closeEmailModal();
+                    triggerToast("Email template added successfully!");
+                }).catch(err => {
+                    alert("Error saving: " + err.message);
+                });
+            }
+        });
+
+        function loadEmailTemplates() {
+            onValue(ref(db, 'agencyEmails'), (snapshot) => {
+                const grid = document.getElementById('email-templates-grid');
+                grid.innerHTML = '';
+                emailTemplatesCache = {};
+
+                if (!snapshot.exists()) {
+                    // Seed the default Idu price slash template automatically!
+                    const seedRef = push(ref(db, 'agencyEmails'));
+                    set(seedRef, {
+                        name: "Idu Property Slashed to ₦1 Billion",
+                        subject: "MASSIVE DISCOUNT: Abuja Idu Industrial / Residential Plot Slashed to ₦1 Billion!",
+                        htmlContent: iduEmailBoilerplate,
+                        createdAt: Date.now()
+                    });
+                    return;
+                }
+
+                snapshot.forEach((child) => {
+                    const key = child.key;
+                    const val = child.val();
+                    emailTemplatesCache[key] = val;
+
+                    const card = document.createElement('div');
+                    card.className = "bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm space-y-4";
+
+                    let editButtons = "";
+                    if (currentUserRole === 'admin' || currentUserRole === 'pa' || currentUserRole === 'marketing') {
+                        editButtons = `
+                            <button onclick="openEmailModal('${key}')" class="px-2.5 py-1.5 bg-white hover:bg-gray-100 text-gray-700 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-gray-200">Edit</button>
+                            <button onclick="deleteEmailTemplate('${key}')" class="px-2.5 py-1.5 bg-red-50 hover:bg-brand-magenta text-red-700 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border border-red-200">Delete</button>
+                        `;
+                    }
+
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between gap-2 border-b border-gray-250 pb-2">
+                            <h3 class="text-xs font-extrabold text-brand-blue uppercase tracking-wide truncate max-w-[70%]">${val.name}</h3>
+                            <span class="text-[9px] text-gray-400 font-bold uppercase shrink-0">${timeAgo(val.createdAt)}</span>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Subject Line:</span>
+                            <div class="flex items-center justify-between gap-2 bg-white px-3 py-2 rounded-xl border border-gray-200">
+                                <p class="text-xs text-gray-700 truncate font-semibold">${val.subject}</p>
+                                <button onclick="copyEmailTemplateSubject('${key}')" class="text-[10px] text-brand-magenta hover:text-brand-blue font-extrabold uppercase shrink-0">Copy</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between gap-2 pt-2">
+                            <button onclick="previewEmailTemplate('${key}')" class="px-3 py-1.5 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm">Preview Email</button>
+                            <div class="flex items-center gap-2">
+                                <button onclick="copyEmailTemplateHtml('${key}')" class="px-3 py-1.5 bg-green-50 hover:bg-green-500 text-green-700 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors border border-green-200 flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                                    Copy Code
+                                </button>
+                                ${editButtons}
+                            </div>
+                        </div>
+                    `;
+
+                    grid.appendChild(card);
+                });
+            });
+        }
+
+        // --- HOMEPAGE PROMO BANNER MANAGER LOGIC ---
+        function loadPromoBannerSettings() {
+            onValue(ref(db, 'urgentSaleBanner'), (snapshot) => {
+                if (!snapshot.exists()) {
+                    // Seed the default urgent sale banner
+                    set(ref(db, 'urgentSaleBanner'), {
+                        active: true,
+                        pcBannerUrl: "images/banner pc size.jpeg",
+                        mobileBannerUrl: "images/banner mobile .jpeg",
+                        targetUrl: "https://wa.me/2348081975967?text=Hi%20Praise%20Dynasty%2C%20I%20am%20interested%20in%20the%20urgent%20land%20sale%20offer%20at%20Idu%20slashed%20to%20%E2%82%A61%20Billion.%20Please%20provide%20more%20details."
+                    });
+                    return;
+                }
+
+                const banner = snapshot.val();
+                document.getElementById('banner-active').checked = banner.active || false;
+                document.getElementById('banner-pc-url').value = banner.pcBannerUrl || "images/banner pc size.jpeg";
+                document.getElementById('banner-mobile-url').value = banner.mobileBannerUrl || "images/banner mobile .jpeg";
+                document.getElementById('banner-target-url').value = banner.targetUrl || "";
+            });
+        }
+
+        document.getElementById('promo-banner-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const active = document.getElementById('banner-active').checked;
+            const pcUrl = document.getElementById('banner-pc-url').value.trim();
+            const mobileUrl = document.getElementById('banner-mobile-url').value.trim();
+            const targetUrl = document.getElementById('banner-target-url').value.trim();
+
+            set(ref(db, 'urgentSaleBanner'), {
+                active: active,
+                pcBannerUrl: pcUrl,
+                mobileBannerUrl: mobileUrl,
+                targetUrl: targetUrl
+            }).then(() => {
+                triggerToast("Promo banner settings updated live!");
+            }).catch(err => {
+                alert("Error updating promo banner: " + err.message);
+            });
+        });
     </script>
+
+    <!-- Add/Edit Email Template Modal -->
+    <div id="email-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl w-full max-w-2xl p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto m-4 text-left">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+                <h3 class="text-sm font-bold text-brand-blue uppercase tracking-wider" id="email-modal-title">Add Email Template</h3>
+                <button onclick="closeEmailModal()" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <form id="email-template-form" class="space-y-4">
+                <input type="hidden" id="email-template-id">
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Template Name</label>
+                    <input type="text" id="email-template-name" required placeholder="e.g. Idu Land Price Reduction Update" class="w-full bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800 font-semibold">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Subject Line</label>
+                    <input type="text" id="email-template-subject" required placeholder="e.g. MASSIVE DISCOUNT: Premium Plot at Idu reduced to ₦1 Billion asking price" class="w-full bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl p-3 text-xs focus:outline-none transition-colors text-gray-800">
+                </div>
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider">HTML Content</label>
+                        <button type="button" onclick="loadDefaultEmailBoilerplate()" class="text-[9px] font-extrabold text-brand-magenta uppercase tracking-wider hover:underline focus:outline-none">
+                            Load Branded Boilerplate
+                        </button>
+                    </div>
+                    <textarea id="email-template-html" required rows="10" placeholder="Paste or edit your HTML email layout here..." class="w-full bg-gray-50 border border-gray-200 focus:border-brand-magenta focus:bg-white rounded-xl p-3 text-xs font-mono focus:outline-none transition-colors text-gray-800"></textarea>
+                </div>
+                <div class="pt-2 flex justify-end gap-3">
+                    <button type="button" onclick="closeEmailModal()" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 bg-brand-magenta hover:bg-brand-magenta/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm">
+                        Save Template
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Email Preview Modal -->
+    <div id="email-preview-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl w-full max-w-3xl p-6 shadow-2xl border border-gray-100 h-[90vh] flex flex-col m-4 text-left">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4 shrink-0">
+                <h3 class="text-sm font-bold text-brand-blue uppercase tracking-wider" id="email-preview-title">Preview Email Template</h3>
+                <button onclick="closeEmailPreviewModal()" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="flex-grow overflow-y-auto bg-gray-100 p-4 rounded-xl border border-gray-200 mb-4">
+                <iframe id="email-preview-frame" class="w-full h-full bg-white rounded-lg border-0 shadow-sm"></iframe>
+            </div>
+            <div class="flex justify-end gap-3 shrink-0">
+                <button onclick="closeEmailPreviewModal()" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

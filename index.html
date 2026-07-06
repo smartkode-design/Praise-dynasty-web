@@ -448,12 +448,12 @@
                         <label for="budget-range" class="text-sm font-bold text-brand-blue uppercase tracking-wider">Investment Budget</label>
                         <span id="budget-val-formatted" class="text-2xl font-bold text-brand-magenta">₦ 250,000,000</span>
                     </div>
-                    <input type="range" id="budget-range" min="100000000" max="2000000000" step="10000000" value="250000000"
+                    <input type="range" id="budget-range" min="100000000" max="50000000000" step="50000000" value="250000000"
                            class="w-full h-2.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-magenta">
                     <div class="flex justify-between text-xs text-gray-400 mt-2 font-semibold">
                         <span>₦ 100 Million</span>
-                        <span>₦ 1 Billion</span>
-                        <span>₦ 2 Billion</span>
+                        <span>₦ 10 Billion</span>
+                        <span>₦ 50 Billion</span>
                     </div>
                 </div>
 
@@ -594,6 +594,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Dynamic Promo Banner Section -->
+            <div id="urgent-sale-banner-container" class="mb-12 w-full overflow-hidden rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hidden">
+                <!-- Hydrated dynamically from Firebase -->
             </div>
 
             <!-- Categories Tabs -->
@@ -820,6 +825,31 @@
                 const data = snapshot.val();
                 window.praiseBriefingSettings = data;
                 document.dispatchEvent(new CustomEvent('briefingSettingsLoaded', { detail: data }));
+            }
+        });
+
+        // Hydrate dynamic Homepage Promotion Banner
+        const bannerContainer = document.getElementById('urgent-sale-banner-container');
+        onValue(ref(db, 'urgentSaleBanner'), (snapshot) => {
+            if (snapshot.exists()) {
+                const banner = snapshot.val();
+                if (banner && banner.active) {
+                    bannerContainer.innerHTML = `
+                        <a href="${banner.targetUrl || '#'}" target="_blank" class="block w-full cursor-pointer relative group">
+                            <!-- PC Banner (Desktop/Tablet) -->
+                            <img src="${banner.pcBannerUrl || 'images/banner pc size.jpeg'}" class="hidden sm:block w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.01]" alt="Praise Dynasty Special Offer" loading="lazy">
+                            <!-- Mobile Banner -->
+                            <img src="${banner.mobileBannerUrl || 'images/banner mobile .jpeg'}" class="block sm:hidden w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.01]" alt="Praise Dynasty Special Offer" loading="lazy">
+                            <!-- Subtle luxury border overlay -->
+                            <div class="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none"></div>
+                        </a>
+                    `;
+                    bannerContainer.classList.remove('hidden');
+                } else {
+                    bannerContainer.classList.add('hidden');
+                }
+            } else {
+                bannerContainer.classList.add('hidden');
             }
         });
 
@@ -1451,7 +1481,8 @@
 
             function formatCurrency(amount) {
                 if (amount >= 1000000000) {
-                    return "₦ " + (amount / 1000000000).toFixed(1) + " Billion";
+                    const val = amount / 1000000000;
+                    return "₦ " + (val % 1 === 0 ? val.toFixed(0) : val.toFixed(1)) + " Billion";
                 } else {
                     return "₦ " + (amount / 1000000).toFixed(0) + " Million";
                 }
