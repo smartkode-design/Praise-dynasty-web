@@ -14,11 +14,11 @@
     <meta property="og:type" content="website" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
-    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
     <!-- Compiled Tailwind CSS Stylesheet -->
-    <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="stylesheet" href="/css/tailwind.css">
     <!-- Google Fonts: Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,7 +55,7 @@
     <!-- Navbar Minimal -->
     <nav
         class="absolute top-0 w-full z-50 px-6 py-6 flex justify-between items-center bg-gradient-to-b from-black/60 to-transparent pointer-events-none">
-        <a href="index.html" class="pointer-events-auto flex items-center group">
+        <a href="/index.html" class="pointer-events-auto flex items-center group">
             <div
                 class="bg-white/10 backdrop-blur-md rounded-full p-2 border border-white/20 group-hover:bg-white/30 transition-colors shadow-lg">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,29 +220,72 @@
         const videoSection = document.getElementById('detail-video-section');
         const videoIframe = document.getElementById('detail-video-iframe');
 
+        // Slug Generator with Collision Prevention and MAX_PATH safety
+        function generateSlug(title, location, propertyId) {
+            let cleanTitle = (title || '')
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .trim()
+                .replace(/\s+/g, '-');
+
+            if (cleanTitle.length > 50) {
+                cleanTitle = cleanTitle.substring(0, 50).replace(/-+$/, '');
+            }
+
+            let cleanLocation = (location || '')
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .trim()
+                .replace(/\s+/g, '-');
+
+            if (cleanLocation.length > 30) {
+                cleanLocation = cleanLocation.substring(0, 30).replace(/-+$/, '');
+            }
+
+            const shortId = propertyId ? propertyId.slice(-6).toLowerCase().replace(/[^a-z0-9]/g, 'x') : '';
+            let base = `${cleanTitle}-${cleanLocation}`;
+            base = base.replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+            return `${base}-${shortId}`;
+        }
+
         async function initPropertyDetails() {
             try {
-                // Parse the URL parameter (?id=property123) or hash fragment (#property123)
-                const urlParams = new URLSearchParams(window.location.search);
-                let propertyId = urlParams.get('id');
+                let property = null;
+                let propertyId = null;
 
-                if (!propertyId && window.location.hash) {
-                    propertyId = window.location.hash.substring(1); // Extract from #ID
+                if (window.preRenderedProperty) {
+                    property = window.preRenderedProperty;
+                    propertyId = property.id;
+                } else {
+                    // Parse the URL parameter (?id=property123) or hash fragment (#property123)
+                    const urlParams = new URLSearchParams(window.location.search);
+                    propertyId = urlParams.get('id');
+
+                    if (!propertyId && window.location.hash) {
+                        propertyId = window.location.hash.substring(1); // Extract from #ID
+                    }
+
+                    if (!propertyId) {
+                        throw new Error("No Property ID Supplied.");
+                    }
+
+                    // Query Firebase Realtime Database
+                    const dbRef = ref(db);
+                    const snapshot = await get(child(dbRef, `properties/${propertyId}`));
+
+                    if (!snapshot.exists()) {
+                        throw new Error("Property Not Found in Global Registry.");
+                    }
+
+                    property = snapshot.val();
+
+                    // Legacy Redirect Support: If client loaded details.html, redirect to dynamic SEO path
+                    if (window.location.pathname.endsWith('details.html')) {
+                        const slug = generateSlug(property.title, property.location, propertyId);
+                        window.location.replace(`property/${slug}/`);
+                        return;
+                    }
                 }
-
-                if (!propertyId) {
-                    throw new Error("No Property ID Supplied.");
-                }
-
-                // Query Firebase Realtime Database
-                const dbRef = ref(db);
-                const snapshot = await get(child(dbRef, `properties/${propertyId}`));
-
-                if (!snapshot.exists()) {
-                    throw new Error("Property Not Found in Global Registry.");
-                }
-
-                const property = snapshot.val();
 
                 // Hydrate Basic Layout
                 titleNode.innerText = property.title || 'Exclusive Offering';
@@ -409,7 +452,7 @@
                         <svg class="w-16 h-16 text-gray-400 mb-6 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                         <h2 class="text-3xl font-extrabold text-brand-blue mb-2 tracking-tight">Portfolio Unavailable</h2>
                         <p class="text-gray-500 max-w-md font-medium tracking-wide leading-relaxed">${error.message === "No Property ID Supplied." ? "Invalid property parameters." : "The requested property has been removed from the database or the link is expired."}</p>
-                        <a href="index.html" class="mt-8 bg-brand-magenta text-white font-bold py-3.5 px-8 rounded-xl hover:bg-rose-600 transition-all duration-300 shadow-[0_4px_15px_rgba(224,0,94,0.3)] hover:shadow-brand-magenta/40 hover:-translate-y-0.5 tracking-wider uppercase text-sm">Return to Global Feed</a>
+                        <a href="/index.html" class="mt-8 bg-brand-magenta text-white font-bold py-3.5 px-8 rounded-xl hover:bg-rose-600 transition-all duration-300 shadow-[0_4px_15px_rgba(224,0,94,0.3)] hover:shadow-brand-magenta/40 hover:-translate-y-0.5 tracking-wider uppercase text-sm">Return to Global Feed</a>
                     </div>
                 `;
             }
