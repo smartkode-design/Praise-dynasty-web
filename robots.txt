@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
-
+Disallow: /admin.html
+Disallow: /login.html
 Sitemap: https://www.praisedynastyrealty.com/sitemap.xml
