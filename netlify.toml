@@ -1,0 +1,8 @@
+# Netlify Configuration File
+# Force trailing slash behavior to match sitemap.xml canonicals
+
+trailing_slash = "always"
+
+[build]
+  publish = "."
+  command = "node generate-property-pages.js"

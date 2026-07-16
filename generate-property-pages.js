@@ -122,27 +122,27 @@ async function runGenerator() {
     let sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.praisedynastyrealty.com/</loc>
+    <loc>https://praisedynastyrealty.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.praisedynastyrealty.com/all-listings.html</loc>
+    <loc>https://praisedynastyrealty.com/all-listings.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.praisedynastyrealty.com/articles.html</loc>
+    <loc>https://praisedynastyrealty.com/articles.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.praisedynastyrealty.com/videos.html</loc>
+    <loc>https://praisedynastyrealty.com/videos.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.praisedynastyrealty.com/funnel.html</loc>
+    <loc>https://praisedynastyrealty.com/funnel.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`;
@@ -185,7 +185,7 @@ async function runGenerator() {
             "@type": "RealEstateListing",
             "name": property.title || "Exclusive Offering",
             "description": property.description || "",
-            "url": `https://www.praisedynastyrealty.com/property/${slug}/`,
+            "url": `https://praisedynastyrealty.com/property/${slug}/`,
             "image": imgSource,
             "numberOfRooms": beds,
             "numberOfBathroomsTotal": baths,
@@ -212,11 +212,11 @@ async function runGenerator() {
         // Replace Head SEO Metadata
         pageHtml = pageHtml.replace(/<title>.*?<\/title>/, `<title>${property.title} | Praise Dynasty Real Estate</title>`);
         pageHtml = pageHtml.replace(/<meta name="description" content=".*?">/, `<meta name="description" content="${cleanDesc}">`);
-        pageHtml = pageHtml.replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="https://www.praisedynastyrealty.com/property/${slug}/" />`);
+        pageHtml = pageHtml.replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="https://praisedynastyrealty.com/property/${slug}/" />`);
         pageHtml = pageHtml.replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${property.title} | Praise Dynasty Real Estate" />`);
         pageHtml = pageHtml.replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${cleanDesc}" />`);
         pageHtml = pageHtml.replace(/<meta property="og:image" content=".*?" \/>/, `<meta property="og:image" content="${imgSource}" />`);
-        pageHtml = pageHtml.replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="https://www.praisedynastyrealty.com/property/${slug}/" />`);
+        pageHtml = pageHtml.replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="https://praisedynastyrealty.com/property/${slug}/" />`);
 
         // Replace Legacy Schema block
         const legacySchemaRegex = /<!-- Schema\.org Markup -->[\s\S]*?<\/script>/;
@@ -265,7 +265,7 @@ async function runGenerator() {
         fs.writeFileSync(path.join(destDir, 'index.html'), pageHtml);
 
         // Add to sitemap
-        sitemapContent += `\n  <url>\n    <loc>https://www.praisedynastyrealty.com/property/${slug}/</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`;
+        sitemapContent += `\n  <url>\n    <loc>https://praisedynastyrealty.com/property/${slug}/</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`;
         
         count++;
     }

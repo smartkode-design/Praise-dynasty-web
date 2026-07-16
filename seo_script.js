@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const domain = 'https://www.praisedynastyrealty.com';
+const domain = 'https://praisedynastyrealty.com';
 
 const seoData = {
     'index.html': {
