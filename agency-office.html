@@ -2880,6 +2880,10 @@
                 const notes = (val.notes || "").toLowerCase();
 
                 if (name.includes(query) || email.includes(query) || notes.includes(query)) {
+                    filtered[key] = val;
+                }
+            });
+
             renderSubscriberRows(filtered);
         };
 
