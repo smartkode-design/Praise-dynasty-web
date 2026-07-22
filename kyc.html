@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="robots" content="noindex, nofollow">
+    <title>Secure HR / KYC Compliance Portal | Praise Dynasty Real Estate</title>
+    <meta name="description" content="Secure, statutory identity verification portal for Praise Dynasty staff, partners, and contractors.">
+    <link rel="canonical" href="https://praisedynastyrealty.com/kyc.html" />
+    <meta property="og:title" content="Secure HR / KYC Compliance Portal | Praise Dynasty" />
+    <meta property="og:description" content="Official statutory identity upload portal for Praise Dynasty staff and remote partners." />
+    <meta property="og:image" content="https://praisedynastyrealty.com/images/logo-light.jpg" />
+    <meta property="og:url" content="https://praisedynastyrealty.com/kyc.html" />
+    <meta property="og:type" content="website" />
+
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Compiled Tailwind CSS Stylesheet -->
+    <link rel="stylesheet" href="css/tailwind.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+</head>
+
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col font-sans selection:bg-brand-magenta selection:text-white relative overflow-x-hidden">
+    
+    <!-- Abstract Ambient Glow Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-0 right-1/4 -mt-20 w-96 h-96 rounded-full bg-brand-magenta/10 blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-[30rem] h-[30rem] rounded-full bg-blue-600/10 blur-3xl"></div>
+    </div>
+
+    <!-- Navigation / Header Bar -->
+    <header class="relative z-10 border-b border-gray-800 bg-gray-900/80 backdrop-blur-md sticky top-0">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="./images/logo-light.jpg" alt="Praise Dynasty Real Estate" class="h-10 w-auto rounded object-contain group-hover:scale-105 transition-transform">
+                <span class="text-sm font-bold text-white tracking-tight hidden sm:inline-block">
+                    Praise Dynasty <span class="text-brand-magenta font-medium">KYC Vault</span>
+                </span>
+            </a>
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    256-Bit Encrypted
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 relative z-10">
+        <div class="w-full max-w-2xl bg-gray-800/90 backdrop-blur-xl border border-gray-700/80 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
+            
+            <!-- Section Header -->
+            <div class="text-center space-y-3">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-magenta/10 border border-brand-magenta/30 text-brand-magenta mb-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Statutory Identity & KYC Verification</h1>
+                <p class="text-xs sm:text-sm text-gray-400 max-w-lg mx-auto leading-relaxed">
+                    Official compliance registration for Praise Dynasty staff, agency partners, and remote contractors. Submitted documents are sealed directly into isolated audit archives.
+                </p>
+            </div>
+
+            <!-- Toast Alert Box -->
+            <div id="toast-alert" class="hidden p-4 rounded-xl text-xs font-semibold text-center border transition-all"></div>
+
+            <!-- Form Container -->
+            <div id="kyc-form-container">
+                <form id="public-kyc-form" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        
+                        <!-- Full Legal Name -->
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+                                Full Legal Name (Matching Bank & ID) <span class="text-brand-magenta">*</span>
+                            </label>
+                            <input type="text" id="full-name" required placeholder="e.g. Sandra Okoro" 
+                                class="w-full bg-gray-900/80 border border-gray-700 focus:border-brand-magenta focus:ring-1 focus:ring-brand-magenta rounded-xl p-3.5 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors">
+                        </div>
+
+                        <!-- Email Address -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+                                Email Address <span class="text-brand-magenta">*</span>
+                            </label>
+                            <input type="email" id="email" required placeholder="e.g. sandra@example.com" 
+                                class="w-full bg-gray-900/80 border border-gray-700 focus:border-brand-magenta focus:ring-1 focus:ring-brand-magenta rounded-xl p-3.5 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors">
+                        </div>
+
+                        <!-- Agency Role / Position -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+                                Role / Engagement Type <span class="text-brand-magenta">*</span>
+                            </label>
+                            <select id="role" required 
+                                class="w-full bg-gray-900/80 border border-gray-700 focus:border-brand-magenta focus:ring-1 focus:ring-brand-magenta rounded-xl p-3.5 text-sm text-gray-200 focus:outline-none transition-colors">
+                                <option value="">-- Select Role --</option>
+                                <option value="pa">PA (Personal Assistant)</option>
+                                <option value="tiktok">TikTok & Video Creator</option>
+                                <option value="marketing">Marketing Executive</option>
+                                <option value="agent">Property Agent / Realtor</option>
+                                <option value="partner">SmartKode Tech / Partner</option>
+                                <option value="contractor">Remote Contractor / External Staff</option>
+                                <option value="staff">General Agency Staff</option>
+                            </select>
+                        </div>
+
+                        <!-- BVN -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+                                BVN (Bank Verification Number) <span class="text-brand-magenta">*</span>
+                            </label>
+                            <input type="text" id="bvn" required maxlength="11" placeholder="11 digits sequence" 
+                                class="w-full bg-gray-900/80 border border-gray-700 focus:border-brand-magenta focus:ring-1 focus:ring-brand-magenta rounded-xl p-3.5 text-sm text-white font-mono tracking-widest placeholder-gray-500 focus:outline-none transition-colors">
+                            <p class="text-[10px] text-gray-400 mt-1">Must be exactly 11 digits.</p>
+                        </div>
+
+                        <!-- NIN -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+                                NIN (National Identity Number) <span class="text-brand-magenta">*</span>
+                            </label>
+                            <input type="text" id="nin" required maxlength="11" placeholder="11 digits sequence" 
+                                class="w-full bg-gray-900/80 border border-gray-700 focus:border-brand-magenta focus:ring-1 focus:ring-brand-magenta rounded-xl p-3.5 text-sm text-white font-mono tracking-widest placeholder-gray-500 focus:outline-none transition-colors">
+                            <p class="text-[10px] text-gray-400 mt-1">Must be exactly 11 digits.</p>
+                        </div>
+
+                        <!-- Government ID Upload -->
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+                                Government Issued ID Document (Passport, Drivers License, NIN Slip) <span class="text-brand-magenta">*</span>
+                            </label>
+                            <label class="flex flex-col w-full h-36 border-2 border-dashed border-gray-700 hover:border-brand-magenta rounded-2xl cursor-pointer hover:bg-gray-900/50 transition-all justify-center items-center">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
+                                    <svg class="w-9 h-9 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                    </svg>
+                                    <p class="text-xs text-gray-300 font-semibold" id="file-label-text">Click to choose image or PDF file</p>
+                                    <p class="text-[10px] text-gray-500 mt-1">Supported formats: PNG, JPG, JPEG, PDF (Max 5MB)</p>
+                                </div>
+                                <input type="file" id="id-file" class="hidden" accept="image/*,.pdf" required />
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Upload Progress Bar -->
+                    <div id="progress-wrapper" class="hidden space-y-2 pt-2">
+                        <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-brand-magenta">
+                            <span>Encrypting & Transmitting Payload...</span>
+                            <span id="progress-text">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-900 rounded-full h-2.5 overflow-hidden border border-gray-700">
+                            <div id="progress-bar" class="bg-gradient-to-r from-brand-blue via-brand-magenta to-green-400 h-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Security Alert Callout -->
+                    <div class="bg-gray-900/90 border border-gray-700/80 rounded-2xl p-4 text-xs text-gray-300 flex gap-3 items-start">
+                        <svg class="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div class="space-y-1">
+                            <p class="font-bold text-white uppercase tracking-wider">Zero-Read Vault Protocol</p>
+                            <p class="leading-relaxed text-gray-400">
+                                Documents submitted on this portal are routed directly into an isolated, write-only security container. Submissions cannot be inspected or altered after submission.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submit-btn" class="w-full py-4 bg-gradient-to-r from-brand-blue to-brand-magenta hover:opacity-95 text-white font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        Lock & Seal KYC Document
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success State Screen -->
+            <div id="success-screen" class="hidden text-center py-10 space-y-6">
+                <div class="w-20 h-20 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 flex items-center justify-center mx-auto shadow-xl animate-bounce">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-bold text-white">KYC Verification Locked & Sealed</h2>
+                    <p class="text-xs sm:text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
+                        Thank you. Your BVN, NIN, and Government ID document have been transmitted directly to the secure Praise Dynasty audit vault.
+                    </p>
+                </div>
+                <div class="pt-4">
+                    <button onclick="location.reload()" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all">
+                        Submit Another Verification
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-800 py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 Praise Dynasty Real Estate Ltd. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase Script Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJBGi_WKLDU493eOrH4Emx7xx_li7wzoY",
+            authDomain: "praise-dynasty-hni.firebaseapp.com",
+            projectId: "praise-dynasty-hni",
+            storageBucket: "praise-dynasty-hni.firebasestorage.app",
+            messagingSenderId: "702909860929",
+            appId: "1:702909860929:web:7c9d2a3c899df3dbf0cac0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const firestore = getFirestore(app);
+        const storage = getStorage(app);
+
+        // Restrict input fields to digits only
+        const restrictDigits = (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        };
+        document.getElementById('bvn').addEventListener('input', restrictDigits);
+        document.getElementById('nin').addEventListener('input', restrictDigits);
+
+        // Update file label text
+        document.getElementById('id-file').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const textEl = document.getElementById('file-label-text');
+            if (file) {
+                textEl.innerText = `Selected File: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+                textEl.classList.add('text-brand-magenta');
+            } else {
+                textEl.innerText = "Click to choose image or PDF file";
+                textEl.classList.remove('text-brand-magenta');
+            }
+        });
+
+        // Toast Helper
+        function showAlert(msg, isError = true) {
+            const alertBox = document.getElementById('toast-alert');
+            alertBox.innerText = msg;
+            alertBox.className = `p-4 rounded-xl text-xs font-semibold text-center border transition-all ${
+                isError ? 'bg-red-900/50 border-red-700 text-red-200' : 'bg-green-900/50 border-green-700 text-green-200'
+            }`;
+            alertBox.classList.remove('hidden');
+            setTimeout(() => alertBox.classList.add('hidden'), 4000);
+        }
+
+        // Form Submit Handler
+        document.getElementById('public-kyc-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fullName = document.getElementById('full-name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const role = document.getElementById('role').value;
+            const bvn = document.getElementById('bvn').value.trim();
+            const nin = document.getElementById('nin').value.trim();
+            const fileInput = document.getElementById('id-file');
+            const file = fileInput.files[0];
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (!fullName || !email || !role || !bvn || !nin || !file) {
+                showAlert("Please complete all required fields.");
+                return;
+            }
+
+            if (bvn.length !== 11) {
+                showAlert("BVN must be exactly 11 digits.");
+                return;
+            }
+
+            if (nin.length !== 11) {
+                showAlert("NIN must be exactly 11 digits.");
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                showAlert("Document file size must not exceed 5MB.");
+                return;
+            }
+
+            // Disable button and reveal progress UI
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Encrypting & Transmitting Payload...
+            `;
+
+            const progressWrapper = document.getElementById('progress-wrapper');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            progressWrapper.classList.remove('hidden');
+
+            // Unique anonymous upload reference
+            const folderId = 'external_' + Math.random().toString(36).substring(2, 10);
+            const storagePath = `kyc_documents/${folderId}/${Date.now()}_${file.name}`;
+            const fileRef = sRef(storage, storagePath);
+            const uploadTask = uploadBytesResumable(fileRef, file);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    progressBar.style.width = `${percent}%`;
+                    progressText.innerText = `${percent}%`;
+                },
+                (error) => {
+                    console.error("Storage upload error:", error);
+                    showAlert("Transmission failed. Check internet connection.");
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Lock & Seal KYC Document";
+                    progressWrapper.classList.add('hidden');
+                },
+                async () => {
+                    try {
+                        const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+
+                        // Save payload into Firestore team_kyc collection
+                        const kycDoc = {
+                            userId: folderId,
+                            fullName: fullName,
+                            email: email,
+                            role: role,
+                            bvn: bvn,
+                            nin: nin,
+                            documentUrl: downloadUrl,
+                            documentStoragePath: storagePath,
+                            source: "standalone_form",
+                            submittedAt: serverTimestamp()
+                        };
+
+                        await addDoc(collection(firestore, "team_kyc"), kycDoc);
+
+                        // Reveal Success Screen
+                        document.getElementById('kyc-form-container').classList.add('hidden');
+                        document.getElementById('success-screen').classList.remove('hidden');
+                    } catch (err) {
+                        console.error("Firestore submit error:", err);
+                        showAlert("Database registration failed: " + err.message);
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = "Lock & Seal KYC Document";
+                        progressWrapper.classList.add('hidden');
+                    }
+                }
+            );
+        });
+    </script>
+</body>
+
+</html>
