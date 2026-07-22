@@ -272,12 +272,12 @@
     <!-- Firebase Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-storage.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDJBGi_WKLDU493eOrH4Emx7xx_li7wzoY",
             authDomain: "praise-dynasty-hni.firebaseapp.com",
+            databaseURL: "https://praise-dynasty-hni-default-rtdb.firebaseio.com",
             projectId: "praise-dynasty-hni",
             storageBucket: "praise-dynasty-hni.firebasestorage.app",
             messagingSenderId: "702909860929",
@@ -285,8 +285,7 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const firestore = getFirestore(app);
-        const storage = getStorage(app);
+        const db = getDatabase(app);
 
         // Restrict inputs to digits only
         const restrictDigits = (e) => {
@@ -318,6 +317,41 @@
             alertBox.classList.remove('hidden');
             setTimeout(() => alertBox.classList.add('hidden'), 4000);
         }
+
+        // Helper to encode/upload document
+        const uploadDocument = (file, updateProgress) => {
+            return new Promise((resolve, reject) => {
+                updateProgress(30);
+
+                // Try Cloudinary first
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', 'ml_default');
+
+                fetch("https://api.cloudinary.com/v1_1/dnlyjgkbz/image/upload", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => {
+                    if (res.ok) return res.json();
+                    throw new Error("Cloudinary fallback");
+                })
+                .then(data => {
+                    updateProgress(100);
+                    resolve(data.secure_url);
+                })
+                .catch(() => {
+                    // Fallback to Data URL encoding
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        updateProgress(100);
+                        resolve(e.target.result);
+                    };
+                    reader.onerror = () => reject(new Error("File reading failed"));
+                    reader.readAsDataURL(file);
+                });
+            });
+        };
 
         // Form Submit Handler
         document.getElementById('public-kyc-form').addEventListener('submit', async (e) => {
@@ -367,55 +401,36 @@
             const progressText = document.getElementById('progress-text');
             progressWrapper.classList.remove('hidden');
 
-            const folderId = 'external_' + Math.random().toString(36).substring(2, 10);
-            const storagePath = `kyc_documents/${folderId}/${Date.now()}_${file.name}`;
-            const fileRef = sRef(storage, storagePath);
-            const uploadTask = uploadBytesResumable(fileRef, file);
+            try {
+                const docUrl = await uploadDocument(file, (pct) => {
+                    progressBar.style.width = `${pct}%`;
+                    progressText.innerText = `${pct}%`;
+                });
 
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    progressBar.style.width = `${percent}%`;
-                    progressText.innerText = `${percent}%`;
-                },
-                (error) => {
-                    console.error("Storage upload error:", error);
-                    showAlert("Transmission failed. Check internet connection.");
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = "Submit Verification";
-                    progressWrapper.classList.add('hidden');
-                },
-                async () => {
-                    try {
-                        const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                const kycDoc = {
+                    fullName: fullName,
+                    email: email,
+                    role: role,
+                    bvn: bvn,
+                    nin: nin,
+                    documentUrl: docUrl,
+                    fileName: file.name,
+                    source: "standalone_form",
+                    submittedAt: Date.now()
+                };
 
-                        const kycDoc = {
-                            userId: folderId,
-                            fullName: fullName,
-                            email: email,
-                            role: role,
-                            bvn: bvn,
-                            nin: nin,
-                            documentUrl: downloadUrl,
-                            documentStoragePath: storagePath,
-                            source: "standalone_form",
-                            submittedAt: serverTimestamp()
-                        };
+                await push(ref(db, "team_kyc"), kycDoc);
 
-                        await addDoc(collection(firestore, "team_kyc"), kycDoc);
-
-                        document.getElementById('kyc-form-container').classList.add('hidden');
-                        document.getElementById('success-screen').classList.remove('hidden');
-                    } catch (err) {
-                        console.error("Firestore submit error:", err);
-                        showAlert("Registration failed: " + err.message);
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.innerText = "Submit Verification";
-                        progressWrapper.classList.add('hidden');
-                    }
-                }
-            );
+                document.getElementById('kyc-form-container').classList.add('hidden');
+                document.getElementById('success-screen').classList.remove('hidden');
+            } catch (err) {
+                console.error("KYC submit error:", err);
+                showAlert("Submission failed: " + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Submit Verification";
+                progressWrapper.classList.add('hidden');
+            }
         });
     </script>
 </body>

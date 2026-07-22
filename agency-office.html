@@ -2938,9 +2938,10 @@
             }
         };
 
-        // Query Firestore to load compliance document entries (strictly super-admin role)
-        async function loadAdminKycExplorer() {
+        // Query Realtime DB to load compliance document entries (strictly super-admin role)
+        function loadAdminKycExplorer() {
             const tbody = document.getElementById('kyc-explorer-tbody');
+            if (!tbody) return;
             tbody.innerHTML = `
                 <tr>
                     <td colspan="6" class="px-6 py-8 text-center text-gray-500 animate-pulse font-medium">
@@ -2949,34 +2950,33 @@
                 </tr>
             `;
 
-            try {
-                const kycCollection = collection(firestore, "team_kyc");
-                const q = query(kycCollection, orderBy("submittedAt", "desc"));
-                const querySnapshot = await getDocs(q);
-
-                if (querySnapshot.empty) {
+            onValue(ref(db, "team_kyc"), (snapshot) => {
+                if (!snapshot.exists()) {
                     tbody.innerHTML = `
                         <tr>
                             <td colspan="6" class="px-6 py-8 text-center text-gray-400 font-medium">
-                                No secure KYC submissions registered.
+                                No secure KYC submissions registered yet.
                             </td>
                         </tr>
                     `;
                     return;
                 }
 
+                const dataObj = snapshot.val();
+                let rows = Object.values(dataObj);
+                rows.sort((a, b) => (b.submittedAt || 0) - (a.submittedAt || 0));
+
                 let html = "";
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const submittedDate = data.submittedAt ? new Date(data.submittedAt.seconds * 1000).toLocaleString('en-NG') : "N/A";
+                rows.forEach((data) => {
+                    const submittedDate = data.submittedAt ? new Date(data.submittedAt).toLocaleString('en-NG') : "N/A";
                     
                     html += `
                         <tr class="hover:bg-gray-50/50 transition-colors">
-                            <td class="py-4 px-4 font-bold text-gray-900">${escapeHtml(data.fullName)}</td>
-                            <td class="py-4 px-4"><span class="px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 text-[10px] uppercase font-bold tracking-wider">${escapeHtml(data.role)}</span></td>
-                            <td class="py-4 px-4 font-mono font-bold tracking-wider text-brand-blue">${escapeHtml(data.bvn)}</td>
-                            <td class="py-4 px-4 font-mono font-bold tracking-wider text-brand-magenta">${escapeHtml(data.nin)}</td>
-                            <td class="py-4 px-4 text-gray-400 font-medium">${submittedDate}</td>
+                            <td class="py-4 px-4 font-bold text-gray-900">${escapeHtml(data.fullName || "N/A")}</td>
+                            <td class="py-4 px-4"><span class="px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 text-[10px] uppercase font-bold tracking-wider">${escapeHtml(data.role || "N/A")}</span></td>
+                            <td class="py-4 px-4 font-mono font-bold tracking-wider text-brand-blue">${escapeHtml(data.bvn || "N/A")}</td>
+                            <td class="py-4 px-4 font-mono font-bold tracking-wider text-brand-magenta">${escapeHtml(data.nin || "N/A")}</td>
+                            <td class="py-4 px-4 text-gray-400 font-medium text-xs">${submittedDate}</td>
                             <td class="py-4 px-4 text-right">
                                 <a href="${data.documentUrl}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-blue hover:bg-brand-magenta text-white font-bold text-[10px] uppercase tracking-wider rounded-lg transition-all shadow-sm">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
@@ -2987,31 +2987,63 @@
                     `;
                 });
                 tbody.innerHTML = html;
-            } catch (error) {
+            }, (error) => {
                 console.error("Super-Admin Decryption Error: ", error);
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="6" class="px-6 py-8 text-center text-red-500 font-bold">
-                            Decryption Failed: Insufficient permissions to read compliance archives.
+                            Decryption Error: ${error.message}
                         </td>
                     </tr>
                 `;
-            }
+            });
         }
+
+        // Helper to encode/upload document
+        const uploadKycDoc = (file, updateProgress) => {
+            return new Promise((resolve, reject) => {
+                updateProgress(30);
+
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', 'ml_default');
+
+                fetch("https://api.cloudinary.com/v1_1/dnlyjgkbz/image/upload", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => {
+                    if (res.ok) return res.json();
+                    throw new Error("Cloudinary fallback");
+                })
+                .then(data => {
+                    updateProgress(100);
+                    resolve(data.secure_url);
+                })
+                .catch(() => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        updateProgress(100);
+                        resolve(e.target.result);
+                    };
+                    reader.onerror = () => reject(new Error("File reading failed"));
+                    reader.readAsDataURL(file);
+                });
+            });
+        };
 
         // Form Submit Upload Handler
         document.getElementById('kyc-upload-form').addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const fullName = document.getElementById('kyc-name').value.trim();
-            const role = document.getElementById('kyc-role').value;
+            const role = document.getElementById('kyc-role').value.trim();
             const bvn = document.getElementById('kyc-bvn').value.trim();
             const nin = document.getElementById('kyc-nin').value.trim();
             const fileInput = document.getElementById('kyc-file');
             const file = fileInput.files[0];
             const submitBtn = document.getElementById('kyc-submit-btn');
 
-            // 1. Inputs validation
             if (!fullName || !role || !bvn || !nin || !file) {
                 triggerToast("Missing required parameters.");
                 return;
@@ -3027,13 +3059,11 @@
                 return;
             }
 
-            // Max file size 5MB limit
             if (file.size > 5 * 1024 * 1024) {
                 triggerToast("File size exceeds 5MB limit.");
                 return;
             }
 
-            // Disable form and show upload progress UI
             submitBtn.disabled = true;
             submitBtn.innerHTML = `
                 <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
@@ -3049,67 +3079,42 @@
             
             progressContainer.classList.remove('hidden');
 
-            // 2. Upload file to storage in write-only directory kyc_documents
-            const storagePath = `kyc_documents/${currentUser.uid}/${Date.now()}_${file.name}`;
-            const fileRef = sRef(storage, storagePath);
-            const uploadTask = uploadBytesResumable(fileRef, file);
+            try {
+                const docUrl = await uploadKycDoc(file, (pct) => {
+                    progressBar.style.width = `${pct}%`;
+                    progressPercent.innerText = `${pct}%`;
+                });
 
-            uploadTask.on('state_changed', 
-                (snapshot) => {
-                    const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    progressBar.style.width = `${percent}%`;
-                    progressPercent.innerText = `${percent}%`;
-                }, 
-                (error) => {
-                    console.error("Storage upload failed: ", error);
-                    triggerToast("Upload failed: Check connection and permissions.");
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = `
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
-                        Seal & Submit KYC Profile
-                    `;
-                    progressContainer.classList.add('hidden');
-                }, 
-                async () => {
-                    try {
-                        const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                const kycDoc = {
+                    userId: currentUser ? currentUser.uid : "internal",
+                    fullName: fullName,
+                    email: currentUser ? currentUser.email : "",
+                    role: role,
+                    bvn: bvn,
+                    nin: nin,
+                    documentUrl: docUrl,
+                    fileName: file.name,
+                    source: "internal_portal",
+                    submittedAt: Date.now()
+                };
 
-                        // 3. Write legal metadata schema to Firestore
-                        const kycDoc = {
-                            userId: currentUser.uid,
-                            fullName: fullName,
-                            role: role,
-                            bvn: bvn,
-                            nin: nin,
-                            documentUrl: downloadUrl,
-                            documentStoragePath: storagePath,
-                            submittedAt: serverTimestamp()
-                        };
+                await push(ref(db, "team_kyc"), kycDoc);
 
-                        await addDoc(collection(firestore, "team_kyc"), kycDoc);
-
-                        // Reveal success pane
-                        document.getElementById('kyc-upload-container').classList.add('hidden');
-                        document.getElementById('kyc-success-container').classList.remove('hidden');
-                        
-                        triggerToast("KYC Compliance Vault Locked!");
-                        
-                        if (currentUserRole === 'admin') {
-                            await loadAdminKycExplorer();
-                        }
-                    } catch (err) {
-                        console.error("Firestore submission failed: ", err);
-                        triggerToast("Database locking failed: " + err.message);
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = `
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
-                            Seal & Submit KYC Profile
-                        `;
-                        progressContainer.classList.add('hidden');
-                    }
-                }
-            );
+                document.getElementById('kyc-upload-container').classList.add('hidden');
+                document.getElementById('kyc-success-container').classList.remove('hidden');
+                
+                triggerToast("KYC Compliance Vault Locked!");
+            } catch (err) {
+                console.error("Submission failed: ", err);
+                triggerToast("Submission failed: " + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                    Seal & Submit KYC Profile
+                `;
+                progressContainer.classList.add('hidden');
+            }
         });
 
         // Reset vault form to original state
