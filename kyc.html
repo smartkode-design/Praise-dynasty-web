@@ -269,25 +269,10 @@
         </div>
     </footer>
 
-    <!-- Firebase Integration -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
-        import { getAuth, signInAnonymously, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDJBGi_WKLDU493eOrH4Emx7xx_li7wzoY",
-            authDomain: "praise-dynasty-hni.firebaseapp.com",
-            databaseURL: "https://praise-dynasty-hni-default-rtdb.firebaseio.com",
-            projectId: "praise-dynasty-hni",
-            storageBucket: "praise-dynasty-hni.firebasestorage.app",
-            messagingSenderId: "702909860929",
-            appId: "1:702909860929:web:7c9d2a3c899df3dbf0cac0"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const auth = getAuth(app);
+    <!-- KYC Form Logic (No Firebase SDK needed — uses REST API) -->
+    <script>
+        // Firebase REST API URL (no SDK needed)
+        const DB_URL = "https://praise-dynasty-hni-default-rtdb.firebaseio.com";
 
         // Restrict inputs to digits only
         const restrictDigits = (e) => {
@@ -320,40 +305,15 @@
             setTimeout(() => alertBox.classList.add('hidden'), 4000);
         }
 
-        // Helper to encode/upload document
-        const uploadDocument = (file, updateProgress) => {
+        // Convert file to base64 DataURL (no external upload needed)
+        function fileToBase64(file) {
             return new Promise((resolve, reject) => {
-                updateProgress(30);
-
-                // Try Cloudinary first
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('upload_preset', 'ml_default');
-
-                fetch("https://api.cloudinary.com/v1_1/dnlyjgkbz/image/upload", {
-                    method: "POST",
-                    body: formData
-                })
-                .then(res => {
-                    if (res.ok) return res.json();
-                    throw new Error("Cloudinary fallback");
-                })
-                .then(data => {
-                    updateProgress(100);
-                    resolve(data.secure_url);
-                })
-                .catch(() => {
-                    // Fallback to Data URL encoding
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        updateProgress(100);
-                        resolve(e.target.result);
-                    };
-                    reader.onerror = () => reject(new Error("File reading failed"));
-                    reader.readAsDataURL(file);
-                });
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(new Error("Failed to read file"));
+                reader.readAsDataURL(file);
             });
-        };
+        }
 
         // Form Submit Handler
         document.getElementById('public-kyc-form').addEventListener('submit', async (e) => {
@@ -404,39 +364,44 @@
             progressWrapper.classList.remove('hidden');
 
             try {
-                if (!auth.currentUser) {
-                    try {
-                        await signInAnonymously(auth);
-                    } catch (authErr) {
-                        console.warn("Anonymous auth disabled, creating temporary submission token...", authErr);
-                        try {
-                            const tempEmail = `kyc_${Date.now()}_${Math.random().toString(36).substring(2,6)}@praisedynasty.com`;
-                            await createUserWithEmailAndPassword(auth, tempEmail, "PraiseVault2026!");
-                        } catch (e2) {
-                            console.warn("Temp token creation notice:", e2);
-                        }
-                    }
-                }
+                // Step 1: Convert file to base64 locally (no upload needed)
+                progressBar.style.width = '30%';
+                progressText.innerText = '30%';
 
-                const docUrl = await uploadDocument(file, (pct) => {
-                    progressBar.style.width = `${pct}%`;
-                    progressText.innerText = `${pct}%`;
-                });
+                const docBase64 = await fileToBase64(file);
 
+                progressBar.style.width = '60%';
+                progressText.innerText = '60%';
+
+                // Step 2: Build the KYC document
                 const kycDoc = {
                     fullName: fullName,
                     email: email,
                     role: role,
                     bvn: bvn,
                     nin: nin,
-                    documentUrl: docUrl,
+                    documentData: docBase64,
                     fileName: file.name,
                     source: "standalone_form",
                     submittedAt: Date.now()
                 };
 
-                await push(ref(db, "team_kyc"), kycDoc);
+                // Step 3: POST directly to Firebase REST API (no auth SDK needed)
+                const response = await fetch(`${DB_URL}/kyc_submissions.json`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(kycDoc)
+                });
 
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Server error (${response.status})`);
+                }
+
+                progressBar.style.width = '100%';
+                progressText.innerText = '100%';
+
+                // Success!
                 document.getElementById('kyc-form-container').classList.add('hidden');
                 document.getElementById('success-screen').classList.remove('hidden');
             } catch (err) {

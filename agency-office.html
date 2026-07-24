@@ -2950,7 +2950,7 @@
                 </tr>
             `;
 
-            onValue(ref(db, "team_kyc"), (snapshot) => {
+            onValue(ref(db, "kyc_submissions"), (snapshot) => {
                 if (!snapshot.exists()) {
                     tbody.innerHTML = `
                         <tr>
@@ -2978,7 +2978,7 @@
                             <td class="py-4 px-4 font-mono font-bold tracking-wider text-brand-magenta">${escapeHtml(data.nin || "N/A")}</td>
                             <td class="py-4 px-4 text-gray-400 font-medium text-xs">${submittedDate}</td>
                             <td class="py-4 px-4 text-right">
-                                <a href="${data.documentUrl}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-blue hover:bg-brand-magenta text-white font-bold text-[10px] uppercase tracking-wider rounded-lg transition-all shadow-sm">
+                                <a href="${data.documentData || data.documentUrl || '#'}" target="_blank" download="${escapeHtml(data.fileName || 'document')}" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-blue hover:bg-brand-magenta text-white font-bold text-[10px] uppercase tracking-wider rounded-lg transition-all shadow-sm">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                                     Retrieve ID
                                 </a>
@@ -3098,7 +3098,7 @@
                     submittedAt: Date.now()
                 };
 
-                await push(ref(db, "team_kyc"), kycDoc);
+                await push(ref(db, "kyc_submissions"), kycDoc);
 
                 document.getElementById('kyc-upload-container').classList.add('hidden');
                 document.getElementById('kyc-success-container').classList.remove('hidden');

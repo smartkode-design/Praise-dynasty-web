@@ -6,3 +6,4 @@ trailing_slash = "always"
 [build]
   publish = "."
   command = "node generate-property-pages.js"
+  functions = "netlify/functions"
