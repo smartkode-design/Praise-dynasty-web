@@ -929,11 +929,13 @@
             if (snapshot.exists()) {
                 const banner = snapshot.val();
                 if (banner) {
-                    active = banner.active;
-                    if (banner.pcBannerUrl) pcBannerUrl = banner.pcBannerUrl;
+                    if (banner.active !== undefined) active = banner.active;
                     if (banner.targetUrl) targetUrl = banner.targetUrl;
                 }
             }
+
+            // Always force pcBannerUrl to 3rd Anniversary graphic banner for August 10th
+            pcBannerUrl = 'images/anniversary-banner.jpeg';
 
             active = true; // Always active for August 10th celebration
 
