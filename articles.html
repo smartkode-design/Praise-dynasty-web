@@ -410,7 +410,7 @@
             let timer = setTimeout(() => {
                 if (sessionStorage.getItem('closed_agent_widget') === 'true') return;
                 widget.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-                widget.classList.add('translate-y-0', 'opacity-100');
+                widget.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
             }, 5000);
 
             const dismissWidget = (e) => {
@@ -425,6 +425,7 @@
                 widget.classList.add('hidden');
                 widget.classList.remove('translate-y-0', 'opacity-100');
                 widget.classList.add('pointer-events-none');
+                try { widget.remove(); } catch(err) {}
             };
 
             closeBtn.addEventListener('click', dismissWidget, { capture: true });
@@ -433,7 +434,7 @@
     </script>
 
     <!-- Sliding WhatsApp Agent Widget -->
-    <div id="whatsapp-agent-widget" class="fixed bottom-24 right-6 z-50 max-w-xs bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none">
+    <div id="whatsapp-agent-widget" class="fixed bottom-24 right-4 sm:right-6 z-[80] max-w-xs bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none">
         <div class="bg-brand-blue text-white p-4 flex items-center gap-3 relative">
             <div class="relative">
                 <img src="./images/logo-light.jpg" alt="Agent" class="w-10 h-10 rounded-full object-cover bg-white">
@@ -443,7 +444,9 @@
                 <h4 class="font-bold text-xs">Praise Dynasty</h4>
                 <p class="text-[9px] text-gray-300">Typically replies instantly</p>
             </div>
-            <button id="close-agent-btn" type="button" aria-label="Close widget" class="ml-auto w-10 h-10 -mr-2 flex items-center justify-center rounded-full text-white/80 hover:text-white hover:bg-white/20 active:bg-white/30 transition-all focus:outline-none pointer-events-auto touch-manipulation z-50 cursor-pointer">
+            <button id="close-agent-btn" type="button" aria-label="Close widget" 
+                onclick="event.preventDefault(); event.stopPropagation(); sessionStorage.setItem('closed_agent_widget','true'); var w=document.getElementById('whatsapp-agent-widget'); if(w){w.style.display='none'; try{w.remove();}catch(e){}}"
+                class="ml-auto w-10 h-10 -mr-2 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 active:bg-white/50 text-white font-bold transition-all focus:outline-none pointer-events-auto touch-manipulation z-[90] cursor-pointer">
                 <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
