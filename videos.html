@@ -396,28 +396,45 @@
             }, 8000);
         }
 
-        // Interactive WhatsApp Agent Chat
+        // Interactive WhatsApp Agent Chat with Bulletproof Mobile Dismissal
         function initWhatsAppChat() {
             const widget = document.getElementById('whatsapp-agent-widget');
             const closeBtn = document.getElementById('close-agent-btn');
+            if (!widget || !closeBtn) return;
+
+            if (sessionStorage.getItem('closed_agent_widget') === 'true') {
+                widget.remove();
+                return;
+            }
             
             let timer = setTimeout(() => {
+                if (sessionStorage.getItem('closed_agent_widget') === 'true') return;
                 widget.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
                 widget.classList.add('translate-y-0', 'opacity-100');
-            }, 6000);
+            }, 5000);
 
-            closeBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                widget.classList.remove('translate-y-0', 'opacity-100');
-                widget.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            const dismissWidget = (e) => {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+                }
+                sessionStorage.setItem('closed_agent_widget', 'true');
                 clearTimeout(timer);
-            });
+                widget.style.display = 'none';
+                widget.classList.add('hidden');
+                widget.classList.remove('translate-y-0', 'opacity-100');
+                widget.classList.add('pointer-events-none');
+            };
+
+            closeBtn.addEventListener('click', dismissWidget, { capture: true });
+            closeBtn.addEventListener('touchstart', dismissWidget, { capture: true, passive: false });
         }
     </script>
 
     <!-- Sliding WhatsApp Agent Widget -->
     <div id="whatsapp-agent-widget" class="fixed bottom-24 right-6 z-50 max-w-xs bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none">
-        <div class="bg-brand-blue text-white p-4 flex items-center gap-3">
+        <div class="bg-brand-blue text-white p-4 flex items-center gap-3 relative">
             <div class="relative">
                 <img src="./images/logo-light.jpg" alt="Agent" class="w-10 h-10 rounded-full object-cover bg-white">
                 <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-brand-blue rounded-full"></span>
@@ -426,8 +443,8 @@
                 <h4 class="font-bold text-xs">Praise Dynasty</h4>
                 <p class="text-[9px] text-gray-300">Typically replies instantly</p>
             </div>
-            <button id="close-agent-btn" class="ml-auto text-white/70 hover:text-white">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <button id="close-agent-btn" type="button" aria-label="Close widget" class="ml-auto w-10 h-10 -mr-2 flex items-center justify-center rounded-full text-white/80 hover:text-white hover:bg-white/20 active:bg-white/30 transition-all focus:outline-none pointer-events-auto touch-manipulation z-50 cursor-pointer">
+                <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
         <div class="p-4 bg-gray-50 text-left">
