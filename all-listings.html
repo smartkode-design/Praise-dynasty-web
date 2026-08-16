@@ -85,7 +85,7 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center group">
-                    <img src="./images/anniversary-logo.png" alt="Praise Dynasty 3rd Anniversary"
+                    <img src="./images/logo-light.jpg" alt="Praise Dynasty Real Estate"
                         class="h-12 w-auto object-contain rounded transition-transform group-hover:scale-105">
                 </div>
 
@@ -1216,36 +1216,7 @@
         }
     </script>
 
-    <!-- Sliding WhatsApp Agent Widget -->
-    <div id="whatsapp-agent-widget" class="fixed bottom-24 right-4 sm:right-6 z-[80] max-w-xs bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none">
-        <div class="bg-brand-blue text-white p-4 flex items-center gap-3 relative">
-            <div class="relative">
-                <img src="./images/logo-light.jpg" alt="Agent" class="w-10 h-10 rounded-full object-cover bg-white">
-                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-brand-blue rounded-full"></span>
-            </div>
-            <div>
-                <h4 class="font-bold text-xs">Praise Dynasty</h4>
-                <p class="text-[9px] text-gray-300">Typically replies instantly</p>
-            </div>
-            <button id="close-agent-btn" type="button" aria-label="Close widget" 
-                onclick="event.preventDefault(); event.stopPropagation(); sessionStorage.setItem('closed_agent_widget','true'); var w=document.getElementById('whatsapp-agent-widget'); if(w){w.style.display='none'; try{w.remove();}catch(e){}}"
-                class="ml-auto w-10 h-10 -mr-2 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 active:bg-white/50 text-white font-bold transition-all focus:outline-none pointer-events-auto touch-manipulation z-[90] cursor-pointer">
-                <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-        </div>
-        <div class="p-4 bg-gray-50 text-left">
-            <p class="text-xs text-gray-600 bg-white p-3 rounded-xl shadow-sm inline-block leading-relaxed">
-                Hi there! Looking for exclusive off-market duplexes or investment plots in Abuja? Let's chat directly on WhatsApp.
-            </p>
-        </div>
-        <div class="p-3 bg-white text-center border-t border-gray-100">
-            <a href="https://wa.me/2348081975967?text=Hi%20Praise%20Dynasty%2C%20I%20am%20visiting%20your%20website%20and%20would%20like%20to%20speak%20to%20a%20director." 
-               target="_blank" id="agent-chat-btn"
-               class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-green-500 hover:bg-green-600 text-white font-bold text-xs uppercase tracking-wider transition-colors">
-                Start Chat
-            </a>
-        </div>
-    </div>
+
 
     <!-- Sticky Bottom Off-Market & Distress Lead Banner -->
     <div id="scroll-lead-banner" class="fixed bottom-6 left-4 right-20 md:left-auto md:right-24 md:max-w-md z-40 bg-brand-blue/95 backdrop-blur-md text-white p-4 rounded-2xl shadow-2xl border border-amber-400/40 flex items-center justify-between gap-3 animate-fade-up">
