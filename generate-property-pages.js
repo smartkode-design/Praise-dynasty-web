@@ -274,7 +274,27 @@ async function runGenerator() {
     sitemapContent += `\n</urlset>\n`;
     fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemapContent);
 
-    console.log(`Successfully generated ${count} property detail pages and updated sitemap.xml!`);
+    // INJECT STATIC SEO LINKS INTO ALL-LISTINGS.HTML
+    console.log("Injecting static SEO links into all-listings.html...");
+    let seoLinksHtml = '<div id="seo-property-links" style="display:none;" aria-hidden="true">\n';
+    for (const key in properties) {
+        const property = properties[key];
+        if (property.status === 'Off-Market') continue;
+        seoLinksHtml += `<a href="https://praisedynastyrealty.com/property/${property.slug}/">${property.title} in ${property.location}</a>\n`;
+    }
+    seoLinksHtml += '</div>';
+
+    const listingsPath = path.join(__dirname, 'all-listings.html');
+    let listingsHtml = fs.readFileSync(listingsPath, 'utf8');
+    
+    // Remove old block if it exists
+    listingsHtml = listingsHtml.replace(/<div id="seo-property-links"[\s\S]*?<\/div>/, '');
+    
+    // Insert new block right before </body>
+    listingsHtml = listingsHtml.replace('</body>', `${seoLinksHtml}\n</body>`);
+    fs.writeFileSync(listingsPath, listingsHtml);
+
+    console.log(`Successfully generated ${count} property detail pages, updated sitemap.xml, and injected SEO links!`);
 }
 
 runGenerator();
