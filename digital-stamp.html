@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Stamp & Signature Generator | Praise Dynasty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Alex+Brush&family=Great+Vibes&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { blue: '#0A192F', magenta: '#D92662', light: '#F4F6F9' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen p-8 font-['Outfit']">
+
+    <div class="max-w-5xl mx-auto">
+        <div class="mb-10 flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-brand-blue mb-2">Digital Stamp & Signature Generator</h1>
+                <p class="text-gray-500">Create transparent PNG stamps and signatures for official Praise Dynasty documents.</p>
+            </div>
+            <a href="index.html" class="text-brand-magenta hover:underline font-semibold">&larr; Back to Site</a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- STAMP GENERATOR -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold text-brand-blue mb-6">1. Official Company Stamp</h2>
+                
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Company Name</label>
+                        <input type="text" id="stampName" value="PRAISE DYNASTY REAL ESTATE LTD" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-magenta" oninput="drawStamp()">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Center Text</label>
+                            <input type="text" id="stampCenter" value="APPROVED" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-magenta" oninput="drawStamp()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Stamp Color</label>
+                            <select id="stampColor" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-magenta" onchange="drawStamp()">
+                                <option value="#0A192F">Brand Blue (#0A192F)</option>
+                                <option value="#D92662">Brand Magenta (#D92662)</option>
+                                <option value="#1F2937">Classic Ink (Dark Gray)</option>
+                                <option value="#1D4ED8">Official Blue</option>
+                                <option value="#DC2626">Urgent Red</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mb-6 bg-gray-50 p-6 rounded-xl border border-dashed border-gray-300">
+                    <canvas id="stampCanvas" width="300" height="300" class="max-w-full h-auto drop-shadow-md"></canvas>
+                </div>
+
+                <button onclick="downloadCanvas('stampCanvas', 'Praise_Dynasty_Stamp.png')" class="w-full bg-brand-blue text-white font-bold py-3 px-4 rounded-xl hover:bg-brand-magenta transition-colors shadow-lg">
+                    Download Transparent Stamp (PNG)
+                </button>
+            </div>
+
+            <!-- SIGNATURE GENERATOR -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold text-brand-blue mb-6">2. Executive Signature</h2>
+                
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Signatory Name</label>
+                        <input type="text" id="sigName" value="Tochukwu C. Okeke" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-magenta" oninput="drawSignature()">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Signature Style</label>
+                            <select id="sigFont" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-magenta" onchange="drawSignature()">
+                                <option value="'Great Vibes', cursive">Classic Cursive</option>
+                                <option value="'Alex Brush', cursive">Elegant Script</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Ink Color</label>
+                            <select id="sigColor" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-magenta" onchange="drawSignature()">
+                                <option value="#0f172a">Black Pen</option>
+                                <option value="#1e3a8a">Blue Pen</option>
+                                <option value="#0A192F">Brand Blue</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mb-6 bg-gray-50 p-6 rounded-xl border border-dashed border-gray-300">
+                    <canvas id="sigCanvas" width="400" height="200" class="max-w-full h-auto drop-shadow-md"></canvas>
+                </div>
+
+                <button onclick="downloadCanvas('sigCanvas', 'Tochukwu_Signature.png')" class="w-full bg-brand-magenta text-white font-bold py-3 px-4 rounded-xl hover:bg-brand-blue transition-colors shadow-lg">
+                    Download Transparent Signature (PNG)
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function drawStamp() {
+            const canvas = document.getElementById('stampCanvas');
+            const ctx = canvas.getContext('2d');
+            const text = document.getElementById('stampName').value.toUpperCase() + ' • ';
+            const centerText = document.getElementById('stampCenter').value.toUpperCase();
+            const color = document.getElementById('stampColor').value;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            const radius = 120;
+
+            // Apply slight random rotation for realism
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(Math.random() * 0.1 - 0.05); // Slight tilt
+            ctx.translate(-cx, -cy);
+
+            // Outer thick ring
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+            ctx.lineWidth = 6;
+            ctx.strokeStyle = color;
+            ctx.stroke();
+
+            // Inner thin ring
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius - 8, 0, 2 * Math.PI);
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Inner-most ring
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius - 45, 0, 2 * Math.PI);
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Circular Text
+            ctx.font = "bold 20px Arial";
+            ctx.fillStyle = color;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            
+            const textRadius = radius - 26;
+            const angleStep = (2 * Math.PI) / text.length;
+            
+            for (let i = 0; i < text.length; i++) {
+                ctx.save();
+                ctx.translate(cx, cy);
+                // Start from top (-Math.PI/2) and go clockwise
+                const angle = i * angleStep - (Math.PI / 2);
+                ctx.rotate(angle);
+                ctx.translate(0, -textRadius);
+                ctx.fillText(text[i], 0, 0);
+                ctx.restore();
+            }
+
+            // Center Text
+            ctx.font = "bold 28px Arial";
+            ctx.fillText(centerText, cx, cy - 5);
+            
+            // Sub Text
+            ctx.font = "12px Arial";
+            ctx.fillText("RC: 1982736", cx, cy + 20);
+
+            // Add some "grunge" or noise for realism (optional)
+            ctx.fillStyle = "rgba(255,255,255,0.6)";
+            for(let i=0; i<300; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.5, 0, Math.PI*2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        function drawSignature() {
+            const canvas = document.getElementById('sigCanvas');
+            const ctx = canvas.getContext('2d');
+            const name = document.getElementById('sigName').value;
+            const font = document.getElementById('sigFont').value;
+            const color = document.getElementById('sigColor').value;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Wait for font to load before drawing
+            document.fonts.ready.then(function() {
+                ctx.font = `60px ${font}`;
+                ctx.fillStyle = color;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                
+                // Add slight angle
+                ctx.save();
+                ctx.translate(canvas.width/2, canvas.height/2);
+                ctx.rotate(-0.05); // Tilt upwards slightly
+                ctx.fillText(name, 0, -10);
+                
+                // Draw a quick underline
+                ctx.beginPath();
+                ctx.moveTo(-100, 30);
+                ctx.quadraticCurveTo(0, 40, 100, 25);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = color;
+                ctx.stroke();
+                
+                ctx.restore();
+            });
+        }
+
+        function downloadCanvas(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Initial draws
+        window.onload = () => {
+            drawStamp();
+            // Need a slight delay for Google Fonts to load the cursive font
+            setTimeout(drawSignature, 500);
+        };
+    </script>
+</body>
+</html>
