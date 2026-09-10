@@ -228,8 +228,9 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             if (img.complete && img.naturalWidth !== 0) {
-                // Draw image scaled down and centered
-                const scale = 0.5; // Scale down the uploaded image slightly
+                // Draw image scaled down and centered to prevent overlapping the text
+                const targetHeight = 180; // Restrict image height so it stays above the text
+                const scale = targetHeight / img.naturalHeight; 
                 const w = img.naturalWidth * scale;
                 const h = img.naturalHeight * scale;
                 const x = (canvas.width - w) / 2;
@@ -257,18 +258,18 @@
                 ctx.putImageData(imageData, 0, 0);
             }
 
-            // Append Name and RC Number at the bottom
+            // Append Name and RC Number safely at the bottom
             ctx.fillStyle = "#0f172a";
             ctx.textAlign = "center";
             
             ctx.font = "bold 20px 'Outfit', Arial";
-            ctx.fillText(name, canvas.width / 2, canvas.height - 40);
+            ctx.fillText(name, canvas.width / 2, canvas.height - 55);
             
             ctx.font = "14px 'Outfit', Arial";
-            ctx.fillText("Founder & CEO", canvas.width / 2, canvas.height - 20);
+            ctx.fillText("Founder & CEO", canvas.width / 2, canvas.height - 35);
 
             ctx.font = "14px 'Outfit', Arial";
-            ctx.fillText(rcText, canvas.width / 2, canvas.height - 2);
+            ctx.fillText(rcText, canvas.width / 2, canvas.height - 15);
         }
 
         function drawSignature() {
