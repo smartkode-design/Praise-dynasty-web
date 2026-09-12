@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROPERTY × TECH | Virtual Summit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#0A192F',
+                            blue: '#172A45',
+                            light: '#F3F4F6',
+                            magenta: '#D92662',
+                            purple: '#6D28D9',
+                            dark: '#111827'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background-color: #0A192F;
+            font-family: 'Outfit', sans-serif;
+            color: #F3F4F6;
+        }
+        
+        #presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at 50% 0%, #172A45 0%, #0A192F 100%);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 8rem;
+            box-sizing: border-box;
+            transform: translateY(20px) scale(0.98);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+            z-index: 10;
+        }
+
+        .slide.previous {
+            transform: translateY(-20px) scale(0.98);
+        }
+
+        .slide.next {
+            transform: translateY(20px) scale(0.98);
+        }
+
+        /* UI Elements */
+        #ui-layer {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6D28D9, #D92662);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        #footer-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Custom typography and layouts */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #fff, #a5b4fc);
+        }
+        
+        .text-gradient-accent {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #f9a8d4, #D92662);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .glass-panel {
+            background: rgba(10, 25, 47, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .number-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: rgba(217, 38, 98, 0.1);
+            color: #D92662;
+            font-weight: 800;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(217, 38, 98, 0.3);
+        }
+
+        .section-marker {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: #D92662;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-marker::before {
+            content: '';
+            width: 40px;
+            height: 2px;
+            background: #D92662;
+        }
+
+        .speaker-note {
+            position: absolute;
+            bottom: 4rem;
+            right: 4rem;
+            background: rgba(0,0,0,0.8);
+            border-left: 3px solid #6D28D9;
+            padding: 1rem;
+            font-size: 0.8rem;
+            max-width: 300px;
+            color: #9CA3AF;
+            border-radius: 0 0.5rem 0.5rem 0;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+        .speaker-note:hover { opacity: 1; }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6D28D9;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="presentation-container">
+
+        <!-- SLIDE 1: COVER -->
+        <div class="slide text-center items-center">
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/10 text-brand-magenta font-bold tracking-widest text-sm mb-8 uppercase">
+                Free Virtual Summit
+            </div>
+            <h1 class="text-7xl font-extrabold tracking-tight mb-4">
+                PROPERTY <span class="text-brand-purple">×</span> TECH
+            </h1>
+            <h2 class="text-3xl font-light text-gray-300 mb-12 max-w-4xl leading-relaxed text-gradient">
+                Building Smarter. Investing Better. Earning in the Digital Era.
+            </h2>
+            <div class="h-px w-32 bg-gradient-to-r from-transparent via-gray-500 to-transparent mb-12"></div>
+            <p class="text-xl font-semibold tracking-wide text-gray-400 mb-2">September 12, 2026 • 10:00 AM WAT</p>
+            <p class="text-lg text-gray-500">Hosted by <span class="text-white font-bold">Praise Dynasty Real Estate</span> × <span class="text-white font-bold">SmartKode Solutions</span></p>
+        </div>
+
+        <!-- SLIDE 2: WELCOME -->
+        <div class="slide">
+            <div class="section-marker">Welcome</div>
+            <h2 class="text-5xl font-bold mb-8">WELCOME TO <span class="text-brand-magenta">PROPERTY × TECH</span></h2>
+            <p class="text-2xl text-gray-300 mb-12">Today we're connecting three things:</p>
+            
+            <div class="grid grid-cols-3 gap-8 mb-16">
+                <div class="card text-center py-10 border-t-4 border-t-blue-500">
+                    <div class="text-5xl mb-4">🏢</div>
+                    <h3 class="text-2xl font-bold">REAL ESTATE</h3>
+                </div>
+                <div class="card text-center py-10 border-t-4 border-t-purple-500">
+                    <div class="text-5xl mb-4">💻</div>
+                    <h3 class="text-2xl font-bold">TECHNOLOGY</h3>
+                </div>
+                <div class="card text-center py-10 border-t-4 border-t-brand-magenta">
+                    <div class="text-5xl mb-4">📈</div>
+                    <h3 class="text-2xl font-bold">OPPORTUNITY</h3>
+                </div>
+            </div>
+            
+            <p class="text-xl italic text-gray-400 border-l-4 border-gray-600 pl-6">
+                “Come for the knowledge. Stay for the opportunities.”
+            </p>
+        </div>
+
+        <!-- SLIDE 3: TODAY'S EXPERIENCE -->
+        <div class="slide">
+            <div class="section-marker">Agenda</div>
+            <h2 class="text-5xl font-bold mb-12">WHAT YOU'LL GET TODAY</h2>
+            
+            <div class="grid grid-cols-2 gap-x-16 gap-y-8 text-xl">
+                <div class="flex items-center gap-4">
+                    <div class="w-3 h-3 rounded-full bg-brand-magenta"></div>
+                    <span>Real Estate & Investment Insights</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-3 h-3 rounded-full bg-brand-magenta"></div>
+                    <span>Industry connections</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-3 h-3 rounded-full bg-brand-purple"></div>
+                    <span>Ways technology can create income</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-3 h-3 rounded-full bg-brand-magenta"></div>
+                    <span>Live Q&A</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-3 h-3 rounded-full bg-brand-purple"></div>
+                    <span>AI & Content Creation</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    <span>Giveaways</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-3 h-3 rounded-full bg-brand-magenta"></div>
+                    <span>Real-world opportunities</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    <span class="font-bold text-white">Fully Funded 3-Week Tech Training Opportunity</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: TRANSITION 1 -->
+        <div class="slide items-center text-center justify-center">
+            <div class="text-9xl font-black text-white/5 mb-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">01</div>
+            <div class="z-10 relative">
+                <h2 class="text-6xl font-bold mb-6">THE REAL ESTATE PLAYBOOK</h2>
+                <div class="inline-block px-6 py-2 rounded-full bg-blue-900/40 border border-blue-700/50 text-blue-300 font-semibold mb-12">
+                    Presented by Praise Dynasty Real Estate
+                </div>
+                <p class="text-2xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
+                    Understanding the market. Spotting opportunity. Investing smarter.
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: REAL ESTATE BASICS -->
+        <div class="slide">
+            <div class="section-marker">01. Foundations</div>
+            <h2 class="text-4xl font-bold mb-16">REAL ESTATE IS MORE THAN BUYING LAND</h2>
+            
+            <div class="flex items-center justify-between mb-16 px-8">
+                <div class="text-center"><div class="text-4xl mb-4">🌍</div><div class="font-bold text-xl">PROPERTY</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="text-center"><div class="text-4xl mb-4">💎</div><div class="font-bold text-xl">VALUE</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="text-center"><div class="text-4xl mb-4">👥</div><div class="font-bold text-xl">DEMAND</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="text-center"><div class="text-4xl mb-4">💰</div><div class="font-bold text-xl text-green-400">INCOME / APPRECIATION</div></div>
+            </div>
+
+            <div class="grid grid-cols-5 gap-4">
+                <div class="card text-center p-6"><div class="font-semibold text-lg text-blue-300 mb-2">Location</div><div class="text-sm text-gray-400">Where it sits</div></div>
+                <div class="card text-center p-6"><div class="font-semibold text-lg text-blue-300 mb-2">Purpose</div><div class="text-sm text-gray-400">How it's used</div></div>
+                <div class="card text-center p-6"><div class="font-semibold text-lg text-blue-300 mb-2">Demand</div><div class="text-sm text-gray-400">Who needs it</div></div>
+                <div class="card text-center p-6"><div class="font-semibold text-lg text-blue-300 mb-2">Docs</div><div class="text-sm text-gray-400">Ownership</div></div>
+                <div class="card text-center p-6"><div class="font-semibold text-lg text-blue-300 mb-2">Value</div><div class="text-sm text-gray-400">Long-term</div></div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: BEFORE YOU INVEST -->
+        <div class="slide">
+            <div class="section-marker">01. Due Diligence</div>
+            <h2 class="text-5xl font-bold mb-12">5 THINGS TO CHECK BEFORE INVESTING</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card flex items-start gap-6 border-l-4 border-l-brand-magenta">
+                    <div class="text-3xl font-black text-white/20">1</div>
+                    <div><h3 class="text-xl font-bold mb-2">Location</h3><p class="text-gray-400 text-sm">Is it in the path of growth?</p></div>
+                </div>
+                <div class="card flex items-start gap-6 border-l-4 border-l-brand-magenta">
+                    <div class="text-3xl font-black text-white/20">2</div>
+                    <div><h3 class="text-xl font-bold mb-2">Documentation & Ownership</h3><p class="text-gray-400 text-sm">Verify titles, survey plans, and legal status.</p></div>
+                </div>
+                <div class="card flex items-start gap-6 border-l-4 border-l-brand-magenta">
+                    <div class="text-3xl font-black text-white/20">3</div>
+                    <div><h3 class="text-xl font-bold mb-2">Purpose of the Investment</h3><p class="text-gray-400 text-sm">Cash flow? Capital appreciation? Personal use?</p></div>
+                </div>
+                <div class="card flex items-start gap-6 border-l-4 border-l-brand-magenta">
+                    <div class="text-3xl font-black text-white/20">4</div>
+                    <div><h3 class="text-xl font-bold mb-2">Market Demand</h3><p class="text-gray-400 text-sm">Are people actively looking to buy or rent here?</p></div>
+                </div>
+                <div class="card flex items-start gap-6 border-l-4 border-l-brand-magenta md:col-span-2 md:w-1/2 md:mx-auto">
+                    <div class="text-3xl font-black text-white/20">5</div>
+                    <div><h3 class="text-xl font-bold mb-2">Exit Strategy & Return</h3><p class="text-gray-400 text-sm">How and when do you pull your money out?</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: FINDING THE OPPORTUNITY -->
+        <div class="slide">
+            <div class="section-marker">01. Growth Strategy</div>
+            <h2 class="text-5xl font-bold mb-10">WHERE DOES THE OPPORTUNITY LIVE?</h2>
+            
+            <div class="flex gap-12">
+                <div class="w-1/2 space-y-4 text-xl">
+                    <div class="p-4 bg-white/5 rounded-lg border border-white/10 flex items-center gap-4"><span class="text-brand-magenta">✓</span> Emerging locations</div>
+                    <div class="p-4 bg-white/5 rounded-lg border border-white/10 flex items-center gap-4"><span class="text-brand-magenta">✓</span> Housing demand</div>
+                    <div class="p-4 bg-white/5 rounded-lg border border-white/10 flex items-center gap-4"><span class="text-brand-magenta">✓</span> Commercial property</div>
+                    <div class="p-4 bg-white/5 rounded-lg border border-white/10 flex items-center gap-4"><span class="text-brand-magenta">✓</span> Development corridors</div>
+                    <div class="p-4 bg-white/5 rounded-lg border border-white/10 flex items-center gap-4"><span class="text-brand-magenta">✓</span> Property partnerships</div>
+                    <div class="p-4 bg-white/5 rounded-lg border border-white/10 flex items-center gap-4"><span class="text-brand-magenta">✓</span> Long-term investment</div>
+                </div>
+                
+                <div class="w-1/2 flex flex-col justify-center">
+                    <div class="glass-panel p-8 rounded-2xl relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-magenta rounded-full blur-3xl opacity-20"></div>
+                        <h4 class="text-sm tracking-widest text-gray-400 uppercase mb-8">The Professional Flow</h4>
+                        
+                        <div class="flex flex-col gap-6">
+                            <div class="flex items-center gap-6"><div class="w-12 h-12 rounded-full bg-blue-900/50 flex items-center justify-center font-bold">1</div><div class="text-xl font-bold">Opportunity</div></div>
+                            <div class="w-1 h-6 bg-gray-700 ml-6"></div>
+                            <div class="flex items-center gap-6"><div class="w-12 h-12 rounded-full bg-blue-900/50 flex items-center justify-center font-bold">2</div><div class="text-xl font-bold">Research</div></div>
+                            <div class="w-1 h-6 bg-gray-700 ml-6"></div>
+                            <div class="flex items-center gap-6"><div class="w-12 h-12 rounded-full bg-blue-900/50 flex items-center justify-center font-bold">3</div><div class="text-xl font-bold">Verification</div></div>
+                            <div class="w-1 h-6 bg-brand-magenta ml-6"></div>
+                            <div class="flex items-center gap-6"><div class="w-12 h-12 rounded-full bg-brand-magenta flex items-center justify-center font-bold">4</div><div class="text-xl font-bold">Decision</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: TRANSITION 2 -->
+        <div class="slide items-center text-center justify-center">
+            <div class="text-9xl font-black text-white/5 mb-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">02</div>
+            <div class="z-10 relative">
+                <h2 class="text-6xl font-bold mb-6">MAKE MONEY WITH TECHNOLOGY</h2>
+                <div class="inline-block px-6 py-2 rounded-full bg-purple-900/40 border border-purple-700/50 text-purple-300 font-semibold">
+                    Presented by SmartKode Solutions
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: THE OPPORTUNITY -->
+        <div class="slide">
+            <div class="section-marker">02. Digital Reality</div>
+            <h2 class="text-4xl font-bold mb-12 leading-tight">
+                THE INTERNET DIDN'T REMOVE OPPORTUNITY.<br>
+                <span class="text-brand-magenta">IT MOVED IT ONLINE.</span>
+            </h2>
+            
+            <div class="card mb-12 bg-gradient-to-br from-brand-navy to-brand-blue border-brand-purple/30">
+                <div class="flex flex-col md:flex-row items-center justify-between px-8">
+                    <div class="text-2xl font-black tracking-widest text-white/50 mb-8 md:mb-0">BUSINESSES NEED</div>
+                    <div class="flex flex-col gap-4 text-xl font-semibold">
+                        <div class="flex items-center gap-4"><span class="text-brand-purple">→</span> Customers</div>
+                        <div class="flex items-center gap-4"><span class="text-brand-purple">→</span> Websites</div>
+                        <div class="flex items-center gap-4"><span class="text-brand-purple">→</span> Content</div>
+                        <div class="flex items-center gap-4"><span class="text-brand-purple">→</span> Digital Marketing</div>
+                        <div class="flex items-center gap-4"><span class="text-brand-purple">→</span> Automation</div>
+                        <div class="flex items-center gap-4"><span class="text-brand-purple">→</span> Software</div>
+                        <div class="flex items-center gap-4"><span class="text-brand-purple">→</span> AI Solutions</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-2xl font-light italic text-gray-300">
+                    “You don't need to build the next Facebook to make money with technology.”
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: 5 WAYS TO MAKE MONEY -->
+        <div class="slide">
+            <div class="section-marker">02. Pathways</div>
+            <h2 class="text-5xl font-bold mb-12">5 PRACTICAL PATHS IN 2026</h2>
+            
+            <div class="space-y-4">
+                <div class="card p-6 flex items-center gap-8 hover:border-brand-purple/50 transition-colors">
+                    <div class="text-4xl">1️⃣</div>
+                    <div><h3 class="text-xl font-bold mb-1">Freelancing</h3><p class="text-gray-400">Offer your skills (writing, design, admin) directly to global clients.</p></div>
+                </div>
+                <div class="card p-6 flex items-center gap-8 hover:border-brand-purple/50 transition-colors">
+                    <div class="text-4xl">2️⃣</div>
+                    <div><h3 class="text-xl font-bold mb-1">Website / Software Development</h3><p class="text-gray-400">Build digital storefronts and systems for businesses.</p></div>
+                </div>
+                <div class="card p-6 flex items-center gap-8 hover:border-brand-purple/50 transition-colors">
+                    <div class="text-4xl">3️⃣</div>
+                    <div><h3 class="text-xl font-bold mb-1">Digital Marketing</h3><p class="text-gray-400">Help businesses get attention and generate sales online.</p></div>
+                </div>
+                <div class="card p-6 flex items-center gap-8 hover:border-brand-purple/50 transition-colors">
+                    <div class="text-4xl">4️⃣</div>
+                    <div><h3 class="text-xl font-bold mb-1">AI & Content Creation</h3><p class="text-gray-400">Use AI tools to rapidly produce videos, copy, and graphics.</p></div>
+                </div>
+                <div class="card p-6 flex items-center gap-8 hover:border-brand-purple/50 transition-colors">
+                    <div class="text-4xl">5️⃣</div>
+                    <div><h3 class="text-xl font-bold mb-1">Digital Products / Services</h3><p class="text-gray-400">Create once (e-books, templates, courses) and sell infinitely.</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: THE FORMULA -->
+        <div class="slide text-center items-center justify-center">
+            <h2 class="text-4xl font-bold mb-4">DON'T JUST LEARN A SKILL.</h2>
+            <h2 class="text-4xl font-bold text-brand-purple mb-16">LEARN TO SOLVE A PROBLEM.</h2>
+            
+            <div class="flex items-center justify-center gap-4 md:gap-8 mb-20 flex-wrap">
+                <div class="text-2xl font-bold px-6 py-3 rounded-lg bg-white/5">SKILL</div>
+                <div class="text-gray-500">↓</div>
+                <div class="text-2xl font-bold px-6 py-3 rounded-lg bg-white/5">PROBLEM</div>
+                <div class="text-gray-500">↓</div>
+                <div class="text-2xl font-bold px-6 py-3 rounded-lg bg-white/5">SOLUTION</div>
+                <div class="text-gray-500">↓</div>
+                <div class="text-2xl font-bold px-6 py-3 rounded-lg bg-brand-purple/20 text-brand-purple">VALUE</div>
+                <div class="text-gray-500">↓</div>
+                <div class="text-2xl font-bold px-6 py-3 rounded-lg bg-green-500/20 text-green-400 border border-green-500/30 shadow-[0_0_15px_rgba(74,222,128,0.2)]">PAYMENT</div>
+            </div>
+            
+            <div class="p-8 border-t border-b border-gray-800">
+                <p class="text-3xl font-light leading-snug">
+                    “People don't pay you because you know technology.<br>
+                    <span class="font-semibold text-white">They pay you because you can create value with it.</span>”
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: REAL-WORLD EXAMPLES -->
+        <div class="slide">
+            <div class="section-marker">02. Execution</div>
+            <h2 class="text-5xl font-bold mb-12">WHAT CAN YOU ACTUALLY BUILD?</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+                <div class="card p-6 text-center hover:-translate-y-2 transition-transform cursor-default"><div class="text-4xl mb-4">🌐</div><div class="font-bold">Business Website</div></div>
+                <div class="card p-6 text-center hover:-translate-y-2 transition-transform cursor-default"><div class="text-4xl mb-4">📊</div><div class="font-bold">Dashboard</div></div>
+                <div class="card p-6 text-center hover:-translate-y-2 transition-transform cursor-default"><div class="text-4xl mb-4">⚙️</div><div class="font-bold">Management System</div></div>
+                <div class="card p-6 text-center hover:-translate-y-2 transition-transform cursor-default"><div class="text-4xl mb-4">📱</div><div class="font-bold">Mobile/Web App</div></div>
+                <div class="card p-6 text-center hover:-translate-y-2 transition-transform cursor-default md:col-start-2"><div class="text-4xl mb-4">🤖</div><div class="font-bold">AI Content</div></div>
+                <div class="card p-6 text-center hover:-translate-y-2 transition-transform cursor-default"><div class="text-4xl mb-4">🔄</div><div class="font-bold">Automation</div></div>
+                <div class="card p-6 text-center hover:-translate-y-2 transition-transform cursor-default"><div class="text-4xl mb-4">📈</div><div class="font-bold">Lead Gen System</div></div>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-2xl font-light text-brand-purple border-b border-brand-purple pb-2 inline-block">
+                    Start with a real problem, not a random technology.
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: AI -->
+        <div class="slide">
+            <div class="section-marker">02. The AI Shift</div>
+            <h2 class="text-5xl font-bold mb-16 text-gradient-accent">AI IS CHANGING THE GAME</h2>
+            
+            <div class="flex items-center justify-between mb-20 bg-white/5 rounded-2xl p-8 border border-white/10">
+                <div class="text-center"><div class="font-bold text-2xl text-gray-400 mb-2">IDEA</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="text-center"><div class="font-bold text-3xl text-brand-magenta mb-2">AI</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="text-center"><div class="font-bold text-2xl text-white mb-2">CONTENT</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="text-center"><div class="font-bold text-2xl text-white mb-2">ATTENTION</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="text-center"><div class="font-bold text-2xl text-green-400 mb-2">CUSTOMERS</div></div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-8 text-lg font-medium">
+                <div class="flex items-center gap-3"><span class="text-brand-magenta">⚡</span> Faster content creation</div>
+                <div class="flex items-center gap-3"><span class="text-brand-magenta">⚡</span> Better productivity</div>
+                <div class="flex items-center gap-3"><span class="text-brand-magenta">⚡</span> Rapid Research</div>
+                <div class="flex items-center gap-3"><span class="text-brand-magenta">⚡</span> Workflow Automation</div>
+                <div class="flex items-center gap-3"><span class="text-brand-magenta">⚡</span> High Personalization</div>
+                <div class="flex items-center gap-3"><span class="text-brand-magenta">⚡</span> New digital services</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: PRACTICAL AI SESSION -->
+        <div class="slide items-center justify-center text-center">
+            <div class="text-brand-magenta font-bold tracking-widest mb-4">03 // AI IN ACTION</div>
+            <h2 class="text-6xl font-black mb-12">LET'S TURN AN IDEA INTO CONTENT.</h2>
+            
+            <div class="w-full max-w-4xl h-80 border-2 border-dashed border-gray-600 rounded-3xl flex items-center justify-center bg-gray-900/50 relative overflow-hidden mb-8">
+                <div class="absolute inset-0 bg-brand-purple/5 opacity-50 animate-pulse"></div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="text-5xl mb-4">🎥</div>
+                    <h3 class="text-2xl font-bold tracking-wide">LIVE AI VIDEO / CONTENT CREATION DEMO</h3>
+                </div>
+            </div>
+            
+            <p class="text-sm text-gray-500 font-mono tracking-widest uppercase">
+                [ This section will be demonstrated live by our AI presenter ]
+            </p>
+        </div>
+
+        <!-- SLIDE 15: PROPERTY x TECH -->
+        <div class="slide">
+            <div class="section-marker">04. The Intersection</div>
+            <h2 class="text-5xl font-bold mb-16">WHERE REAL ESTATE MEETS TECHNOLOGY</h2>
+            
+            <div class="grid grid-cols-2 gap-12">
+                <div class="card border-gray-700 bg-gray-900/50">
+                    <h3 class="text-2xl font-bold mb-8 text-gray-400 border-b border-gray-800 pb-4">TRADITIONAL</h3>
+                    <div class="space-y-6 text-lg text-gray-500">
+                        <div class="p-4 bg-gray-800/50 rounded">Property listing</div>
+                        <div class="text-center">↓</div>
+                        <div class="p-4 bg-gray-800/50 rounded">Phone calls</div>
+                        <div class="text-center">↓</div>
+                        <div class="p-4 bg-gray-800/50 rounded">Manual follow-up</div>
+                    </div>
+                </div>
+                
+                <div class="card border-brand-purple/50 bg-brand-purple/5 relative overflow-hidden">
+                    <div class="absolute right-0 top-0 w-32 h-32 bg-brand-magenta rounded-full blur-3xl opacity-20"></div>
+                    <h3 class="text-2xl font-bold mb-8 text-white border-b border-brand-purple/30 pb-4 relative z-10">MODERN</h3>
+                    <div class="space-y-4 text-lg font-semibold relative z-10">
+                        <div class="p-3 bg-white/10 rounded border border-white/5">Property website</div>
+                        <div class="text-center text-brand-magenta">↓</div>
+                        <div class="p-3 bg-white/10 rounded border border-white/5">Social/content</div>
+                        <div class="text-center text-brand-magenta">↓</div>
+                        <div class="p-3 bg-white/10 rounded border border-white/5">Lead capture</div>
+                        <div class="text-center text-brand-magenta">↓</div>
+                        <div class="p-3 bg-white/10 rounded border border-white/5">Automated follow-up</div>
+                        <div class="text-center text-brand-magenta">↓</div>
+                        <div class="p-3 bg-green-500/20 text-green-400 rounded border border-green-500/30">Qualified prospects</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: THE BIGGER OPPORTUNITY -->
+        <div class="slide">
+            <h2 class="text-4xl font-bold mb-2">REAL ESTATE NEEDS TECHNOLOGY.</h2>
+            <h2 class="text-4xl font-bold text-brand-magenta mb-12">TECHNOLOGY NEEDS REAL-WORLD PROBLEMS.</h2>
+            
+            <div class="grid grid-cols-2 gap-x-12 gap-y-6 mb-16 text-xl">
+                <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">🌐</div> Property websites</div>
+                <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">👥</div> Customer management</div>
+                <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">📱</div> Digital marketing</div>
+                <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">🕶️</div> Virtual property experiences</div>
+                <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">🤖</div> AI property content</div>
+                <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">🔄</div> Automated follow-up</div>
+                <div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">🎯</div> Lead generation</div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-brand-purple/20 to-brand-magenta/20 p-6 rounded-xl border border-white/10 text-center">
+                <p class="text-xl font-semibold">
+                    “This is where businesses, developers and technology professionals can create value together.”
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: OPPORTUNITY DROP -->
+        <div class="slide text-center items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-navy via-brand-dark to-black">
+            <div class="text-brand-magenta font-bold tracking-widest mb-6">05 // THE OPPORTUNITY DROP</div>
+            <h2 class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 mb-12 drop-shadow-2xl">
+                ₦50,000 GIVEAWAY
+            </h2>
+            
+            <div class="flex justify-center gap-8 mb-16 w-full max-w-3xl mx-auto">
+                <div class="card flex-1 bg-white/5 border-white/10 p-6 flex flex-col items-center justify-center mt-8">
+                    <div class="text-4xl mb-2">🥈</div>
+                    <div class="text-2xl font-bold text-gray-300">₦12,000</div>
+                </div>
+                <div class="card flex-1 bg-gradient-to-b from-yellow-500/20 to-transparent border-yellow-500/30 p-8 flex flex-col items-center justify-center transform -translate-y-4 shadow-[0_0_30px_rgba(234,179,8,0.2)]">
+                    <div class="text-6xl mb-4">🥇</div>
+                    <div class="text-4xl font-black text-yellow-400">₦22,000</div>
+                </div>
+                <div class="card flex-1 bg-white/5 border-white/10 p-6 flex flex-col items-center justify-center mt-8">
+                    <div class="text-4xl mb-2">🥉</div>
+                    <div class="text-2xl font-bold text-gray-400">₦6,000</div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col gap-4 text-lg font-semibold mb-10">
+                <div class="text-green-400 flex items-center justify-center gap-3">🎓 FULLY FUNDED 3-WEEK TECH TRAINING OPPORTUNITY</div>
+                <div class="text-blue-300 flex items-center justify-center gap-3">🎁 Interactive challenges</div>
+                <div class="text-purple-300 flex items-center justify-center gap-3">🤝 Networking & connections</div>
+            </div>
+
+            <p class="text-sm text-gray-500 italic">
+                *Stay active throughout the event for interactive challenges and announcements.*
+            </p>
+        </div>
+
+        <!-- SLIDE 18: TRAINING -->
+        <div class="slide">
+            <div class="section-marker">05. Mentorship</div>
+            <h2 class="text-4xl font-bold mb-4">YOUR NEXT STEP COULD START HERE</h2>
+            
+            <div class="my-12 p-1 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 rounded-2xl inline-block">
+                <div class="bg-brand-navy rounded-xl p-10 h-full">
+                    <div class="text-green-400 font-black tracking-widest uppercase mb-2">FULLY FUNDED</div>
+                    <h3 class="text-5xl font-bold text-white mb-8">3-WEEK TECH TRAINING</h3>
+                    
+                    <ul class="space-y-6 text-xl text-gray-300">
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Practical technology skills</li>
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Guided learning</li>
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Hands-on experience</li>
+                        <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Opportunity to develop a monetizable skill</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p class="text-gray-500">
+                <span class="inline-block border border-gray-600 rounded px-3 py-1 text-sm">INFO</span> Application / selection details will be explained during the session.
+            </p>
+        </div>
+
+        <!-- SLIDE 19: LIVE CHALLENGE -->
+        <div class="slide items-center justify-center text-center">
+            <h2 class="text-6xl font-black mb-16 text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.3)]">QUICK CHALLENGE 👀</h2>
+            
+            <div class="grid grid-cols-1 gap-8 w-full max-w-4xl">
+                <div class="card border-blue-500/50 bg-blue-900/20 p-10 transform transition-transform hover:scale-105">
+                    <h3 class="text-2xl font-bold mb-6">“What is ONE technology skill you believe can be monetized online in 2026?”</h3>
+                    <div class="inline-flex items-center gap-2 text-blue-300 bg-blue-900/50 px-6 py-2 rounded-full font-bold">
+                        💬 Drop your answer in the chat
+                    </div>
+                </div>
+                
+                <div class="card border-brand-magenta/50 bg-brand-magenta/10 p-10 transform transition-transform hover:scale-105">
+                    <h3 class="text-2xl font-bold mb-6">“What is ONE thing you should check before investing in a property?”</h3>
+                    <div class="inline-flex items-center gap-2 text-brand-magenta bg-brand-magenta/20 px-6 py-2 rounded-full font-bold">
+                        💬 Drop your answer in the chat
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Q&A -->
+        <div class="slide flex flex-row items-center">
+            <div class="w-1/2 pr-12">
+                <div class="text-brand-magenta font-bold tracking-widest mb-4">06 // LIVE Q&A</div>
+                <h2 class="text-7xl font-black mb-12">ASK US ANYTHING.</h2>
+                
+                <div class="space-y-6 text-2xl font-light">
+                    <div class="flex items-center gap-4">🏠 <span class="text-white font-semibold">Real Estate</span></div>
+                    <div class="flex items-center gap-4">💻 <span class="text-white font-semibold">Technology</span></div>
+                    <div class="flex items-center gap-4">🤖 <span class="text-white font-semibold">AI</span></div>
+                    <div class="flex items-center gap-4">💰 <span class="text-white font-semibold">Income Opportunities</span></div>
+                    <div class="flex items-center gap-4">📈 <span class="text-white font-semibold">Business Growth</span></div>
+                </div>
+            </div>
+            <div class="w-1/2 flex justify-center">
+                <div class="text-[250px] font-black text-white/5 select-none hover:text-brand-magenta/20 transition-colors duration-700">
+                    ?
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: FINAL MESSAGE -->
+        <div class="slide items-center justify-center text-center">
+            <h2 class="text-5xl font-black mb-16 max-w-4xl leading-tight">
+                THE FUTURE BELONGS TO PEOPLE WHO POSITION THEMSELVES.
+            </h2>
+            
+            <div class="space-y-6 text-2xl font-light text-gray-300 mb-20">
+                <p><span class="font-bold text-white">Real estate</span> creates physical value.</p>
+                <p><span class="font-bold text-white">Technology</span> creates digital leverage.</p>
+                <p class="text-brand-magenta font-semibold">Together, they create new opportunities.</p>
+            </div>
+            
+            <h3 class="text-4xl font-extrabold tracking-widest text-white/20">PROPERTY × TECH</h3>
+        </div>
+
+        <!-- SLIDE 22: NEXT STEP -->
+        <div class="slide">
+            <div class="section-marker">Action</div>
+            <h2 class="text-5xl font-bold mb-12">WHAT DO YOU WANT TO DO NEXT?</h2>
+            
+            <div class="grid grid-cols-1 gap-6 max-w-4xl">
+                <div class="card p-6 border-l-4 border-l-blue-500 flex justify-between items-center group">
+                    <div class="text-gray-400 font-semibold tracking-widest uppercase text-sm">IF YOU'RE INTERESTED IN REAL ESTATE</div>
+                    <div class="text-xl font-bold group-hover:text-blue-400 transition-colors">→ Speak with Praise Dynasty</div>
+                </div>
+                
+                <div class="card p-6 border-l-4 border-l-brand-purple flex justify-between items-center group">
+                    <div class="text-gray-400 font-semibold tracking-widest uppercase text-sm">IF YOU'RE INTERESTED IN TECHNOLOGY</div>
+                    <div class="text-xl font-bold group-hover:text-brand-purple transition-colors">→ Connect with SmartKode Solutions</div>
+                </div>
+                
+                <div class="card p-6 border-l-4 border-l-green-500 flex justify-between items-center group">
+                    <div class="text-gray-400 font-semibold tracking-widest uppercase text-sm">IF YOU WANT THE TRAINING</div>
+                    <div class="text-xl font-bold group-hover:text-green-400 transition-colors">→ Follow application instructions</div>
+                </div>
+                
+                <div class="card p-6 border-l-4 border-l-brand-magenta flex justify-between items-center group">
+                    <div class="text-gray-400 font-semibold tracking-widest uppercase text-sm">IF YOU WANT TO BUILD / GROW A BUSINESS</div>
+                    <div class="text-xl font-bold group-hover:text-brand-magenta transition-colors">→ Let's talk</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 23: THANK YOU -->
+        <div class="slide text-center items-center justify-center">
+            <h2 class="text-6xl font-black mb-12">THANK YOU FOR JOINING</h2>
+            <h3 class="text-4xl font-bold text-brand-purple mb-16">PROPERTY × TECH</h3>
+            
+            <div class="text-2xl font-light text-gray-400 space-y-2 mb-16">
+                <p>Building Smarter.</p>
+                <p>Investing Better.</p>
+                <p>Earning in the Digital Era.</p>
+            </div>
+            
+            <p class="text-lg font-bold text-white mb-6">Praise Dynasty Real Estate × SmartKode Solutions</p>
+            <p class="text-sm text-brand-magenta tracking-widest uppercase border border-brand-magenta/30 rounded-full px-6 py-2 inline-block">Stay connected for the next opportunity.</p>
+        </div>
+
+    </div>
+
+    <!-- UI Overlay -->
+    <div id="ui-layer">
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="footer-bar">
+            <div>PROPERTY × TECH Summit 2026</div>
+            <div class="flex items-center gap-4">
+                <div class="text-xs tracking-widest">NAVIGATE: ARROWS / SPACE / HOME / END</div>
+                <div id="slide-counter" class="font-mono bg-white/10 px-3 py-1 rounded">01 / 23</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const counter = document.getElementById('slide-counter');
+        const progress = document.getElementById('progress-bar');
+
+        function showSlide(index) {
+            if(index < 0) index = 0;
+            if(index >= totalSlides) index = totalSlides - 1;
+            
+            slides.forEach((slide, i) => {
+                if(i === index) {
+                    slide.classList.add('active');
+                    slide.classList.remove('previous', 'next');
+                } else if (i < index) {
+                    slide.classList.remove('active', 'next');
+                    slide.classList.add('previous');
+                } else {
+                    slide.classList.remove('active', 'previous');
+                    slide.classList.add('next');
+                }
+            });
+            
+            currentSlide = index;
+            counter.innerText = `${String(currentSlide + 1).padStart(2, '0')} / ${totalSlides}`;
+            progress.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                showSlide(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
