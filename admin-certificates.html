@@ -6,7 +6,6 @@
     <title>Admin | PROPERTY × TECH Certificates</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Dependencies for PDF/Image Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -25,7 +24,6 @@
     </script>
 
     <style>
-        /* Hidden Template for High-Res Generation (A4 Landscape at 96DPI) */
         #cert-template-container {
             position: absolute;
             top: -9999px; left: -9999px;
@@ -46,11 +44,22 @@
             box-sizing: border-box;
             position: relative;
             display: flex; flex-direction: column;
-            align-items: center; padding: 50px 70px;
+            align-items: center; padding: 40px 70px;
         }
         .cert-watermark {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             opacity: 0.03; font-size: 200px; font-weight: 900; white-space: nowrap; pointer-events: none;
+        }
+        .toast {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+            background: #0A192F; color: white; padding: 1rem 1.5rem;
+            border-radius: 0.75rem; font-weight: 600;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -60,27 +69,27 @@
     <div id="admin-gate" class="fixed inset-0 bg-brand-navy z-50 flex items-center justify-center p-4">
         <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
             <h2 class="text-2xl font-bold text-brand-navy mb-2">Admin Access Required</h2>
-            <p class="text-gray-500 mb-6 text-sm">Please set or enter your local admin passcode to proceed.</p>
-            <input type="password" id="admin-pass-input" class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand-magenta outline-none mb-4 text-center font-bold" placeholder="Enter Passcode">
+            <p class="text-gray-500 mb-6 text-sm">Enter your admin passcode to proceed.</p>
+            <input type="password" id="admin-pass-input" class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand-magenta outline-none mb-4 text-center font-bold" placeholder="Enter Passcode" onkeydown="if(event.key==='Enter')loginAdmin()">
             <button onclick="loginAdmin()" class="w-full bg-brand-magenta text-white font-bold py-3 rounded-lg hover:bg-brand-navy transition-colors">Access Dashboard</button>
         </div>
     </div>
 
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <aside class="w-64 bg-brand-navy text-white flex flex-col">
+        <aside class="w-64 bg-brand-navy text-white flex flex-col flex-shrink-0">
             <div class="p-6 border-b border-white/10">
                 <h1 class="font-black text-xl tracking-widest text-brand-magenta">PROPERTY × TECH</h1>
                 <p class="text-xs text-gray-400 mt-1 uppercase">Certificate Portal</p>
             </div>
             <nav class="flex-grow p-4 space-y-2">
-                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-brand-magenta/20 text-brand-magenta font-bold transition-all">📊 Dashboard</button>
-                <button onclick="switchTab('generate')" id="tab-generate" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all">✨ Generate Single</button>
-                <button onclick="switchTab('bulk')" id="tab-bulk" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all">📂 Bulk Generate</button>
-                <button onclick="switchTab('list')" id="tab-list" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all">📋 All Certificates</button>
+                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-brand-magenta/20 text-brand-magenta font-bold transition-all">📊 Dashboard</button>
+                <button onclick="switchTab('generate')" id="tab-generate" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all">✨ Generate Single</button>
+                <button onclick="switchTab('bulk')" id="tab-bulk" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all">📂 Bulk Generate</button>
+                <button onclick="switchTab('list')" id="tab-list" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all">📋 All Certificates</button>
             </nav>
             <div class="p-4 border-t border-white/10 text-xs text-gray-500 text-center">
-                System v1.0
+                System v1.0 &middot; Data stored locally
             </div>
         </aside>
 
@@ -94,27 +103,27 @@
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-500 font-semibold uppercase">Total Issued</p>
-                            <h3 id="stat-total" class="text-4xl font-black text-brand-navy mt-1">-</h3>
+                            <h3 id="stat-total" class="text-4xl font-black text-brand-navy mt-1">0</h3>
                         </div>
                         <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-xl">📄</div>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
                         <div>
-                            <p class="text-sm text-gray-500 font-semibold uppercase">Valid Certificates</p>
-                            <h3 id="stat-valid" class="text-4xl font-black text-green-500 mt-1">-</h3>
+                            <p class="text-sm text-gray-500 font-semibold uppercase">Valid</p>
+                            <h3 id="stat-valid" class="text-4xl font-black text-green-500 mt-1">0</h3>
                         </div>
                         <div class="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center text-xl">✅</div>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-500 font-semibold uppercase">Revoked</p>
-                            <h3 id="stat-revoked" class="text-4xl font-black text-red-500 mt-1">-</h3>
+                            <h3 id="stat-revoked" class="text-4xl font-black text-red-500 mt-1">0</h3>
                         </div>
                         <div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-xl">❌</div>
                     </div>
                 </div>
                 
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-xl font-bold text-brand-navy">Recent Certificates</h3>
                         <button onclick="switchTab('list')" class="text-brand-magenta text-sm font-bold hover:underline">View All &rarr;</button>
@@ -125,16 +134,20 @@
                                 <tr class="text-gray-400 text-xs uppercase border-b border-gray-100">
                                     <th class="pb-3 font-semibold">Certificate ID</th>
                                     <th class="pb-3 font-semibold">Participant Name</th>
-                                    <th class="pb-3 font-semibold">Date Issued</th>
+                                    <th class="pb-3 font-semibold">Email</th>
                                     <th class="pb-3 font-semibold">Status</th>
                                 </tr>
                             </thead>
                             <tbody id="recent-table-body" class="text-sm">
-                                <tr><td colspan="4" class="py-4 text-center text-gray-400">Loading...</td></tr>
+                                <tr><td colspan="4" class="py-4 text-center text-gray-400">No certificates yet.</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+
+                <button onclick="switchTab('generate')" class="bg-brand-magenta text-white font-bold py-4 px-8 rounded-xl hover:bg-brand-navy transition-colors shadow-lg">
+                    ✨ Quick Generate Certificate
+                </button>
             </div>
 
             <!-- Generate Single View -->
@@ -165,21 +178,22 @@
                                 </div>
                             </div>
                             <button type="submit" id="btn-gen-single" class="w-full bg-brand-navy text-white font-bold py-4 rounded-xl hover:bg-brand-magenta transition-colors shadow-lg flex items-center justify-center gap-2">
-                                <span>Generate & Save Record</span>
+                                <span>Generate Certificate</span>
                             </button>
                         </form>
                     </div>
 
-                    <!-- Action Area -->
+                    <!-- Result Area -->
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center items-center text-center">
                         <div id="gen-success-area" class="hidden w-full">
                             <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-4">✅</div>
                             <h3 class="text-2xl font-bold text-brand-navy mb-2">Certificate Created!</h3>
+                            <p class="text-gray-500 mb-1">For: <span id="success-name" class="font-bold text-brand-navy"></span></p>
                             <p class="text-gray-500 mb-6">ID: <span id="success-id" class="font-mono font-bold text-brand-magenta bg-brand-magenta/10 px-2 py-1 rounded"></span></p>
                             
                             <div class="space-y-3 w-full max-w-sm mx-auto">
                                 <button onclick="downloadCurrentPDF()" class="w-full bg-brand-navy text-white font-bold py-3 rounded-lg hover:bg-blue-800 transition-colors flex justify-center items-center gap-2">
-                                    📄 Download High-Res PDF
+                                    📄 Download PDF
                                 </button>
                                 <button onclick="downloadCurrentPNG()" class="w-full bg-gray-100 text-brand-navy font-bold py-3 rounded-lg border border-gray-200 hover:bg-gray-200 transition-colors flex justify-center items-center gap-2">
                                     🖼️ Download Image (PNG)
@@ -192,7 +206,7 @@
                         </div>
                         <div id="gen-empty-area" class="text-gray-400">
                             <div class="text-6xl mb-4">📜</div>
-                            <p>Fill the form to generate a certificate.</p>
+                            <p>Fill the form and click generate.</p>
                         </div>
                     </div>
                 </div>
@@ -203,19 +217,18 @@
                 <h2 class="text-3xl font-bold text-brand-navy mb-8">Bulk Certificate Generation</h2>
                 
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
-                    <p class="text-gray-500 mb-4">Paste a list of names (one per line). The system will automatically generate a unique certificate ID for each person, save them to the database, and compile them into a downloadable ZIP file containing high-quality PDFs.</p>
+                    <p class="text-gray-500 mb-4">Paste a list of names (one per line). The system will generate a unique certificate for each person and download a ZIP file of all the PDFs.</p>
                     
                     <textarea id="bulk-names" class="w-full h-48 p-4 rounded-xl border border-gray-200 focus:border-brand-magenta outline-none font-mono text-sm mb-4" placeholder="John Doe&#10;Jane Smith&#10;Abdulrahman Musa"></textarea>
                     
                     <div class="flex items-center justify-between">
-                        <div class="text-sm text-gray-500">Ensure names are spelled correctly.</div>
+                        <div class="text-sm text-gray-500">One name per line. Duplicates will be skipped.</div>
                         <button onclick="startBulkGen()" id="btn-bulk" class="bg-brand-magenta text-white font-bold py-3 px-8 rounded-xl hover:bg-brand-navy transition-colors shadow-lg">
                             Process Bulk Generation
                         </button>
                     </div>
                 </div>
 
-                <!-- Bulk Progress -->
                 <div id="bulk-progress-area" class="hidden bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
                     <h3 class="text-xl font-bold text-brand-navy mb-2" id="bulk-status-text">Processing...</h3>
                     <div class="w-full bg-gray-100 rounded-full h-4 mb-4 overflow-hidden">
@@ -229,7 +242,10 @@
             <div id="view-list" class="view-section hidden">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-bold text-brand-navy">All Certificates</h2>
-                    <input type="text" id="search-certs" oninput="filterList()" placeholder="Search Name or ID..." class="px-4 py-2 rounded-lg border border-gray-200 outline-none focus:border-brand-magenta w-64 text-sm">
+                    <div class="flex gap-4">
+                        <input type="text" id="search-certs" oninput="renderAllList()" placeholder="Search..." class="px-4 py-2 rounded-lg border border-gray-200 outline-none focus:border-brand-magenta w-64 text-sm">
+                        <button onclick="exportCSV()" class="bg-gray-100 text-gray-700 font-bold py-2 px-4 rounded-lg border border-gray-200 text-sm hover:bg-gray-200">Export CSV</button>
+                    </div>
                 </div>
                 
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -239,13 +255,14 @@
                                 <tr class="text-gray-500 text-xs uppercase border-b border-gray-200">
                                     <th class="py-4 px-6 font-semibold">ID</th>
                                     <th class="py-4 px-6 font-semibold">Name</th>
-                                    <th class="py-4 px-6 font-semibold">Date Issued</th>
+                                    <th class="py-4 px-6 font-semibold">Email</th>
+                                    <th class="py-4 px-6 font-semibold">Phone</th>
                                     <th class="py-4 px-6 font-semibold">Status</th>
                                     <th class="py-4 px-6 font-semibold text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="all-table-body" class="text-sm">
-                                <tr><td colspan="5" class="py-8 text-center text-gray-400">Loading database...</td></tr>
+                                <tr><td colspan="6" class="py-8 text-center text-gray-400">No certificates generated yet.</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -255,32 +272,28 @@
         </main>
     </div>
 
-    <!-- The Hidden HTML Template used for generating the Canvas/PDF -->
+    <!-- Hidden Certificate Template for Canvas Rendering -->
     <div id="cert-template-container">
         <div class="cert-border-outer">
             <div class="cert-border-inner">
                 <div class="cert-watermark">PXT 2026</div>
                 
                 <!-- Logos Row -->
-                <div style="display:flex; justify-content: space-between; width:100%; align-items:center; margin-bottom: 50px;">
-                    <div style="font-size:24px; font-weight:800; color:#0A192F; letter-spacing:1px;">PRAISE DYNASTY <span style="font-weight:400;">REAL ESTATE</span></div>
-                    <div style="font-size:24px; font-weight:800; color:#6D28D9; letter-spacing:1px;">SMARTKODE <span style="font-weight:400;">SOLUTIONS</span></div>
+                <div style="display:flex; justify-content: space-between; width:100%; align-items:center; margin-bottom: 40px;">
+                    <div style="font-size:22px; font-weight:800; color:#0A192F; letter-spacing:1px;">PRAISE DYNASTY <span style="font-weight:400;">REAL ESTATE</span></div>
+                    <div style="font-size:22px; font-weight:800; color:#6D28D9; letter-spacing:1px;">SMARTKODE <span style="font-weight:400;">SOLUTIONS</span></div>
                 </div>
 
-                <!-- Titles -->
-                <h1 style="font-size: 58px; font-weight: 800; color: #0A192F; margin: 0 0 15px 0; letter-spacing: 4px;">CERTIFICATE OF ATTENDANCE</h1>
-                <p style="font-size: 22px; color: #4B5563; margin: 0 0 40px 0; font-weight: 300;">This certificate is proudly presented to</p>
+                <h1 style="font-size: 52px; font-weight: 800; color: #0A192F; margin: 0 0 10px 0; letter-spacing: 4px;">CERTIFICATE OF ATTENDANCE</h1>
+                <p style="font-size: 20px; color: #4B5563; margin: 0 0 35px 0; font-weight: 300;">This certificate is proudly presented to</p>
                 
-                <!-- Participant Name -->
-                <div id="tpl-name" style="font-size: 72px; font-family: 'Great Vibes', serif; color: #D92662; margin: 0 0 35px 0; line-height: 1.1; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; min-width: 600px; text-align: center;">Participant Name</div>
+                <div id="tpl-name" style="font-size: 68px; font-family: 'Great Vibes', serif; color: #D92662; margin: 0 0 30px 0; line-height: 1.1; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; min-width: 600px; text-align: center;">Participant Name</div>
                 
-                <!-- Body -->
-                <p style="font-size: 20px; color: #1F2937; max-width: 850px; text-align: center; line-height: 1.7; margin: 0 0 40px 0; font-weight: 400;">
+                <p style="font-size: 18px; color: #1F2937; max-width: 850px; text-align: center; line-height: 1.7; margin: 0 0 35px 0; font-weight: 400;">
                     For participating in <strong style="color: #0A192F;">PROPERTY × TECH 2026</strong>, a virtual summit bringing together Real Estate, Technology, AI, Investment, Opportunities and Digital Growth.
                 </p>
                 
-                <!-- Event Details -->
-                <div style="display:flex; justify-content: center; gap: 50px; margin-bottom: 40px; font-size: 18px; color: #4B5563; font-weight: 600; background: #f3f4f6; padding: 15px 40px; border-radius: 50px;">
+                <div style="display:flex; justify-content: center; gap: 50px; margin-bottom: 30px; font-size: 16px; color: #4B5563; font-weight: 600; background: #f3f4f6; padding: 12px 40px; border-radius: 50px;">
                     <div>September 12, 2026</div>
                     <div style="color: #D92662;">•</div>
                     <div>10:00 AM WAT</div>
@@ -288,255 +301,267 @@
                     <div>Virtual Summit — Google Meet</div>
                 </div>
 
-                <p style="font-size: 16px; color: #6B7280; font-style: italic; margin-bottom: 60px;">
+                <p style="font-size: 14px; color: #6B7280; font-style: italic; margin-bottom: 40px;">
                     Organized by Praise Dynasty Real Estate in collaboration with SmartKode Solutions
                 </p>
 
-                <!-- Bottom Row (Signatures & QR) -->
+                <!-- Signatures & QR -->
                 <div style="display:flex; justify-content: space-between; width:100%; align-items: flex-end; margin-top: auto;">
-                    
-                    <!-- Sig 1 -->
-                    <div style="text-align: center; width: 280px;">
-                        <div style="border-bottom: 2px solid #0A192F; height: 60px; margin-bottom: 15px; position:relative;">
-                            <!-- Handwritten simulation placeholder -->
-                            <span style="font-family:'Great Vibes', cursive; font-size: 40px; color: #1e3a8a; position:absolute; bottom:5px; left:50%; transform:translateX(-50%);">Mr. Praise</span>
+                    <div style="text-align: center; width: 260px;">
+                        <div style="border-bottom: 2px solid #0A192F; height: 55px; margin-bottom: 12px; position:relative;">
+                            <span style="font-family:'Great Vibes', cursive; font-size: 38px; color: #1e3a8a; position:absolute; bottom:5px; left:50%; transform:translateX(-50%);">Mr. Praise</span>
                         </div>
-                        <div style="font-weight: 700; color: #0A192F; font-size: 18px;">Mr. Praise</div>
-                        <div style="font-size: 14px; color: #4B5563; margin-top: 4px;">Praise Dynasty Real Estate</div>
+                        <div style="font-weight: 700; color: #0A192F; font-size: 16px;">Mr. Praise</div>
+                        <div style="font-size: 13px; color: #4B5563; margin-top: 4px;">Praise Dynasty Real Estate</div>
                     </div>
                     
-                    <!-- QR / Validation -->
                     <div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-                        <div id="tpl-qr" style="width: 100px; height: 100px; margin-bottom: 15px;"></div>
-                        <div id="tpl-id" style="font-size: 16px; font-weight: 800; color: #D92662; letter-spacing: 2px; font-family: monospace;">PXT-2026-XXXXXX</div>
+                        <div id="tpl-qr" style="width: 90px; height: 90px; margin-bottom: 10px;"></div>
+                        <div id="tpl-id" style="font-size: 14px; font-weight: 800; color: #D92662; letter-spacing: 2px; font-family: monospace;">PXT-2026-XXXXXX</div>
                     </div>
                     
-                    <!-- Sig 2 -->
-                    <div style="text-align: center; width: 280px;">
-                        <div style="border-bottom: 2px solid #0A192F; height: 60px; margin-bottom: 15px; position:relative;">
-                            <!-- Handwritten simulation placeholder -->
-                            <span style="font-family:'Great Vibes', cursive; font-size: 35px; color: #1e3a8a; position:absolute; bottom:5px; left:50%; transform:translateX(-50%);">Hussein A. H.</span>
+                    <div style="text-align: center; width: 260px;">
+                        <div style="border-bottom: 2px solid #0A192F; height: 55px; margin-bottom: 12px; position:relative;">
+                            <span style="font-family:'Great Vibes', cursive; font-size: 33px; color: #1e3a8a; position:absolute; bottom:5px; left:50%; transform:translateX(-50%);">Hussein A. H.</span>
                         </div>
-                        <div style="font-weight: 700; color: #0A192F; font-size: 18px;">Hussein Abdulsalam Hassan</div>
-                        <div style="font-size: 14px; color: #4B5563; margin-top: 4px;">SmartKode Solutions</div>
+                        <div style="font-weight: 700; color: #0A192F; font-size: 16px;">Hussein Abdulsalam Hassan</div>
+                        <div style="font-size: 13px; color: #4B5563; margin-top: 4px;">SmartKode Solutions</div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Application Logic -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, get, onValue, query, orderByChild } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    <script>
+        // ===== LOCAL STORAGE DATABASE =====
+        function getDB() {
+            try { return JSON.parse(localStorage.getItem('pxt_certificates') || '{}'); } 
+            catch(e) { return {}; }
+        }
+        function saveDB(data) { localStorage.setItem('pxt_certificates', JSON.stringify(data)); }
+        function getSeq() { return parseInt(localStorage.getItem('pxt_seq') || '0'); }
+        function saveSeq(n) { localStorage.setItem('pxt_seq', String(n)); }
+        function nextId() {
+            let s = getSeq() + 1;
+            saveSeq(s);
+            return 'PXT-2026-' + String(s).padStart(6, '0');
+        }
+        function reserveIds(count) {
+            let start = getSeq() + 1;
+            saveSeq(getSeq() + count);
+            return start;
+        }
 
-        // Setup Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyDJBGi_WKLDU493eOrH4Emx7xx_li7wzoY",
-            authDomain: "praise-dynasty-hni.firebaseapp.com",
-            projectId: "praise-dynasty-hni",
-            storageBucket: "praise-dynasty-hni.firebasestorage.app",
-            messagingSenderId: "702909860929",
-            appId: "1:702909860929:web:7c9d2a3c899df3dbf0cac0"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        // ===== VERIFICATION URL BUILDER =====
+        function buildVerifyURL(certData) {
+            const payload = { 
+                name: certData.participant_name, 
+                id: certData.certificate_id 
+            };
+            const encoded = btoa(JSON.stringify(payload));
+            return `https://praisedynastyrealty.com/verify.html?d=${encoded}`;
+        }
 
-        // Global State
-        let allCertificates = [];
-        let currentGeneratedBlobPDF = null;
-        let currentGeneratedDataPNG = null;
-        let currentGeneratedId = null;
-
-        // Admin Gate Logic
-        window.loginAdmin = function() {
+        // ===== ADMIN GATE =====
+        function loginAdmin() {
             const pass = document.getElementById('admin-pass-input').value;
             if(pass.trim().length > 0) {
                 localStorage.setItem('pxt_admin', 'true');
                 document.getElementById('admin-gate').style.display = 'none';
-                initDashboard();
+                refreshDashboard();
             }
-        };
-
+        }
         if(localStorage.getItem('pxt_admin') === 'true') {
             document.getElementById('admin-gate').style.display = 'none';
-            initDashboard();
+            refreshDashboard();
         }
 
-        // Tab Switching
-        window.switchTab = function(tabName) {
+        // ===== TAB SWITCHING =====
+        function switchTab(tabName) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             document.getElementById(`view-${tabName}`).classList.remove('hidden');
             
-            const tabs = ['dashboard', 'generate', 'bulk', 'list'];
-            tabs.forEach(t => {
-                const btn = document.getElementById(`tab-${t}`);
-                if(t === tabName) {
-                    btn.classList.replace('text-gray-300', 'text-brand-magenta');
-                    btn.classList.replace('hover:bg-white/5', 'bg-brand-magenta/20');
-                    btn.classList.add('font-bold');
-                } else {
-                    btn.classList.replace('text-brand-magenta', 'text-gray-300');
-                    btn.classList.replace('bg-brand-magenta/20', 'hover:bg-white/5');
-                    btn.classList.remove('font-bold');
-                }
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = 'tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 transition-all';
             });
-        };
+            const active = document.getElementById(`tab-${tabName}`);
+            active.className = 'tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-brand-magenta/20 text-brand-magenta font-bold transition-all';
 
-        // Realtime Data Listener
-        function initDashboard() {
-            const certsRef = ref(db, 'articles/certificates');
-            onValue(certsRef, (snapshot) => {
-                const data = snapshot.val();
-                allCertificates = [];
-                let validCount = 0;
-                let revokedCount = 0;
-                
-                if (data) {
-                    Object.keys(data).forEach(key => {
-                        const cert = data[key];
-                        allCertificates.push(cert);
-                        if(cert.verification_status === 'VALID') validCount++;
-                        if(cert.verification_status === 'REVOKED') revokedCount++;
-                    });
-                    
-                    // Sort by date descending
-                    allCertificates.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                }
-
-                // Update Stats
-                document.getElementById('stat-total').innerText = allCertificates.length;
-                document.getElementById('stat-valid').innerText = validCount;
-                document.getElementById('stat-revoked').innerText = revokedCount;
-
-                renderTables();
-            });
+            if (tabName === 'dashboard') refreshDashboard();
+            if (tabName === 'list') renderAllList();
         }
 
-        function renderTables() {
-            // Recent (Dashboard)
-            const recentBody = document.getElementById('recent-table-body');
-            const recentHTML = allCertificates.slice(0, 5).map(c => `
-                <tr class="border-b border-gray-50 last:border-0 hover:bg-gray-50 transition-colors">
-                    <td class="py-4 font-mono text-gray-500">${c.certificate_id}</td>
-                    <td class="py-4 font-bold text-gray-800">${c.participant_name}</td>
-                    <td class="py-4 text-gray-500">${new Date(c.created_at).toLocaleDateString()}</td>
-                    <td class="py-4">
-                        <span class="px-2 py-1 text-xs font-bold rounded-full ${c.verification_status === 'VALID' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">${c.verification_status}</span>
-                    </td>
-                </tr>
-            `).join('');
-            recentBody.innerHTML = recentHTML || '<tr><td colspan="4" class="py-4 text-center text-gray-400">No certificates found.</td></tr>';
+        // ===== DASHBOARD =====
+        function refreshDashboard() {
+            const db = getDB();
+            const certs = Object.values(db);
+            certs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-            // All List
-            window.filterList();
-        }
-
-        window.filterList = function() {
-            const term = document.getElementById('search-certs')?.value.toLowerCase() || '';
-            const filtered = allCertificates.filter(c => c.participant_name.toLowerCase().includes(term) || c.certificate_id.toLowerCase().includes(term));
+            const valid = certs.filter(c => c.verification_status === 'VALID').length;
+            const revoked = certs.filter(c => c.verification_status === 'REVOKED').length;
             
-            const tbody = document.getElementById('all-table-body');
-            tbody.innerHTML = filtered.map(c => `
-                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td class="py-4 px-6 font-mono text-xs text-gray-500">${c.certificate_id}</td>
-                    <td class="py-4 px-6 font-bold text-gray-800">${c.participant_name}</td>
-                    <td class="py-4 px-6 text-gray-500 text-sm">${new Date(c.created_at).toLocaleDateString()}</td>
-                    <td class="py-4 px-6">
-                        <span class="px-2 py-1 text-xs font-bold rounded-full ${c.verification_status === 'VALID' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">${c.verification_status}</span>
-                    </td>
-                    <td class="py-4 px-6 text-right space-x-2">
-                        <button onclick="toggleStatus('${c.certificate_id}', '${c.verification_status}')" class="text-xs px-3 py-1 border border-gray-200 rounded hover:bg-gray-100">Toggle Status</button>
-                    </td>
-                </tr>
-            `).join('') || '<tr><td colspan="5" class="py-8 text-center text-gray-400">No matching certificates.</td></tr>';
-        }
+            document.getElementById('stat-total').innerText = certs.length;
+            document.getElementById('stat-valid').innerText = valid;
+            document.getElementById('stat-revoked').innerText = revoked;
 
-        window.toggleStatus = async function(id, currentStatus) {
-            const newStatus = currentStatus === 'VALID' ? 'REVOKED' : 'VALID';
-            if(confirm(`Are you sure you want to mark ${id} as ${newStatus}?`)) {
-                await set(ref(db, `certificates/${id}/verification_status`), newStatus);
+            const tbody = document.getElementById('recent-table-body');
+            if (certs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center text-gray-400">No certificates yet. Generate your first one!</td></tr>';
+            } else {
+                tbody.innerHTML = certs.slice(0, 8).map(c => `
+                    <tr class="border-b border-gray-50 last:border-0 hover:bg-gray-50 transition-colors">
+                        <td class="py-3 font-mono text-xs text-gray-500">${c.certificate_id}</td>
+                        <td class="py-3 font-bold text-gray-800">${c.participant_name}</td>
+                        <td class="py-3 text-gray-500 text-sm">${c.email || '-'}</td>
+                        <td class="py-3">
+                            <span class="px-2 py-1 text-xs font-bold rounded-full ${c.verification_status === 'VALID' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">${c.verification_status}</span>
+                        </td>
+                    </tr>
+                `).join('');
             }
         }
 
-        // --- ID GENERATION ---
-        async function getNextSeqNumber(count = 1) {
-            const metaRef = ref(db, 'articles/certificate_metadata/seq');
-            const snap = await get(metaRef);
-            let current = snap.exists() ? snap.val() : 0;
-            let start = current + 1;
-            await set(metaRef, current + count);
-            return start;
+        // ===== ALL CERTIFICATES LIST =====
+        function renderAllList() {
+            const db = getDB();
+            const certs = Object.values(db);
+            certs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            const term = (document.getElementById('search-certs')?.value || '').toLowerCase();
+            const filtered = certs.filter(c => 
+                c.participant_name.toLowerCase().includes(term) || 
+                c.certificate_id.toLowerCase().includes(term) ||
+                (c.email || '').toLowerCase().includes(term)
+            );
+
+            const tbody = document.getElementById('all-table-body');
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-gray-400">No matching certificates.</td></tr>';
+            } else {
+                tbody.innerHTML = filtered.map(c => `
+                    <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                        <td class="py-4 px-6 font-mono text-xs text-gray-500">${c.certificate_id}</td>
+                        <td class="py-4 px-6 font-bold text-gray-800">${c.participant_name}</td>
+                        <td class="py-4 px-6 text-gray-500 text-sm">${c.email || '-'}</td>
+                        <td class="py-4 px-6 text-gray-500 text-sm">${c.phone || '-'}</td>
+                        <td class="py-4 px-6">
+                            <span class="px-2 py-1 text-xs font-bold rounded-full ${c.verification_status === 'VALID' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">${c.verification_status}</span>
+                        </td>
+                        <td class="py-4 px-6 text-right space-x-2">
+                            <button onclick="redownload('${c.certificate_id}')" class="text-xs px-3 py-1 border border-gray-200 rounded hover:bg-gray-100" title="Re-download PDF">📄</button>
+                            <button onclick="toggleStatus('${c.certificate_id}')" class="text-xs px-3 py-1 border border-gray-200 rounded hover:bg-gray-100" title="Toggle VALID/REVOKED">🔄</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
         }
 
-        // --- RENDERING CORE ---
+        function toggleStatus(id) {
+            const db = getDB();
+            if (!db[id]) return;
+            const current = db[id].verification_status;
+            const next = current === 'VALID' ? 'REVOKED' : 'VALID';
+            if (confirm(`Mark ${id} as ${next}?`)) {
+                db[id].verification_status = next;
+                saveDB(db);
+                renderAllList();
+                refreshDashboard();
+                showToast(`${id} marked as ${next}`);
+            }
+        }
+
+        async function redownload(id) {
+            const db = getDB();
+            const cert = db[id];
+            if (!cert) return;
+            
+            const canvas = await renderCertificateCanvas(cert.participant_name, cert.certificate_id);
+            const pdfBlob = createPDFBlob(canvas);
+            saveAs(pdfBlob, `${cert.certificate_id}.pdf`);
+        }
+
+        function exportCSV() {
+            const db = getDB();
+            const certs = Object.values(db);
+            if (certs.length === 0) return alert('No certificates to export.');
+            
+            let csv = 'Certificate ID,Name,Email,Phone,Status,Date Issued\n';
+            certs.forEach(c => {
+                csv += `${c.certificate_id},"${c.participant_name}",${c.email||''},${c.phone||''},${c.verification_status},${c.issue_date}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            saveAs(blob, `PXT2026_certificates_${Date.now()}.csv`);
+        }
+
+        // ===== CERTIFICATE RENDERING =====
         async function renderCertificateCanvas(name, certId) {
-            // Update Template DOM
             document.getElementById('tpl-name').innerText = name;
             document.getElementById('tpl-id').innerText = certId;
             
-            // Generate QR
+            // Build QR with encoded verification data
             const qrContainer = document.getElementById('tpl-qr');
-            qrContainer.innerHTML = ''; // clear
+            qrContainer.innerHTML = '';
+            const verifyData = { name: name, id: certId };
+            const verifyURL = `https://praisedynastyrealty.com/verify.html?d=${btoa(JSON.stringify(verifyData))}`;
+            
             new QRCode(qrContainer, {
-                text: `https://praisedynastyrealty.com/verify.html?id=${certId}`,
-                width: 100, height: 100,
-                colorDark : "#0A192F", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
+                text: verifyURL,
+                width: 90, height: 90,
+                colorDark: '#0A192F', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H
             });
 
-            // Wait for QR to render
-            await new Promise(r => setTimeout(r, 100));
+            await new Promise(r => setTimeout(r, 200));
 
-            // Render via html2canvas
             const target = document.getElementById('cert-template-container');
             const canvas = await html2canvas(target, { 
-                scale: 2, // High resolution
-                useCORS: true,
-                backgroundColor: '#ffffff'
+                scale: 2, useCORS: true, backgroundColor: '#ffffff'
             });
-
             return canvas;
         }
 
         function createPDFBlob(canvas) {
             const imgData = canvas.toDataURL('image/png');
             const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('l', 'mm', 'a4'); // A4 landscape is 297 x 210 mm
+            const pdf = new jsPDF('l', 'mm', 'a4');
             pdf.addImage(imgData, 'PNG', 0, 0, 297, 210);
             return pdf.output('blob');
         }
 
-        // --- SINGLE GEN ---
-        window.generateSingle = async function(e) {
+        // ===== SINGLE GENERATION =====
+        let currentPDFBlob = null;
+        let currentPNGData = null;
+        let currentCertId = null;
+        let currentCertName = null;
+
+        async function generateSingle(e) {
             e.preventDefault();
             const btn = document.getElementById('btn-gen-single');
             const name = document.getElementById('gen-name').value.trim();
             const email = document.getElementById('gen-email').value.trim();
             const phone = document.getElementById('gen-phone').value.trim();
             
-            if(!name || !email || !phone) return alert('Name, Email, and Phone are required');
-            
-            btn.innerHTML = `<div class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div> Processing...`;
+            if (!name || !email || !phone) return alert('Name, Email, and Phone are required.');
+
+            btn.innerHTML = '<div class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div> Processing...';
             btn.disabled = true;
 
             try {
-                // 1. Get ID
-                const seq = await getNextSeqNumber();
-                const certId = `PXT-2026-${String(seq).padStart(6, '0')}`;
-                
-                // 2. Render visually
+                const certId = nextId();
                 const canvas = await renderCertificateCanvas(name, certId);
-                
-                // 3. Store assets in memory for download
-                currentGeneratedDataPNG = canvas.toDataURL('image/png');
-                currentGeneratedBlobPDF = createPDFBlob(canvas);
-                currentGeneratedId = certId;
 
-                // 4. Save to DB
-                const certData = {
-                    id: certId, certificate_id: certId,
-                    participant_name: name, email, phone,
+                currentPNGData = canvas.toDataURL('image/png');
+                currentPDFBlob = createPDFBlob(canvas);
+                currentCertId = certId;
+                currentCertName = name;
+
+                // Save to localStorage
+                const db = getDB();
+                db[certId] = {
+                    certificate_id: certId,
+                    participant_name: name,
+                    email: email,
+                    phone: phone,
+                    notes: document.getElementById('gen-notes').value.trim(),
                     event_name: 'PROPERTY × TECH 2026',
                     event_date: '2026-09-12',
                     attendance_status: 'Attended',
@@ -544,50 +569,56 @@
                     verification_status: 'VALID',
                     created_at: new Date().toISOString()
                 };
-                await set(ref(db, `certificates/${certId}`), certData);
+                saveDB(db);
 
-                // 5. Update UI
+                // Show success
                 document.getElementById('gen-empty-area').classList.add('hidden');
                 document.getElementById('gen-success-area').classList.remove('hidden');
                 document.getElementById('success-id').innerText = certId;
+                document.getElementById('success-name').innerText = name;
                 
+                showToast('Certificate generated successfully!');
             } catch (err) {
                 console.error(err);
                 alert('Failed to generate certificate: ' + (err.message || err));
             } finally {
-                btn.innerHTML = `Generate & Save Record`;
+                btn.innerHTML = '<span>Generate Certificate</span>';
                 btn.disabled = false;
             }
-        };
+        }
 
-        window.resetSingleGen = function() {
+        function resetSingleGen() {
             document.getElementById('single-gen-form').reset();
             document.getElementById('gen-success-area').classList.add('hidden');
             document.getElementById('gen-empty-area').classList.remove('hidden');
         }
 
-        window.downloadCurrentPDF = function() {
-            if(currentGeneratedBlobPDF) saveAs(currentGeneratedBlobPDF, `${currentGeneratedId}.pdf`);
+        function downloadCurrentPDF() {
+            if (currentPDFBlob) saveAs(currentPDFBlob, `${currentCertId}.pdf`);
         }
-        window.downloadCurrentPNG = function() {
-            if(currentGeneratedDataPNG) saveAs(currentGeneratedDataPNG, `${currentGeneratedId}.png`);
+        function downloadCurrentPNG() {
+            if (currentPNGData) {
+                const link = document.createElement('a');
+                link.download = `${currentCertId}.png`;
+                link.href = currentPNGData;
+                link.click();
+            }
         }
-        window.copyVerifyLink = function() {
-            const url = `https://praisedynastyrealty.com/verify.html?id=${currentGeneratedId}`;
-            navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
+        function copyVerifyLink() {
+            const payload = { name: currentCertName, id: currentCertId };
+            const url = `https://praisedynastyrealty.com/verify.html?d=${btoa(JSON.stringify(payload))}`;
+            navigator.clipboard.writeText(url).then(() => showToast('Verification link copied!'));
         }
 
-        // --- BULK GEN ---
-        window.startBulkGen = async function() {
+        // ===== BULK GENERATION =====
+        async function startBulkGen() {
             const text = document.getElementById('bulk-names').value.trim();
-            if(!text) return alert("Please enter names.");
-            
+            if (!text) return alert('Please enter names.');
+
             const rawNames = text.split('\n').map(n => n.trim()).filter(n => n.length > 0);
-            // Deduplicate incoming array
             const names = [...new Set(rawNames)];
-            
-            if(names.length === 0) return alert("No valid names found.");
-            
+            if (names.length === 0) return alert('No valid names found.');
+
             const btn = document.getElementById('btn-bulk');
             const progressArea = document.getElementById('bulk-progress-area');
             const progressBar = document.getElementById('bulk-progress-bar');
@@ -595,59 +626,75 @@
             const statusText = document.getElementById('bulk-status-text');
 
             btn.disabled = true;
-            btn.innerText = "Generating...";
+            btn.innerText = 'Generating...';
             progressArea.classList.remove('hidden');
-            
+            progressBar.style.width = '0%';
+
             try {
-                // Reserve sequence block
-                const startSeq = await getNextSeqNumber(names.length);
+                const startSeq = reserveIds(names.length);
                 const zip = new JSZip();
-                
-                for(let i=0; i < names.length; i++) {
+                const db = getDB();
+
+                for (let i = 0; i < names.length; i++) {
                     const name = names[i];
-                    const certId = `PXT-2026-${String(startSeq + i).padStart(6, '0')}`;
-                    
+                    const certId = 'PXT-2026-' + String(startSeq + i).padStart(6, '0');
+
                     statusText.innerText = `Processing: ${name}`;
-                    
-                    // Render
+                    countText.innerText = `${i + 1} / ${names.length}`;
+                    progressBar.style.width = `${Math.round(((i + 1) / names.length) * 100)}%`;
+
                     const canvas = await renderCertificateCanvas(name, certId);
                     const pdfBlob = createPDFBlob(canvas);
-                    
-                    // Add to zip
+
                     const safeName = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
                     zip.file(`${safeName}_${certId}.pdf`, pdfBlob);
 
-                    // Save DB
-                    const certData = {
-                        id: certId, certificate_id: certId,
-                        participant_name: name, email: '', phone: '',
-                        event_name: 'PROPERTY × TECH 2026', event_date: '2026-09-12',
-                        attendance_status: 'Attended', issue_date: new Date().toISOString().split('T')[0],
-                        verification_status: 'VALID', created_at: new Date().toISOString()
+                    db[certId] = {
+                        certificate_id: certId,
+                        participant_name: name,
+                        email: '', phone: '',
+                        event_name: 'PROPERTY × TECH 2026',
+                        event_date: '2026-09-12',
+                        attendance_status: 'Attended',
+                        issue_date: new Date().toISOString().split('T')[0],
+                        verification_status: 'VALID',
+                        created_at: new Date().toISOString()
                     };
-                    await set(ref(db, `certificates/${certId}`), certData);
+                    saveDB(db);
 
-                    // Update Progress
-                    const pct = Math.round(((i + 1) / names.length) * 100);
-                    progressBar.style.width = `${pct}%`;
-                    countText.innerText = `${i + 1} / ${names.length}`;
+                    // Small delay to let browser breathe
+                    await new Promise(r => setTimeout(r, 50));
                 }
 
-                statusText.innerText = "Zipping files...";
-                const zipContent = await zip.generateAsync({type:"blob"});
-                saveAs(zipContent, `PXT2026_Certificates_${new Date().getTime()}.zip`);
-                
-                statusText.innerText = "Complete!";
+                statusText.innerText = 'Zipping files...';
+                const zipContent = await zip.generateAsync({ type: 'blob' });
+                saveAs(zipContent, `PXT2026_Certificates_${Date.now()}.zip`);
+
+                statusText.innerText = `Complete! ${names.length} certificates generated.`;
                 document.getElementById('bulk-names').value = '';
-                
+                showToast(`${names.length} certificates generated and downloaded!`);
+                refreshDashboard();
+
             } catch (err) {
                 console.error(err);
-                alert("An error occurred during bulk generation.");
+                alert('Error during bulk generation: ' + (err.message || err));
             } finally {
                 btn.disabled = false;
-                btn.innerText = "Process Bulk Generation";
+                btn.innerText = 'Process Bulk Generation';
             }
         }
+
+        // ===== TOAST =====
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.className = 'toast';
+            t.innerText = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        // Init
+        refreshDashboard();
     </script>
 </body>
 </html>
