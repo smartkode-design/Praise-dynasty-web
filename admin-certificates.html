@@ -386,7 +386,7 @@
 
         // Realtime Data Listener
         function initDashboard() {
-            const certsRef = ref(db, 'certificates');
+            const certsRef = ref(db, 'articles/certificates');
             onValue(certsRef, (snapshot) => {
                 const data = snapshot.val();
                 allCertificates = [];
@@ -462,7 +462,7 @@
 
         // --- ID GENERATION ---
         async function getNextSeqNumber(count = 1) {
-            const metaRef = ref(db, 'certificate_metadata/seq');
+            const metaRef = ref(db, 'articles/certificate_metadata/seq');
             const snap = await get(metaRef);
             let current = snap.exists() ? snap.val() : 0;
             let start = current + 1;

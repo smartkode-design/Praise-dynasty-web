@@ -107,7 +107,7 @@
             loadingState.classList.remove('hidden');
 
             try {
-                const certRef = ref(db, `certificates/${certId}`);
+                const certRef = ref(db, `articles/certificates/${certId}`);
                 const snapshot = await get(certRef);
 
                 loadingState.classList.add('hidden');
