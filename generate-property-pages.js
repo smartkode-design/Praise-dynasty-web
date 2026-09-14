@@ -276,22 +276,28 @@ async function runGenerator() {
 
     // INJECT STATIC SEO LINKS INTO ALL-LISTINGS.HTML
     console.log("Injecting static SEO links into all-listings.html...");
-    let seoLinksHtml = '<div id="seo-property-links" style="display:none;" aria-hidden="true">\n';
+    let seoLinksHtml = `
+<div id="seo-property-directory" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white">
+    <h3 class="text-xl font-bold text-brand-blue mb-6">Property Directory</h3>
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+`;
     for (const key in properties) {
         const property = properties[key];
         if (property.status === 'Off-Market') continue;
-        seoLinksHtml += `<a href="https://praisedynastyrealty.com/property/${property.slug}/">${property.title} in ${property.location}</a>\n`;
+        seoLinksHtml += `        <li><a href="https://praisedynastyrealty.com/property/${property.slug}/" class="text-gray-600 hover:text-brand-magenta transition-colors">${property.title} in ${property.location}</a></li>\n`;
     }
-    seoLinksHtml += '</div>';
+    seoLinksHtml += `    </ul>\n</div>\n<!-- END SEO DIRECTORY -->`;
 
     const listingsPath = path.join(__dirname, 'all-listings.html');
     let listingsHtml = fs.readFileSync(listingsPath, 'utf8');
     
-    // Remove old block if it exists
+    // Remove old hidden block if it exists
     listingsHtml = listingsHtml.replace(/<div id="seo-property-links"[\s\S]*?<\/div>/, '');
+    // Remove old visible directory if it exists
+    listingsHtml = listingsHtml.replace(/<div id="seo-property-directory"[\s\S]*?<!-- END SEO DIRECTORY -->/, '');
     
-    // Insert new block right before </body>
-    listingsHtml = listingsHtml.replace('</body>', `${seoLinksHtml}\n</body>`);
+    // Insert new directory right before the footer
+    listingsHtml = listingsHtml.replace('<footer ', `${seoLinksHtml}\n    <footer `);
     fs.writeFileSync(listingsPath, listingsHtml);
 
     console.log(`Successfully generated ${count} property detail pages, updated sitemap.xml, and injected SEO links!`);
