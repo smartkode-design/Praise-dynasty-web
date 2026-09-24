@@ -284,38 +284,38 @@
                             </div>
 
                             <!-- SmartKode AI SEO Engine -->
-                            <div class="md:col-span-2 bg-gradient-to-r from-gray-900 via-brand-blue to-gray-900 p-6 rounded-2xl border border-gray-800 text-white shadow-xl relative overflow-hidden">
-                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5 border-b border-gray-800/80 pb-4">
+                            <div class="md:col-span-2 p-6 sm:p-8 rounded-2xl border-2 border-brand-magenta/30 shadow-md relative overflow-hidden" style="background: #F8FAFC; border: 2px solid #E2E8F0;">
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-gray-200 pb-5">
                                     <div>
                                         <div class="flex items-center gap-2">
                                             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase bg-brand-magenta text-white">SmartKode AI Engine</span>
-                                            <span class="text-xs text-green-400 font-semibold flex items-center gap-1">● Live Gemini Active</span>
+                                            <span class="text-xs text-green-600 font-bold flex items-center gap-1">● Live Gemini Active</span>
                                         </div>
-                                        <h4 class="text-base font-bold text-white mt-1">Property SEO & Local Search Intelligence</h4>
-                                        <p class="text-xs text-gray-400">Auto-generates Google search tags, local keywords, and structured buyer FAQs.</p>
+                                        <h4 class="text-lg font-bold text-gray-900 mt-1">Property SEO & Local Search Intelligence</h4>
+                                        <p class="text-xs text-gray-500 font-medium">Auto-generates Google search tags, local keywords, and structured buyer FAQs.</p>
                                     </div>
-                                    <button type="button" id="btn-generate-ai-seo" class="px-5 py-2.5 bg-brand-magenta hover:bg-pink-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95 shrink-0">
+                                    <button type="button" id="btn-generate-ai-seo" class="px-6 py-3 bg-brand-magenta hover:bg-pink-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95 shrink-0">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                         <span id="btn-ai-text">✨ Generate AI SEO</span>
                                     </button>
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
                                     <div>
-                                        <label class="block text-gray-300 font-semibold mb-1">SEO Title Tag (Google Search Headline)</label>
-                                        <input id="seo-meta-title" type="text" placeholder="Auto-generated high-converting search title..." class="w-full px-3 py-2.5 bg-gray-800/90 border border-gray-700 rounded-lg text-white font-medium outline-none focus:border-brand-magenta">
+                                        <label class="block text-gray-800 font-bold mb-1.5 text-xs">SEO Title Tag (Google Search Headline)</label>
+                                        <input id="seo-meta-title" type="text" placeholder="Auto-generated high-converting search title..." class="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-semibold outline-none focus:ring-2 focus:ring-brand-magenta focus:border-brand-magenta shadow-sm" style="color: #0F172A !important; background-color: #FFFFFF !important;">
                                     </div>
                                     <div>
-                                        <label class="block text-gray-300 font-semibold mb-1">Target Keywords & Neighborhood Tags</label>
-                                        <input id="seo-keywords" type="text" placeholder="e.g. Asokoro luxury duplex, C of O, Abuja land banking..." class="w-full px-3 py-2.5 bg-gray-800/90 border border-gray-700 rounded-lg text-white font-medium outline-none focus:border-brand-magenta">
+                                        <label class="block text-gray-800 font-bold mb-1.5 text-xs">Target Keywords & Neighborhood Tags</label>
+                                        <input id="seo-keywords" type="text" placeholder="e.g. Asokoro luxury duplex, C of O, Abuja land banking..." class="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-semibold outline-none focus:ring-2 focus:ring-brand-magenta focus:border-brand-magenta shadow-sm" style="color: #0F172A !important; background-color: #FFFFFF !important;">
                                     </div>
                                     <div class="md:col-span-2">
-                                        <label class="block text-gray-300 font-semibold mb-1">Meta Description (Snippet seen on Google search results)</label>
-                                        <textarea id="seo-meta-desc" rows="2" placeholder="Auto-generated compelling summary for Google bots and buyers..." class="w-full px-3 py-2 bg-gray-800/90 border border-gray-700 rounded-lg text-white font-medium outline-none focus:border-brand-magenta resize-y"></textarea>
+                                        <label class="block text-gray-800 font-bold mb-1.5 text-xs">Meta Description (Snippet seen on Google search results)</label>
+                                        <textarea id="seo-meta-desc" rows="2" placeholder="Auto-generated compelling summary for Google bots and buyers..." class="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-semibold outline-none focus:ring-2 focus:ring-brand-magenta focus:border-brand-magenta resize-y shadow-sm" style="color: #0F172A !important; background-color: #FFFFFF !important;"></textarea>
                                     </div>
                                     <div class="md:col-span-2">
-                                        <label class="block text-gray-300 font-semibold mb-1">Local FAQ & Buyer Intelligence (Structured Q&A)</label>
-                                        <textarea id="seo-faqs" rows="3" placeholder="Auto-generated buyer FAQs (Zoning, Title status, Proximity)..." class="w-full px-3 py-2 bg-gray-800/90 border border-gray-700 rounded-lg text-white font-medium outline-none focus:border-brand-magenta resize-y"></textarea>
+                                        <label class="block text-gray-800 font-bold mb-1.5 text-xs">Local FAQ & Buyer Intelligence (Structured Q&A)</label>
+                                        <textarea id="seo-faqs" rows="4" placeholder="Auto-generated buyer FAQs (Zoning, Title status, Proximity)..." class="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-semibold outline-none focus:ring-2 focus:ring-brand-magenta focus:border-brand-magenta resize-y shadow-sm" style="color: #0F172A !important; background-color: #FFFFFF !important;"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1152,29 +1152,43 @@ IMPORTANT: Output ONLY the raw JSON object. Do not include markdown code blocks,
                         if (jsonMatch) cleanJsonStr = jsonMatch[0];
                     }
 
-                    const seoData = JSON.parse(cleanJsonStr);
-
-                    const titleField = seoData.metaTitle || seoData.title;
-                    if (titleField) document.getElementById('seo-meta-title').value = titleField;
-
-                    if (seoData.keywords) {
-                        document.getElementById('seo-keywords').value = Array.isArray(seoData.keywords) ? seoData.keywords.join(', ') : seoData.keywords;
+                    let parsed = JSON.parse(cleanJsonStr);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        parsed = parsed[0];
                     }
-                    const descField = seoData.metaDescription || seoData.description;
-                    if (descField) {
-                        document.getElementById('seo-meta-desc').value = descField;
+                    if (parsed.seo) parsed = parsed.seo;
+                    if (parsed.data) parsed = parsed.data;
+
+                    console.log("SmartKode AI SEO Parsed Result:", parsed);
+
+                    const titleVal = parsed.metaTitle || parsed.title || parsed.seoTitle || parsed.headline || '';
+                    if (titleVal && document.getElementById('seo-meta-title')) {
+                        document.getElementById('seo-meta-title').value = titleVal;
                     }
-                    if (seoData.faqs) {
-                        if (Array.isArray(seoData.faqs)) {
-                            document.getElementById('seo-faqs').value = seoData.faqs.map(f => {
+
+                    const keywordsVal = parsed.keywords || parsed.targetKeywords || parsed.tags || '';
+                    if (keywordsVal && document.getElementById('seo-keywords')) {
+                        document.getElementById('seo-keywords').value = Array.isArray(keywordsVal) ? keywordsVal.join(', ') : keywordsVal;
+                    }
+
+                    const descVal = parsed.metaDescription || parsed.description || parsed.metaDesc || parsed.summary || '';
+                    if (descVal && document.getElementById('seo-meta-desc')) {
+                        document.getElementById('seo-meta-desc').value = descVal;
+                    }
+
+                    const faqsVal = parsed.faqs || parsed.faq || parsed.questions || '';
+                    if (faqsVal && document.getElementById('seo-faqs')) {
+                        if (Array.isArray(faqsVal)) {
+                            document.getElementById('seo-faqs').value = faqsVal.map(f => {
+                                if (typeof f === 'string') return f;
                                 const q = f.question || f.q || 'Question';
                                 const a = f.answer || f.a || 'Answer';
                                 return `Q: ${q}\nA: ${a}`;
                             }).join('\n\n');
-                        } else if (typeof seoData.faqs === 'object') {
-                            document.getElementById('seo-faqs').value = JSON.stringify(seoData.faqs, null, 2);
+                        } else if (typeof faqsVal === 'object') {
+                            document.getElementById('seo-faqs').value = JSON.stringify(faqsVal, null, 2);
                         } else {
-                            document.getElementById('seo-faqs').value = seoData.faqs;
+                            document.getElementById('seo-faqs').value = faqsVal;
                         }
                     }
 
