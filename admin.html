@@ -283,6 +283,43 @@
                                     class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-all placeholder-gray-400 resize-y font-medium text-gray-900"></textarea>
                             </div>
 
+                            <!-- SmartKode AI SEO Engine -->
+                            <div class="md:col-span-2 bg-gradient-to-r from-gray-900 via-brand-blue to-gray-900 p-6 rounded-2xl border border-gray-800 text-white shadow-xl relative overflow-hidden">
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5 border-b border-gray-800/80 pb-4">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase bg-brand-magenta text-white">SmartKode AI Engine</span>
+                                            <span class="text-xs text-green-400 font-semibold flex items-center gap-1">● Live Gemini Active</span>
+                                        </div>
+                                        <h4 class="text-base font-bold text-white mt-1">Property SEO & Local Search Intelligence</h4>
+                                        <p class="text-xs text-gray-400">Auto-generates Google search tags, local keywords, and structured buyer FAQs.</p>
+                                    </div>
+                                    <button type="button" id="btn-generate-ai-seo" class="px-5 py-2.5 bg-brand-magenta hover:bg-pink-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95 shrink-0">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                        <span id="btn-ai-text">✨ Generate AI SEO</span>
+                                    </button>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                                    <div>
+                                        <label class="block text-gray-300 font-semibold mb-1">SEO Title Tag (Google Search Headline)</label>
+                                        <input id="seo-meta-title" type="text" placeholder="Auto-generated high-converting search title..." class="w-full px-3 py-2.5 bg-gray-800/90 border border-gray-700 rounded-lg text-white font-medium outline-none focus:border-brand-magenta">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-300 font-semibold mb-1">Target Keywords & Neighborhood Tags</label>
+                                        <input id="seo-keywords" type="text" placeholder="e.g. Asokoro luxury duplex, C of O, Abuja land banking..." class="w-full px-3 py-2.5 bg-gray-800/90 border border-gray-700 rounded-lg text-white font-medium outline-none focus:border-brand-magenta">
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-gray-300 font-semibold mb-1">Meta Description (Snippet seen on Google search results)</label>
+                                        <textarea id="seo-meta-desc" rows="2" placeholder="Auto-generated compelling summary for Google bots and buyers..." class="w-full px-3 py-2 bg-gray-800/90 border border-gray-700 rounded-lg text-white font-medium outline-none focus:border-brand-magenta resize-y"></textarea>
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-gray-300 font-semibold mb-1">Local FAQ & Buyer Intelligence (Structured Q&A)</label>
+                                        <textarea id="seo-faqs" rows="3" placeholder="Auto-generated buyer FAQs (Zoning, Title status, Proximity)..." class="w-full px-3 py-2 bg-gray-800/90 border border-gray-700 rounded-lg text-white font-medium outline-none focus:border-brand-magenta resize-y"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                         <!-- 2. Dynamic Pricing & Units Section -->
@@ -901,7 +938,13 @@
                 description: descVal,
                 status: statusVal,
                 youtubeUrl: youtubeVal,
-                units: units
+                units: units,
+                seo: {
+                    metaTitle: document.getElementById('seo-meta-title')?.value.trim() || '',
+                    keywords: document.getElementById('seo-keywords')?.value.trim() || '',
+                    metaDescription: document.getElementById('seo-meta-desc')?.value.trim() || '',
+                    faqs: document.getElementById('seo-faqs')?.value.trim() || ''
+                }
             };
 
             const btnText = publishBtn.querySelector('span');
@@ -1005,6 +1048,14 @@
                     document.getElementById('property-district').value = '';
                 }
 
+                // Reset SEO fields
+                if (document.getElementById('seo-meta-title')) {
+                    document.getElementById('seo-meta-title').value = '';
+                    document.getElementById('seo-keywords').value = '';
+                    document.getElementById('seo-meta-desc').value = '';
+                    document.getElementById('seo-faqs').value = '';
+                }
+
             } catch (error) {
                 console.error("Error writing to database: ", error);
                 window.showToast("Upload Failed: " + error.message, 'error');
@@ -1014,6 +1065,97 @@
                 publishBtn.disabled = false;
             }
         });
+
+        // ==========================
+        // SMARTKODE AI SEO ENGINE (GEMINI)
+        // ==========================
+        const btnGenerateAiSeo = document.getElementById('btn-generate-ai-seo');
+        if (btnGenerateAiSeo) {
+            btnGenerateAiSeo.addEventListener('click', async () => {
+                const title = document.getElementById('property-title')?.value.trim();
+                const district = document.getElementById('property-district')?.value.trim();
+                const state = document.getElementById('property-state')?.value.trim();
+                const country = document.getElementById('property-country')?.value.trim();
+                const type = document.getElementById('property-type')?.value.trim();
+                const category = document.getElementById('listing-type')?.value.trim();
+                const desc = document.getElementById('property-desc')?.value.trim();
+
+                if (!title) {
+                    window.showToast('Please enter at least a Property Title first!', 'error');
+                    return;
+                }
+
+                const btnText = document.getElementById('btn-ai-text');
+                const origText = btnText.innerText;
+                btnGenerateAiSeo.disabled = true;
+                btnText.innerText = '🧠 Thinking (Gemini)...';
+
+                const prompt = `You are an elite luxury real estate SEO copywriter and strategist in Nigeria for Praise Dynasty Real Estate Ltd.
+Analyze the following property and produce high-ranking Google SEO tags and buyer intelligence:
+Property Title: ${title}
+Location: ${district ? district + ', ' : ''}${state ? state + ', ' : ''}${country || 'Nigeria'}
+Property Type: ${type || 'Luxury Real Estate'}
+Category: For ${category || 'Sale'}
+Description: ${desc || 'Prime luxury property with great investment value.'}
+
+Return your answer strictly in valid JSON format with these exact keys:
+{
+  "metaTitle": "Catchy SEO Title under 60 characters including property type, district, and Praise Dynasty",
+  "keywords": "Comma-separated high-intent search keywords (include title documents like C of O / AGIS, neighborhood tags, investment terms)",
+  "metaDescription": "High-converting meta description under 155 characters that entices clicks on Google search",
+  "faqs": "3 clear Q&As formatted with Q: and A: on separate lines addressing title verification, neighborhood security, and capital appreciation potential"
+}
+IMPORTANT: Output ONLY the raw JSON object. Do not include markdown code blocks, backticks, or introductory text.`;
+
+                try {
+                    const apiKey = atob("QVEuQWI4Uk42S3ZadlI1a2loUmFwU0xfRlJJZU51eU96b1p6bmRLYVpxZFNWVXZXM1pjdGc=");
+                    // Primary and fallback models verified for this key
+                    const models = ["gemma-4-26b-a4b-it", "gemini-3.6-flash", "gemini-flash-latest"];
+                    let rawResponse = null;
+
+                    for (const m of models) {
+                        try {
+                            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                            });
+                            if (res.ok) {
+                                const json = await res.json();
+                                const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
+                                if (text && text.trim().length > 0) {
+                                    rawResponse = text;
+                                    break;
+                                }
+                            }
+                        } catch (e) {
+                            console.warn(`Model ${m} encountered an issue, trying fallback...`, e);
+                        }
+                    }
+
+                    if (!rawResponse) throw new Error("Could not retrieve content from Gemini.");
+
+                    // Clean any markdown formatting if present
+                    const cleanJsonStr = rawResponse.replace(/```json/gi, '').replace(/```/g, '').trim();
+                    const seoData = JSON.parse(cleanJsonStr);
+
+                    if (seoData.metaTitle) document.getElementById('seo-meta-title').value = seoData.metaTitle;
+                    if (seoData.keywords) document.getElementById('seo-keywords').value = seoData.keywords;
+                    if (seoData.metaDescription) document.getElementById('seo-meta-desc').value = seoData.metaDescription;
+                    if (seoData.faqs) {
+                        document.getElementById('seo-faqs').value = typeof seoData.faqs === 'string' ? seoData.faqs : JSON.stringify(seoData.faqs, null, 2);
+                    }
+
+                    window.showToast('✨ AI SEO Intelligence Generated Successfully!', 'success');
+                } catch (err) {
+                    console.error("AI SEO Engine Error:", err);
+                    window.showToast('AI Generation encountered an issue. Please try again.', 'error');
+                } finally {
+                    btnGenerateAiSeo.disabled = false;
+                    btnText.innerText = origText;
+                }
+            });
+        }
 
         // Live Properties Table (Read)
         onValue(propertiesRef, (snapshot) => {
@@ -1168,6 +1310,14 @@
                     document.getElementById('listing-type').value = p.propertyType || '';
                     descInput.value = p.description || '';
                     youtubeInput.value = p.youtubeUrl || '';
+
+                    // Rehydrate SEO Fields if available
+                    if (document.getElementById('seo-meta-title')) {
+                        document.getElementById('seo-meta-title').value = p.seo?.metaTitle || '';
+                        document.getElementById('seo-keywords').value = p.seo?.keywords || '';
+                        document.getElementById('seo-meta-desc').value = p.seo?.metaDescription || '';
+                        document.getElementById('seo-faqs').value = p.seo?.faqs || '';
+                    }
 
                     // Image Placeholder UI Logic (Security prevents auto-assigning <input type="file"> URLs)
                     if (p.imageUrl && p.imageUrl.trim() !== '') {
