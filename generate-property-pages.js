@@ -17,7 +17,6 @@ function generateSlug(title, location, propertyId) {
         .trim()
         .replace(/\s+/g, '-');
 
-    // Truncate title slug to avoid exceeding path limits on Windows (MAX_PATH is 260 chars)
     if (cleanTitle.length > 50) {
         cleanTitle = cleanTitle.substring(0, 50).replace(/-+$/, '');
     }
@@ -83,8 +82,26 @@ function getPropPrice(p) {
     return 0;
 }
 
+// Helper to parse Q&A string into structured items
+function parseFaqs(faqText) {
+    if (!faqText || typeof faqText !== 'string') return [];
+    const faqs = [];
+    const blocks = faqText.split(/\n\s*\n/);
+    for (const block of blocks) {
+        const qMatch = block.match(/Q:\s*(.*?)(?=\nA:|\r\nA:|$)/is);
+        const aMatch = block.match(/A:\s*(.*)/is);
+        if (qMatch && aMatch) {
+            faqs.push({
+                question: qMatch[1].trim(),
+                answer: aMatch[1].trim()
+            });
+        }
+    }
+    return faqs;
+}
+
 async function runGenerator() {
-    console.log("Starting Pre-rendering Generator...");
+    console.log("Starting SmartKode AI SEO & Pre-rendering Generator...");
 
     // 1. Fetch properties from database
     const dbUrl = "https://praise-dynasty-hni-default-rtdb.firebaseio.com/properties.json";
@@ -118,6 +135,16 @@ async function runGenerator() {
     }
     const templateContent = fs.readFileSync(templatePath, 'utf8');
 
+    // Build active property list with slugs for linking
+    const activePropertyList = [];
+    for (const key in properties) {
+        const p = properties[key];
+        p.id = key;
+        if (p.status === 'Off-Market') continue;
+        p.slug = generateSlug(p.title, p.location, key);
+        activePropertyList.push(p);
+    }
+
     // Setup sitemap output
     let sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -132,6 +159,11 @@ async function runGenerator() {
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://praisedynastyrealty.com/tech-training</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://praisedynastyrealty.com/articles.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -140,25 +172,14 @@ async function runGenerator() {
     <loc>https://praisedynastyrealty.com/videos.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://praisedynastyrealty.com/funnel.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>`;
 
-    console.log(`Pre-rendering ${Object.keys(properties).length} property pages...`);
+    console.log(`Pre-rendering ${activePropertyList.length} active property pages with AI SEO & Internal Linking...`);
 
     let count = 0;
-    for (const key in properties) {
-        const property = properties[key];
-        property.id = key; // Assign ID
-        
-        // Exclude Off-Market properties from being indexed
-        if (property.status === 'Off-Market') continue;
-
-        const slug = generateSlug(property.title, property.location, key);
-        property.slug = slug;
+    for (const property of activePropertyList) {
+        const key = property.id;
+        const slug = property.slug;
 
         // Parse specifications
         const beds = extractBedrooms(property.title, property.units);
@@ -179,12 +200,24 @@ async function runGenerator() {
             .replace(/\n/g, ' ')
             .slice(0, 160) + '...';
 
-        // 4. Construct JSON-LD Schema
+        // 4. Extract AI SEO Intelligence
+        const seo = property.seo || {};
+        const seoTitle = (seo.metaTitle && seo.metaTitle.trim()) 
+            ? seo.metaTitle.trim() 
+            : `${property.title} | Praise Dynasty Real Estate`;
+        const seoDesc = (seo.metaDescription && seo.metaDescription.trim()) 
+            ? seo.metaDescription.trim().replace(/"/g, '&quot;') 
+            : cleanDesc;
+        const seoKeywords = (seo.keywords && seo.keywords.trim()) 
+            ? seo.keywords.trim().replace(/"/g, '&quot;') 
+            : `${property.title}, real estate Abuja, luxury property Nigeria`;
+
+        // 5. Construct JSON-LD Schema (RealEstateListing)
         const schemaObj = {
             "@context": "https://schema.org",
             "@type": "RealEstateListing",
-            "name": property.title || "Exclusive Offering",
-            "description": property.description || "",
+            "name": seoTitle,
+            "description": seoDesc,
             "url": `https://praisedynastyrealty.com/property/${slug}/`,
             "image": imgSource,
             "numberOfRooms": beds,
@@ -192,8 +225,8 @@ async function runGenerator() {
             "offeredIn": {
                 "@type": "Offer",
                 "price": price,
-                "priceCurrency": "NGN",
-                "availability": "https://schema.org/InStock"
+                "priceCurrency": property.currency === '$' ? 'USD' : 'NGN',
+                "availability": property.status === 'Recently Sold' ? "https://schema.org/Sold" : "https://schema.org/InStock"
             },
             "address": {
                 "@type": "PostalAddress",
@@ -202,25 +235,137 @@ async function runGenerator() {
             }
         };
 
-        // 5. Pre-render HTML markup
+        // 6. Handle AI FAQs & FAQPage Schema
+        let faqSchemaTag = '';
+        let faqSectionHtml = '';
+        const parsedFaqs = parseFaqs(seo.faqs);
+
+        if (parsedFaqs.length > 0) {
+            const faqSchema = {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": parsedFaqs.map(f => ({
+                    "@type": "Question",
+                    "name": f.question,
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": f.answer
+                    }
+                }))
+            };
+            faqSchemaTag = `\n    <!-- Schema.org FAQPage Rich Snippet -->\n    <script type="application/ld+json">\n    ${JSON.stringify(faqSchema, null, 2)}\n    </script>`;
+
+            let faqItemsHtml = '';
+            for (const f of parsedFaqs) {
+                faqItemsHtml += `
+                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-6">
+                    <h4 class="font-bold text-gray-900 text-base mb-2 flex items-start gap-2">
+                        <span class="text-brand-magenta font-black">Q:</span> ${f.question}
+                    </h4>
+                    <p class="text-gray-600 text-sm leading-relaxed pl-6">${f.answer}</p>
+                </div>`;
+            }
+
+            faqSectionHtml = `
+            <!-- SmartKode AI Local FAQs & Buyer Intelligence -->
+            <section class="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 mt-10">
+                <h3 class="text-2xl font-bold text-brand-blue mb-6 border-b border-gray-100 pb-4 flex items-center gap-2">
+                    <span>📍</span> Neighborhood Intelligence & Buyer FAQs
+                </h3>
+                <div class="space-y-4">
+                    ${faqItemsHtml}
+                </div>
+            </section>`;
+        }
+
+        // 7. Contextual Internal Linking (Similar Properties in this Neighborhood)
+        const currentLoc = (property.location || '').toLowerCase();
+        const currentDistrict = (property.neighborhood || '').toLowerCase();
+        const related = [];
+
+        // Match by neighborhood or city
+        for (const other of activePropertyList) {
+            if (other.id === key) continue;
+            const otherLoc = (other.location || '').toLowerCase();
+            const otherDistrict = (other.neighborhood || '').toLowerCase();
+
+            const matchDistrict = currentDistrict && otherDistrict && (currentDistrict.includes(otherDistrict) || otherDistrict.includes(currentDistrict));
+            const matchCity = currentLoc && otherLoc && (currentLoc.split(',')[0].trim() === otherLoc.split(',')[0].trim());
+
+            if (matchDistrict || matchCity) {
+                related.push(other);
+                if (related.length >= 3) break;
+            }
+        }
+
+        // Backfill with other active listings if under 3
+        if (related.length < 3) {
+            for (const other of activePropertyList) {
+                if (other.id === key) continue;
+                if (!related.some(r => r.id === other.id)) {
+                    related.push(other);
+                    if (related.length >= 3) break;
+                }
+            }
+        }
+
+        let relatedCardsHtml = '';
+        for (const rel of related) {
+            const relPrice = getPropPrice(rel);
+            const relCurrency = rel.currency || '₦';
+            const relPriceFormatted = relPrice > 0 ? `${relCurrency}${new Intl.NumberFormat('en-US').format(relPrice)}` : 'Price on Request';
+            const relImg = (rel.imageUrl && rel.imageUrl.trim() !== '') ? rel.imageUrl : "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=80";
+
+            relatedCardsHtml += `
+            <a href="/property/${rel.slug}/" class="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                <div class="h-44 w-full overflow-hidden relative">
+                    <img src="${relImg}" alt="${rel.title}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <span class="absolute top-3 left-3 bg-brand-magenta text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full">${rel.type || 'Exclusive'}</span>
+                </div>
+                <div class="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                        <p class="text-xs text-gray-400 font-medium mb-1">${rel.location || 'Abuja, Nigeria'}</p>
+                        <h4 class="font-bold text-gray-900 group-hover:text-brand-magenta transition-colors line-clamp-1">${rel.title}</h4>
+                    </div>
+                    <p class="text-base font-extrabold text-brand-blue mt-3">${relPriceFormatted}</p>
+                </div>
+            </a>`;
+        }
+
+        const internalLinkingSection = `
+        <!-- SmartKode Automated Property Internal Linking -->
+        <section class="max-w-7xl mx-auto px-6 md:px-12 py-14 border-t border-gray-200 mt-12">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
+                <div>
+                    <p class="text-xs font-bold text-brand-magenta uppercase tracking-widest">Internal Property Directory</p>
+                    <h3 class="text-2xl md:text-3xl font-bold text-brand-blue mt-1">Similar Properties in this Neighborhood</h3>
+                </div>
+                <a href="/all-listings.html" class="text-brand-magenta font-bold text-sm hover:underline flex items-center gap-1">Browse All Listings &rarr;</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                ${relatedCardsHtml}
+            </div>
+        </section>`;
+
+        // 8. Pre-render HTML markup
         let pageHtml = templateContent;
 
         // Inject pre-rendered payload at head
         const preRenderScript = `<script>window.preRenderedProperty = ${JSON.stringify(property)};</script>\n</head>`;
         pageHtml = pageHtml.replace('</head>', preRenderScript);
 
-        // Replace Head SEO Metadata
-        pageHtml = pageHtml.replace(/<title>.*?<\/title>/, `<title>${property.title} | Praise Dynasty Real Estate</title>`);
-        pageHtml = pageHtml.replace(/<meta name="description" content=".*?">/, `<meta name="description" content="${cleanDesc}">`);
+        // Replace Head SEO Metadata with AI SEO
+        pageHtml = pageHtml.replace(/<title>.*?<\/title>/, `<title>${seoTitle}</title>`);
+        pageHtml = pageHtml.replace(/<meta name="description" content=".*?">/, `<meta name="description" content="${seoDesc}">\n    <meta name="keywords" content="${seoKeywords}">`);
         pageHtml = pageHtml.replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="https://praisedynastyrealty.com/property/${slug}/" />`);
-        pageHtml = pageHtml.replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${property.title} | Praise Dynasty Real Estate" />`);
-        pageHtml = pageHtml.replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${cleanDesc}" />`);
+        pageHtml = pageHtml.replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${seoTitle}" />`);
+        pageHtml = pageHtml.replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${seoDesc}" />`);
         pageHtml = pageHtml.replace(/<meta property="og:image" content=".*?" \/>/, `<meta property="og:image" content="${imgSource}" />`);
         pageHtml = pageHtml.replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="https://praisedynastyrealty.com/property/${slug}/" />`);
 
-        // Replace Legacy Schema block
+        // Replace Legacy Schema block with RealEstateListing + FAQPage schema
         const legacySchemaRegex = /<!-- Schema\.org Markup -->[\s\S]*?<\/script>/;
-        const newSchemaTag = `<!-- Schema.org RealEstateListing Markup -->\n    <script type="application/ld+json">\n    ${JSON.stringify(schemaObj, null, 2)}\n    </script>`;
+        const newSchemaTag = `<!-- Schema.org RealEstateListing Markup -->\n    <script type="application/ld+json">\n    ${JSON.stringify(schemaObj, null, 2)}\n    </script>${faqSchemaTag}`;
         pageHtml = pageHtml.replace(legacySchemaRegex, newSchemaTag);
 
         // Pre-hydrate Hero Layout Images & Labels
@@ -228,7 +373,7 @@ async function runGenerator() {
         pageHtml = pageHtml.replace('id="detail-title"\n                    class="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight shadow-black drop-shadow-lg max-w-4xl">\n                    Premium Estate', `id="detail-title" class="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight shadow-black drop-shadow-lg max-w-4xl">${property.title}`);
         pageHtml = pageHtml.replace('id="detail-location">Global Market', `id="detail-location">${property.location}`);
         pageHtml = pageHtml.replace('id="detail-status"\n                    class="bg-brand-magenta text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-xl">Exclusive', `id="detail-status" class="bg-brand-magenta text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-xl">${property.status || 'Exclusive'}`);
-        pageHtml = pageHtml.replace('id="detail-desc" class="text-gray-600 leading-relaxed text-lg whitespace-pre-line"></p>', `id="detail-desc" class="text-gray-600 leading-relaxed text-lg whitespace-pre-line">${property.description || ''}</p>`);
+        pageHtml = pageHtml.replace('id="detail-desc" class="text-gray-600 leading-relaxed text-lg whitespace-pre-line"></p>', `id="detail-desc" class="text-gray-600 leading-relaxed text-lg whitespace-pre-line">${property.description || ''}</p>${faqSectionHtml}`);
 
         // Pre-hydrate Units List
         let unitsHtml = '';
@@ -259,6 +404,9 @@ async function runGenerator() {
         }
         pageHtml = pageHtml.replace('<div id="units-list" class="space-y-4">\n                        <!-- Dynamic Units Injection -->\n                        <div class="text-center text-brand-light/50 py-4 animate-pulse text-sm">Synchronizing\n                            configurations...</div>\n                    </div>', `<div id="units-list" class="space-y-4">${unitsHtml}</div>`);
 
+        // Inject Contextual Internal Linking right before the footer
+        pageHtml = pageHtml.replace('<div class="mt-10 text-center pb-8 border-t border-gray-100', `${internalLinkingSection}\n\n        <div class="mt-10 text-center pb-8 border-t border-gray-100`);
+
         // Write page to folder structure
         const destDir = path.join(propertyDir, slug);
         fs.mkdirSync(destDir, { recursive: true });
@@ -281,9 +429,7 @@ async function runGenerator() {
     <h3 class="text-xl font-bold text-brand-blue mb-6">Property Directory</h3>
     <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
 `;
-    for (const key in properties) {
-        const property = properties[key];
-        if (property.status === 'Off-Market') continue;
+    for (const property of activePropertyList) {
         seoLinksHtml += `        <li><a href="https://praisedynastyrealty.com/property/${property.slug}/" class="text-gray-600 hover:text-brand-magenta transition-colors">${property.title} in ${property.location}</a></li>\n`;
     }
     seoLinksHtml += `    </ul>\n</div>\n<!-- END SEO DIRECTORY -->`;
@@ -291,16 +437,14 @@ async function runGenerator() {
     const listingsPath = path.join(__dirname, 'all-listings.html');
     let listingsHtml = fs.readFileSync(listingsPath, 'utf8');
     
-    // Remove old hidden block if it exists
-    listingsHtml = listingsHtml.replace(/<div id="seo-property-links"[\s\S]*?<\/div>/, '');
-    // Remove old visible directory if it exists
+    // Remove old directory if it exists
     listingsHtml = listingsHtml.replace(/<div id="seo-property-directory"[\s\S]*?<!-- END SEO DIRECTORY -->/, '');
     
     // Insert new directory right before the footer
     listingsHtml = listingsHtml.replace('<footer ', `${seoLinksHtml}\n    <footer `);
     fs.writeFileSync(listingsPath, listingsHtml);
 
-    console.log(`Successfully generated ${count} property detail pages, updated sitemap.xml, and injected SEO links!`);
+    console.log(`✅ Successfully generated ${count} property detail pages with AI SEO, FAQ schema, and Internal Linking!`);
 }
 
 runGenerator();

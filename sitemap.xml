@@ -11,6 +11,11 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://praisedynastyrealty.com/tech-training</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://praisedynastyrealty.com/articles.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -19,11 +24,6 @@
     <loc>https://praisedynastyrealty.com/videos.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://praisedynastyrealty.com/funnel.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://praisedynastyrealty.com/property/semi-detached-4-bedroom-terrace-with-c-of-o-abuja-nigeria-7codlr/</loc>
@@ -1227,6 +1227,51 @@
   </url>
   <url>
     <loc>https://praisedynastyrealty.com/property/12-plots-of-commercial-land-with-uncompleted-build-imo-state-nigeria-mewp1m/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/property/secure-2-bedroom-apartment-with-24-hour-solar-powe-abuja-nigeria-8rjtxj/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/property/2-bedroom-semi-detached-bungalow-in-trade-more-est-abuja-nigeria-i7jbxi/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/property/spacious-4-bedroom-terrace-with-bq-and-three-livin-abuja-nigeria-9oyxjc/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/property/standard-self-contained-apartment-in-wuye-main-abuja-nigeria-szqe9h/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/property/prime-1672-m-corner-residential-plot-with-c-of-o-i-abuja-nigeria-kng8z1/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/property/5-bedroom-semi-detached-duplex-with-guest-chalet-f-abuja-nigeria-ax7cbb/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/property/neatly-renovated-3-bedroom-apartment-in-wuse-2-abuja-nigeria-k321fj/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/property/4-bedroom-terrace-duplex-with-bq-in-wuse-2-abuja-nigeria-x27zup/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/property/prime-1300-m-residential-plot-with-c-of-o-in-maita-abuja-nigeria-0sosif/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
