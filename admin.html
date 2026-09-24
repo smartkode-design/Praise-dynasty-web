@@ -1135,15 +1135,32 @@ IMPORTANT: Output ONLY the raw JSON object. Do not include markdown code blocks,
 
                     if (!rawResponse) throw new Error("Could not retrieve content from Gemini.");
 
-                    // Clean any markdown formatting if present
-                    const cleanJsonStr = rawResponse.replace(/```json/gi, '').replace(/```/g, '').trim();
-                    const seoData = JSON.parse(cleanJsonStr);
+                    // Robust JSON extraction from model response (handles any thinking or markdown traces)
+                    const jsonMatch = rawResponse.match(/\{[\s\S]*\}/);
+                    if (!jsonMatch) throw new Error("No JSON structure found in AI response.");
+                    const seoData = JSON.parse(jsonMatch[0]);
 
-                    if (seoData.metaTitle) document.getElementById('seo-meta-title').value = seoData.metaTitle;
-                    if (seoData.keywords) document.getElementById('seo-keywords').value = seoData.keywords;
-                    if (seoData.metaDescription) document.getElementById('seo-meta-desc').value = seoData.metaDescription;
+                    if (seoData.metaTitle) {
+                        document.getElementById('seo-meta-title').value = seoData.metaTitle;
+                    }
+                    if (seoData.keywords) {
+                        document.getElementById('seo-keywords').value = Array.isArray(seoData.keywords) ? seoData.keywords.join(', ') : seoData.keywords;
+                    }
+                    if (seoData.metaDescription) {
+                        document.getElementById('seo-meta-desc').value = seoData.metaDescription;
+                    }
                     if (seoData.faqs) {
-                        document.getElementById('seo-faqs').value = typeof seoData.faqs === 'string' ? seoData.faqs : JSON.stringify(seoData.faqs, null, 2);
+                        if (Array.isArray(seoData.faqs)) {
+                            document.getElementById('seo-faqs').value = seoData.faqs.map(f => {
+                                const q = f.question || f.q || 'Question';
+                                const a = f.answer || f.a || 'Answer';
+                                return `Q: ${q}\nA: ${a}`;
+                            }).join('\n\n');
+                        } else if (typeof seoData.faqs === 'object') {
+                            document.getElementById('seo-faqs').value = JSON.stringify(seoData.faqs, null, 2);
+                        } else {
+                            document.getElementById('seo-faqs').value = seoData.faqs;
+                        }
                     }
 
                     window.showToast('✨ AI SEO Intelligence Generated Successfully!', 'success');
