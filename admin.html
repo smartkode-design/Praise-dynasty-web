@@ -1109,16 +1109,20 @@ IMPORTANT: Output ONLY the raw JSON object. Do not include markdown code blocks,
 
                 try {
                     const apiKey = atob("QVEuQWI4Uk42S3ZadlI1a2loUmFwU0xfRlJJZU51eU96b1p6bmRLYVpxZFNWVXZXM1pjdGc=");
-                    // Primary and fallback models verified for this key
-                    const models = ["gemma-4-26b-a4b-it", "gemini-3.6-flash", "gemini-flash-latest"];
+                    // Ultra-fast Flash model verified for instant JSON responses
+                    const models = ["gemini-3.1-flash-lite", "gemini-3.5-flash", "gemma-4-26b-a4b-it"];
                     let rawResponse = null;
 
                     for (const m of models) {
                         try {
+                            const reqBody = {
+                                contents: [{ parts: [{ text: prompt }] }],
+                                generationConfig: { responseMimeType: "application/json" }
+                            };
                             const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                                body: JSON.stringify(reqBody)
                             });
                             if (res.ok) {
                                 const json = await res.json();
@@ -1127,27 +1131,38 @@ IMPORTANT: Output ONLY the raw JSON object. Do not include markdown code blocks,
                                     rawResponse = text;
                                     break;
                                 }
+                            } else {
+                                console.warn(`Model ${m} returned HTTP ${res.status}`);
                             }
                         } catch (e) {
-                            console.warn(`Model ${m} encountered an issue, trying fallback...`, e);
+                            console.warn(`Model ${m} encountered an issue:`, e);
                         }
                     }
 
-                    if (!rawResponse) throw new Error("Could not retrieve content from Gemini.");
+                    if (!rawResponse) throw new Error("AI service temporarily busy. Please retry.");
 
-                    // Robust JSON extraction from model response (handles any thinking or markdown traces)
-                    const jsonMatch = rawResponse.match(/\{[\s\S]*\}/);
-                    if (!jsonMatch) throw new Error("No JSON structure found in AI response.");
-                    const seoData = JSON.parse(jsonMatch[0]);
-
-                    if (seoData.metaTitle) {
-                        document.getElementById('seo-meta-title').value = seoData.metaTitle;
+                    // Clean JSON parsing
+                    let cleanJsonStr = rawResponse.trim();
+                    if (cleanJsonStr.includes("```json")) {
+                        cleanJsonStr = cleanJsonStr.split("```json")[1].split("```")[0].trim();
+                    } else if (cleanJsonStr.includes("```")) {
+                        cleanJsonStr = cleanJsonStr.split("```")[1].split("```")[0].trim();
+                    } else {
+                        const jsonMatch = cleanJsonStr.match(/\{[\s\S]*\}/);
+                        if (jsonMatch) cleanJsonStr = jsonMatch[0];
                     }
+
+                    const seoData = JSON.parse(cleanJsonStr);
+
+                    const titleField = seoData.metaTitle || seoData.title;
+                    if (titleField) document.getElementById('seo-meta-title').value = titleField;
+
                     if (seoData.keywords) {
                         document.getElementById('seo-keywords').value = Array.isArray(seoData.keywords) ? seoData.keywords.join(', ') : seoData.keywords;
                     }
-                    if (seoData.metaDescription) {
-                        document.getElementById('seo-meta-desc').value = seoData.metaDescription;
+                    const descField = seoData.metaDescription || seoData.description;
+                    if (descField) {
+                        document.getElementById('seo-meta-desc').value = descField;
                     }
                     if (seoData.faqs) {
                         if (Array.isArray(seoData.faqs)) {
@@ -1166,7 +1181,7 @@ IMPORTANT: Output ONLY the raw JSON object. Do not include markdown code blocks,
                     window.showToast('✨ AI SEO Intelligence Generated Successfully!', 'success');
                 } catch (err) {
                     console.error("AI SEO Engine Error:", err);
-                    window.showToast('AI Generation encountered an issue. Please try again.', 'error');
+                    window.showToast('AI Error: ' + err.message, 'error');
                 } finally {
                     btnGenerateAiSeo.disabled = false;
                     btnText.innerText = origText;
