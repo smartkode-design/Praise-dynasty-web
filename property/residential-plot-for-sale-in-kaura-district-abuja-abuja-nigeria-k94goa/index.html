@@ -470,6 +470,10 @@ High Investment Value</p>
                     // Absolute generic fallback architecture
                     heroImg.src = "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1920&q=80";
                 }
+                heroImg.onerror = function () {
+                    this.onerror = null;
+                    this.src = "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1920&q=80";
+                };
 
                 // Hydrate Dynamic Units Array Pipeline
                 unitsList.innerHTML = '';
@@ -503,10 +507,28 @@ High Investment Value</p>
                     `;
                 }
 
-                // Hydrate Responsive YouTube Iframe Element (Local Error 153 bypass)
+                // Hydrate Responsive YouTube Iframe Element with Pre-flight Availability Check
                 if (ytId) {
-                    videoIframe.src = `https://www.youtube.com/embed/${ytId}?rel=0`;
-                    videoSection.classList.remove('hidden');
+                    const probe = new Image();
+                    probe.onload = function () {
+                        // YouTube returns 120x90 placeholder when video is unavailable/deleted, or 480x360 when active
+                        if (probe.naturalWidth > 120) {
+                            videoIframe.src = `https://www.youtube.com/embed/${ytId}?rel=0`;
+                            videoSection.classList.remove('hidden');
+                        } else {
+                            videoIframe.src = '';
+                            videoSection.classList.add('hidden');
+                        }
+                    };
+                    probe.onerror = function () {
+                        // Video deleted, private, or 404 on YouTube
+                        videoIframe.src = '';
+                        videoSection.classList.add('hidden');
+                    };
+                    probe.src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+                } else {
+                    videoIframe.src = '';
+                    videoSection.classList.add('hidden');
                 }
 
                 // Hydrate WhatsApp Auto-Draft Engine
