@@ -202,15 +202,24 @@ async function runGenerator() {
 
         // 4. Extract AI SEO Intelligence
         const seo = property.seo || {};
+        const locName = property.location || 'Abuja, Nigeria';
+        const propType = property.type || 'Luxury Real Estate';
+
         const seoTitle = (seo.metaTitle && seo.metaTitle.trim()) 
             ? seo.metaTitle.trim() 
-            : `${property.title} | Praise Dynasty Real Estate`;
+            : `${property.title} in ${locName} | Praise Dynasty Real Estate`;
+
+        const priceDisplay = price > 0 
+            ? `${property.currency === '$' ? '$' : '₦'}${new Intl.NumberFormat('en-US').format(price)}`
+            : 'Price on Request';
+
         const seoDesc = (seo.metaDescription && seo.metaDescription.trim()) 
             ? seo.metaDescription.trim().replace(/"/g, '&quot;') 
-            : cleanDesc;
+            : `Explore ${property.title} located in ${locName}. Featuring ${beds > 0 ? beds + ' bedrooms, ' : ''}premium finishes, and verified title documents. Listed at ${priceDisplay}. Inquire with Praise Dynasty.`;
+
         const seoKeywords = (seo.keywords && seo.keywords.trim()) 
             ? seo.keywords.trim().replace(/"/g, '&quot;') 
-            : `${property.title}, real estate Abuja, luxury property Nigeria`;
+            : `${property.title}, ${propType} in ${locName}, real estate Abuja, luxury property Nigeria, Praise Dynasty Realty, buy house ${locName}`;
 
         // 5. Construct JSON-LD Schema (RealEstateListing)
         const schemaObj = {
@@ -238,7 +247,25 @@ async function runGenerator() {
         // 6. Handle AI FAQs & FAQPage Schema
         let faqSchemaTag = '';
         let faqSectionHtml = '';
-        const parsedFaqs = parseFaqs(seo.faqs);
+        let parsedFaqs = parseFaqs(seo.faqs);
+
+        // SmartKode Algorithmic Fallback: If no custom AI FAQs, automatically generate 3 high-converting local buyer FAQs!
+        if (parsedFaqs.length === 0) {
+            parsedFaqs = [
+                {
+                    question: `What title documents and development approvals are attached to ${property.title}?`,
+                    answer: `This property comes with verified title documentation (such as Certificate of Occupancy, Right of Occupancy, or Governor's Consent where applicable). Praise Dynasty Legal & Compliance teams conduct rigorous AGIS and land registry verifications prior to listing.`
+                },
+                {
+                    question: `Where is this property situated and what are the neighborhood infrastructure advantages?`,
+                    answer: `The property is situated in ${locName}. This prime location offers excellent road network connectivity, proximity to diplomatic and commercial centers, 24/7 security surveillance, and consistent capital appreciation.`
+                },
+                {
+                    question: `How can I schedule a private inspection or reserve this property?`,
+                    answer: `You can click the WhatsApp Consultation button on this page or call Praise Dynasty directly at +234 808 197 5967 to schedule a private walkthrough and receive the full property investor prospectus.`
+                }
+            ];
+        }
 
         if (parsedFaqs.length > 0) {
             const faqSchema = {
