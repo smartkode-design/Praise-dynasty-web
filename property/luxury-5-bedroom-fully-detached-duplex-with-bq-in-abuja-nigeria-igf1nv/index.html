@@ -37,7 +37,51 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-    <!-- Schema.org RealEstateListing Markup -->
+    <!-- Google Search Breadcrumbs Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://praisedynastyrealty.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Properties",
+      "item": "https://praisedynastyrealty.com/all-listings.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Luxury 5-Bedroom Fully Detached Duplex with BQ in NAF Valley Estate, Asokoro",
+      "item": "https://praisedynastyrealty.com/property/luxury-5-bedroom-fully-detached-duplex-with-bq-in-abuja-nigeria-igf1nv/"
+    }
+  ]
+}
+    </script>
+    <!-- Google Search Product & Offer Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Luxury 5-Bedroom Fully Detached Duplex with BQ in NAF Valley Estate, Asokoro",
+  "description": "Explore Luxury 5-Bedroom Fully Detached Duplex with BQ in NAF Valley Estate, Asokoro located in Abuja, Nigeria. Featuring premium finishes, and verified title documents. Listed at ₦1,800,000,000. Inquire with Praise Dynasty.",
+  "image": "https://res.cloudinary.com/dnlyjgkbz/image/upload/v1775723419/bm8eig1lop3vu1yxdkl2.png",
+  "offers": {
+    "@type": "Offer",
+    "price": 1800000000,
+    "priceCurrency": "NGN",
+    "availability": "https://schema.org/InStock",
+    "url": "https://praisedynastyrealty.com/property/luxury-5-bedroom-fully-detached-duplex-with-bq-in-abuja-nigeria-igf1nv/"
+  }
+}
+    </script>
+    <!-- Schema.org RealEstateListing Data -->
     <script type="application/ld+json">
     {
   "@context": "https://schema.org",

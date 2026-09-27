@@ -244,6 +244,48 @@ async function runGenerator() {
             }
         };
 
+        // 5b. Google Search Breadcrumbs Rich Snippet Schema
+        const breadcrumbSchema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://praisedynastyrealty.com/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Properties",
+                    "item": "https://praisedynastyrealty.com/all-listings.html"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": property.title || "Exclusive Property",
+                    "item": `https://praisedynastyrealty.com/property/${slug}/`
+                }
+            ]
+        };
+
+        // 5c. Google Search Product & Offer Rich Snippet Schema
+        const productSchema = {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": property.title || "Luxury Property",
+            "description": seoDesc,
+            "image": imgSource,
+            "offers": {
+                "@type": "Offer",
+                "price": price > 0 ? price : 0,
+                "priceCurrency": property.currency === '$' ? 'USD' : 'NGN',
+                "availability": property.status === 'Recently Sold' ? "https://schema.org/Sold" : "https://schema.org/InStock",
+                "url": `https://praisedynastyrealty.com/property/${slug}/`
+            }
+        };
+
         // 6. Handle AI FAQs & FAQPage Schema
         let faqSchemaTag = '';
         let faqSectionHtml = '';
@@ -390,9 +432,9 @@ async function runGenerator() {
         pageHtml = pageHtml.replace(/<meta property="og:image" content=".*?" \/>/, `<meta property="og:image" content="${imgSource}" />`);
         pageHtml = pageHtml.replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="https://praisedynastyrealty.com/property/${slug}/" />`);
 
-        // Replace Legacy Schema block with RealEstateListing + FAQPage schema
+        // Replace Legacy Schema block with Breadcrumbs, Product, RealEstateListing + FAQPage schema
         const legacySchemaRegex = /<!-- Schema\.org Markup -->[\s\S]*?<\/script>/;
-        const newSchemaTag = `<!-- Schema.org RealEstateListing Markup -->\n    <script type="application/ld+json">\n    ${JSON.stringify(schemaObj, null, 2)}\n    </script>${faqSchemaTag}`;
+        const newSchemaTag = `<!-- Google Search Breadcrumbs Rich Snippet -->\n    <script type="application/ld+json">\n    ${JSON.stringify(breadcrumbSchema, null, 2)}\n    </script>\n    <!-- Google Search Product & Offer Rich Snippet -->\n    <script type="application/ld+json">\n    ${JSON.stringify(productSchema, null, 2)}\n    </script>\n    <!-- Schema.org RealEstateListing Data -->\n    <script type="application/ld+json">\n    ${JSON.stringify(schemaObj, null, 2)}\n    </script>${faqSchemaTag}`;
         pageHtml = pageHtml.replace(legacySchemaRegex, newSchemaTag);
 
         // Pre-hydrate Hero Layout Images & Labels

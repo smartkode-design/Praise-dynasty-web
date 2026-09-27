@@ -37,7 +37,51 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-    <!-- Schema.org RealEstateListing Markup -->
+    <!-- Google Search Breadcrumbs Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://praisedynastyrealty.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Properties",
+      "item": "https://praisedynastyrealty.com/all-listings.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Smart Luxury 3 Bedroom Apartment in Wuse 2, Abuja",
+      "item": "https://praisedynastyrealty.com/property/smart-luxury-3-bedroom-apartment-in-wuse-2-abuja-abuja-nigeria-bzs7uh/"
+    }
+  ]
+}
+    </script>
+    <!-- Google Search Product & Offer Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Smart Luxury 3 Bedroom Apartment in Wuse 2, Abuja",
+  "description": "Explore Smart Luxury 3 Bedroom Apartment in Wuse 2, Abuja located in Abuja, Nigeria. Featuring 3 bedrooms, premium finishes, and verified title documents. Listed at ₦330,000,000. Inquire with Praise Dynasty.",
+  "image": "https://res.cloudinary.com/dnlyjgkbz/image/upload/v1779949568/mcxjsnf1gdtnnotzwknj.png",
+  "offers": {
+    "@type": "Offer",
+    "price": 330000000,
+    "priceCurrency": "NGN",
+    "availability": "https://schema.org/InStock",
+    "url": "https://praisedynastyrealty.com/property/smart-luxury-3-bedroom-apartment-in-wuse-2-abuja-abuja-nigeria-bzs7uh/"
+  }
+}
+    </script>
+    <!-- Schema.org RealEstateListing Data -->
     <script type="application/ld+json">
     {
   "@context": "https://schema.org",

@@ -37,7 +37,51 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-    <!-- Schema.org RealEstateListing Markup -->
+    <!-- Google Search Breadcrumbs Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://praisedynastyrealty.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Properties",
+      "item": "https://praisedynastyrealty.com/all-listings.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Commercial Plaza with 16 Shops for Sale in FHA Lugbe, Abuja",
+      "item": "https://praisedynastyrealty.com/property/commercial-plaza-with-16-shops-for-sale-in-fha-lug-abuja-nigeria-mbmxs5/"
+    }
+  ]
+}
+    </script>
+    <!-- Google Search Product & Offer Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Commercial Plaza with 16 Shops for Sale in FHA Lugbe, Abuja",
+  "description": "Explore Commercial Plaza with 16 Shops for Sale in FHA Lugbe, Abuja located in Abuja, Nigeria. Featuring premium finishes, and verified title documents. Listed at ₦250,000,000. Inquire with Praise Dynasty.",
+  "image": "https://res.cloudinary.com/dnlyjgkbz/image/upload/v1776158935/cnsrmwpwbnxdsoudej5t.png",
+  "offers": {
+    "@type": "Offer",
+    "price": 250000000,
+    "priceCurrency": "NGN",
+    "availability": "https://schema.org/InStock",
+    "url": "https://praisedynastyrealty.com/property/commercial-plaza-with-16-shops-for-sale-in-fha-lug-abuja-nigeria-mbmxs5/"
+  }
+}
+    </script>
+    <!-- Schema.org RealEstateListing Data -->
     <script type="application/ld+json">
     {
   "@context": "https://schema.org",

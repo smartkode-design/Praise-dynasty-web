@@ -37,7 +37,51 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-    <!-- Schema.org RealEstateListing Markup -->
+    <!-- Google Search Breadcrumbs Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://praisedynastyrealty.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Properties",
+      "item": "https://praisedynastyrealty.com/all-listings.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Residential Plot (824.13 SQM) in Katampe, Abuja",
+      "item": "https://praisedynastyrealty.com/property/residential-plot-82413-sqm-in-katampe-abuja-abuja-nigeria-my5se0/"
+    }
+  ]
+}
+    </script>
+    <!-- Google Search Product & Offer Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Residential Plot (824.13 SQM) in Katampe, Abuja",
+  "description": "Explore Residential Plot (824.13 SQM) in Katampe, Abuja located in Abuja, Nigeria. Featuring premium finishes, and verified title documents. Listed at ₦270,000,000. Inquire with Praise Dynasty.",
+  "image": "https://res.cloudinary.com/dnlyjgkbz/image/upload/v1777965473/npg2bnp82mtmysid1eop.jpg",
+  "offers": {
+    "@type": "Offer",
+    "price": 270000000,
+    "priceCurrency": "NGN",
+    "availability": "https://schema.org/InStock",
+    "url": "https://praisedynastyrealty.com/property/residential-plot-82413-sqm-in-katampe-abuja-abuja-nigeria-my5se0/"
+  }
+}
+    </script>
+    <!-- Schema.org RealEstateListing Data -->
     <script type="application/ld+json">
     {
   "@context": "https://schema.org",

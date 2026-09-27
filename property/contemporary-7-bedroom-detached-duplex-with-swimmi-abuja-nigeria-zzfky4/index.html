@@ -37,7 +37,51 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-    <!-- Schema.org RealEstateListing Markup -->
+    <!-- Google Search Breadcrumbs Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://praisedynastyrealty.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Properties",
+      "item": "https://praisedynastyrealty.com/all-listings.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Contemporary 7-Bedroom Detached Duplex with Swimming Pool & Elevator in Maitama, Abuja",
+      "item": "https://praisedynastyrealty.com/property/contemporary-7-bedroom-detached-duplex-with-swimmi-abuja-nigeria-zzfky4/"
+    }
+  ]
+}
+    </script>
+    <!-- Google Search Product & Offer Rich Snippet -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Contemporary 7-Bedroom Detached Duplex with Swimming Pool & Elevator in Maitama, Abuja",
+  "description": "Explore Contemporary 7-Bedroom Detached Duplex with Swimming Pool & Elevator in Maitama, Abuja located in Abuja, Nigeria. Featuring premium finishes, and verified title documents. Listed at ₦7,000,000,000. Inquire with Praise Dynasty.",
+  "image": "https://res.cloudinary.com/dnlyjgkbz/image/upload/v1775727018/evmzfbz5pdrragyb1m2u.jpg",
+  "offers": {
+    "@type": "Offer",
+    "price": 7000000000,
+    "priceCurrency": "NGN",
+    "availability": "https://schema.org/InStock",
+    "url": "https://praisedynastyrealty.com/property/contemporary-7-bedroom-detached-duplex-with-swimmi-abuja-nigeria-zzfky4/"
+  }
+}
+    </script>
+    <!-- Schema.org RealEstateListing Data -->
     <script type="application/ld+json">
     {
   "@context": "https://schema.org",
