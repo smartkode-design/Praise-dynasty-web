@@ -1,6 +1,13 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
+Disallow: /admin-certificates.html
+Disallow: /agency-office.html
+Disallow: /content-planner.html
+Disallow: /digital-stamp.html
 Disallow: /login.html
+Disallow: /monday_mail*
+Disallow: /praisedynasty_*
+Disallow: /offer_letter_*
+Disallow: /smartkode_*
 Sitemap: https://praisedynastyrealty.com/sitemap.xml
-Sitemap: https://www.praisedynastyrealty.com/sitemap.xml

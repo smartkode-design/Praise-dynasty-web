@@ -205,17 +205,27 @@ async function runGenerator() {
         const locName = property.location || 'Abuja, Nigeria';
         const propType = property.type || 'Luxury Real Estate';
 
-        const seoTitle = (seo.metaTitle && seo.metaTitle.trim()) 
+        let rawTitle = (seo.metaTitle && seo.metaTitle.trim()) 
             ? seo.metaTitle.trim() 
-            : `${property.title} in ${locName} | Praise Dynasty Real Estate`;
+            : `${property.title} in ${locName}`;
+        
+        // Google & SEO tools recommend titles under 60 characters
+        if (rawTitle.length > 42) {
+            rawTitle = rawTitle.substring(0, 42).replace(/\s+\S*$/, '').trim().replace(/[\s,.-]+$/, '');
+        }
+        const seoTitle = `${rawTitle} | Praise Dynasty`;
 
         const priceDisplay = price > 0 
             ? `${property.currency === '$' ? '$' : '₦'}${new Intl.NumberFormat('en-US').format(price)}`
             : 'Price on Request';
 
-        const seoDesc = (seo.metaDescription && seo.metaDescription.trim()) 
-            ? seo.metaDescription.trim().replace(/"/g, '&quot;') 
-            : `Explore ${property.title} located in ${locName}. Featuring ${beds > 0 ? beds + ' bedrooms, ' : ''}premium finishes, and verified title documents. Listed at ${priceDisplay}. Inquire with Praise Dynasty.`;
+        let rawDesc = (seo.metaDescription && seo.metaDescription.trim()) 
+            ? seo.metaDescription.trim() 
+            : `Explore ${property.title} in ${locName}. ${beds > 0 ? beds + ' beds. ' : ''}Verified title, listed at ${priceDisplay}. Inquire with Praise Dynasty.`;
+        if (rawDesc.length > 155) {
+            rawDesc = rawDesc.substring(0, 155).trim().replace(/[\s,.-]+$/, '') + '...';
+        }
+        const seoDesc = rawDesc.replace(/"/g, '&quot;');
 
         const seoKeywords = (seo.keywords && seo.keywords.trim()) 
             ? seo.keywords.trim().replace(/"/g, '&quot;') 

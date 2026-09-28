@@ -7,6 +7,12 @@
   --font-sans: "Outfit", sans-serif;
 }
 
+/* Global Viewport Overflow Protection */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 /* Custom styling utilities shared across pages */
 .hero-pattern {
     background-image: 
