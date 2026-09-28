@@ -159,6 +159,11 @@ async function runGenerator() {
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://praisedynastyrealty.com/admiralty-estate-asokoro.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://praisedynastyrealty.com/tech-training</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -204,6 +209,7 @@ async function runGenerator() {
         const seo = property.seo || {};
         const locName = property.location || 'Abuja, Nigeria';
         const propType = property.type || 'Luxury Real Estate';
+        const isAsokoro = ((property.title || '') + ' ' + (property.location || '') + ' ' + (property.district || '')).toLowerCase().includes('asokoro');
 
         let rawTitle = (seo.metaTitle && seo.metaTitle.trim()) 
             ? seo.metaTitle.trim() 
@@ -227,9 +233,13 @@ async function runGenerator() {
         }
         const seoDesc = rawDesc.replace(/"/g, '&quot;');
 
-        const seoKeywords = (seo.keywords && seo.keywords.trim()) 
+        let baseKeywords = (seo.keywords && seo.keywords.trim()) 
             ? seo.keywords.trim().replace(/"/g, '&quot;') 
             : `${property.title}, ${propType} in ${locName}, real estate Abuja, luxury property Nigeria, Praise Dynasty Realty, buy house ${locName}`;
+        if (isAsokoro && !baseKeywords.toLowerCase().includes('admiralty estate')) {
+            baseKeywords += `, Admiralty Estate Asokoro, houses for sale in Admiralty Estate Asokoro, luxury duplex in Asokoro, NAF Valley Estate Asokoro, lands for sale in Asokoro`;
+        }
+        const seoKeywords = baseKeywords;
 
         // 5. Construct JSON-LD Schema (RealEstateListing)
         const schemaObj = {
@@ -303,14 +313,20 @@ async function runGenerator() {
 
         // SmartKode Algorithmic Fallback: If no custom AI FAQs, automatically generate 3 high-converting local buyer FAQs!
         if (parsedFaqs.length === 0) {
+            const locFaqAnswer = isAsokoro
+                ? `The property is situated in prestigious ${locName}, within direct proximity to Admiralty Estate, NAF Valley Estate, and top diplomatic missions in Asokoro, Abuja. This prime enclave offers world-class security surveillance, uninterrupted power infrastructure, serene paved boulevards, and elite capital appreciation.`
+                : `The property is situated in ${locName}. This prime location offers excellent road network connectivity, proximity to diplomatic and commercial centers, 24/7 security surveillance, and consistent capital appreciation.`;
+
             parsedFaqs = [
                 {
                     question: `What title documents and development approvals are attached to ${property.title}?`,
                     answer: `This property comes with verified title documentation (such as Certificate of Occupancy, Right of Occupancy, or Governor's Consent where applicable). Praise Dynasty Legal & Compliance teams conduct rigorous AGIS and land registry verifications prior to listing.`
                 },
                 {
-                    question: `Where is this property situated and what are the neighborhood infrastructure advantages?`,
-                    answer: `The property is situated in ${locName}. This prime location offers excellent road network connectivity, proximity to diplomatic and commercial centers, 24/7 security surveillance, and consistent capital appreciation.`
+                    question: isAsokoro
+                        ? `Where is this property situated in Asokoro and what are the neighborhood infrastructure advantages?`
+                        : `Where is this property situated and what are the neighborhood infrastructure advantages?`,
+                    answer: locFaqAnswer
                 },
                 {
                     question: `How can I schedule a private inspection or reserve this property?`,
@@ -411,9 +427,30 @@ async function runGenerator() {
             </a>`;
         }
 
+        let asokoroCalloutHtml = '';
+        if (isAsokoro) {
+            asokoroCalloutHtml = `
+            <div class="mb-8 p-6 bg-gradient-to-r from-brand-blue to-purple-950 text-white rounded-3xl border border-white/10 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-magenta/20 border border-brand-magenta/40 flex items-center justify-center font-bold text-xl shrink-0">
+                        🏛️
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-300">Asokoro Prime District Guide</span>
+                        <h4 class="text-lg font-bold text-white">Looking for Luxury Residences or Land in Admiralty Estate Asokoro?</h4>
+                        <p class="text-xs text-blue-100/70">Explore 2026 pricing benchmarks, off-market duplexes, and verified land opportunities.</p>
+                    </div>
+                </div>
+                <a href="/admiralty-estate-asokoro.html" class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-magenta hover:bg-brand-magenta/90 text-white text-xs font-bold rounded-xl transition-all shadow-md whitespace-nowrap">
+                    Read Admiralty Estate Guide &rarr;
+                </a>
+            </div>`;
+        }
+
         const internalLinkingSection = `
         <!-- SmartKode Automated Property Internal Linking -->
         <section class="max-w-7xl mx-auto px-6 md:px-12 py-14 border-t border-gray-200 mt-12">
+            ${asokoroCalloutHtml}
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
                 <div>
                     <p class="text-xs font-bold text-brand-magenta uppercase tracking-widest">Internal Property Directory</p>
