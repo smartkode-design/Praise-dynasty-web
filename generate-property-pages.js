@@ -164,11 +164,6 @@ async function runGenerator() {
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://praisedynastyrealty.com/tech-training</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://praisedynastyrealty.com/articles.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -519,6 +514,18 @@ async function runGenerator() {
             `;
         }
         pageHtml = pageHtml.replace('<div id="units-list" class="space-y-4">\n                        <!-- Dynamic Units Injection -->\n                        <div class="text-center text-brand-light/50 py-4 animate-pulse text-sm">Synchronizing\n                            configurations...</div>\n                    </div>', `<div id="units-list" class="space-y-4">${unitsHtml}</div>`);
+
+        // Pre-hydrate friendly WhatsApp Inquiry link
+        let waDraftPrice = 'Price on Request';
+        const waSym = property.currency || '₦';
+        if (property.units && Array.isArray(property.units) && property.units.length > 0 && property.units[0].price > 0) {
+            waDraftPrice = `${waSym}${new Intl.NumberFormat('en-US').format(property.units[0].price)}`;
+        } else if (property.price && property.price > 0) {
+            waDraftPrice = `${waSym}${new Intl.NumberFormat('en-US').format(property.price)}`;
+        }
+        const waMsg = `Hello Praise Dynasty, I saw the ${property.title} in ${property.location || 'Abuja'} listed at ${waDraftPrice} on your website. Is this property still available for inspection?`;
+        const waLink = `https://wa.me/2348081975967?text=${encodeURIComponent(waMsg)}`;
+        pageHtml = pageHtml.replace('href="https://wa.me/2348081975967"', `href="${waLink}"`);
 
         // Inject Contextual Internal Linking right before the footer
         pageHtml = pageHtml.replace('<div class="mt-10 text-center pb-8 border-t border-gray-100', `${internalLinkingSection}\n\n        <div class="mt-10 text-center pb-8 border-t border-gray-100`);

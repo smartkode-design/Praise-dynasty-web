@@ -10,4 +10,5 @@ Disallow: /monday_mail*
 Disallow: /praisedynasty_*
 Disallow: /offer_letter_*
 Disallow: /smartkode_*
+Disallow: /tech-training*
 Sitemap: https://praisedynastyrealty.com/sitemap.xml
