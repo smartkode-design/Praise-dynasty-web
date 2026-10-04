@@ -172,6 +172,11 @@ async function runGenerator() {
     <loc>https://praisedynastyrealty.com/videos.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/funnel.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>`;
 
     console.log(`Pre-rendering ${activePropertyList.length} active property pages with AI SEO & Internal Linking...`);
