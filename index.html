@@ -1081,7 +1081,7 @@
             }
             let total = filtered.length;
             if (country === 'All' && (!state || state === 'All')) {
-                total += 29; // Temporarily offset by +29 to show 270 instead of 241
+                total = Math.max(310, filtered.length + 60); // Scaled offset to show 310 global listings
             }
             return total;
         }
