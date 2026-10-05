@@ -265,6 +265,32 @@
                         </button>
                     </div>
                 </div>
+                <!-- Live Search Match Counter & Popular Searches -->
+                <div class="mt-4 pt-3.5 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                    <!-- Quick Search Popular Tags -->
+                    <div class="flex items-center gap-1.5 flex-wrap text-gray-500">
+                        <span class="font-bold text-gray-700 flex items-center gap-1">🔥 Popular:</span>
+                        <button type="button" class="hero-quick-tag px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-brand-magenta hover:text-white text-gray-700 transition-colors font-medium cursor-pointer" data-location="Asokoro" data-type="Mansion">Asokoro Mansions</button>
+                        <button type="button" class="hero-quick-tag px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-brand-magenta hover:text-white text-gray-700 transition-colors font-medium cursor-pointer" data-location="Maitama" data-type="Duplex">Maitama Duplexes</button>
+                        <button type="button" class="hero-quick-tag px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-brand-magenta hover:text-white text-gray-700 transition-colors font-medium cursor-pointer" data-location="Katampe" data-type="Land">Katampe Land</button>
+                        <button type="button" class="hero-quick-tag px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-brand-magenta hover:text-white text-gray-700 transition-colors font-medium cursor-pointer" data-location="Guzape" data-type="Terrace">Guzape Terraces</button>
+                        <button type="button" class="hero-quick-tag px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 hover:bg-amber-400 hover:text-amber-950 text-amber-800 transition-colors font-bold cursor-pointer" data-location="" data-type="" data-tab="all" data-distress="true">⚡ Distress Deals</button>
+                    </div>
+
+                    <!-- Live Dynamic Match Counter Badge -->
+                    <div id="hero-match-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-50 text-green-700 border border-green-200 font-semibold whitespace-nowrap self-start sm:self-auto">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span id="hero-match-count">310+ Verified Listings Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Off-Market Private Request Micro-Link -->
+            <div class="mb-6 text-center text-xs sm:text-sm text-gray-200 font-light flex items-center justify-center gap-2 flex-wrap animate-fade-up delay-175">
+                <span>Looking for off-market, diplomatic enclaves, or unlisted plots in Abuja?</span>
+                <a href="https://wa.me/2348081975967?text=Hello%20Praise%20Dynasty,%20I%20am%20looking%20for%20exclusive%20off-market%20or%20unlisted%20properties%20in%20Abuja." target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 font-bold underline transition-colors inline-flex items-center gap-1">
+                    Chat with an executive director on WhatsApp →
+                </a>
             </div>
 
             <!-- Hero Institutional Stats Bar (Highlighting 310+ Verified Listings) -->
@@ -1464,6 +1490,7 @@
                 btn.classList.add("bg-brand-blue", "text-white", "shadow-sm");
                 btn.classList.remove("text-gray-600", "hover:text-brand-blue", "hover:bg-gray-100");
                 selectedHeroTab = btn.getAttribute("data-tab");
+                updateHeroMatchCount();
             });
         });
 
@@ -1526,6 +1553,101 @@
                 }
             });
         }
+
+        // Live Dynamic Match Counter Engine
+        function updateHeroMatchCount() {
+            const matchCountEl = document.getElementById("hero-match-count");
+            if (!matchCountEl) return;
+
+            const locInput = document.getElementById("hero-search-location");
+            const typeInput = document.getElementById("hero-search-type");
+            const budgetInput = document.getElementById("hero-search-budget");
+
+            const locVal = locInput ? locInput.value.trim().toLowerCase() : "";
+            const typeVal = typeInput ? typeInput.value.trim().toLowerCase() : "";
+            const budgetVal = budgetInput ? budgetInput.value : "any";
+
+            // If no filters are active, show baseline
+            if (!locVal && !typeVal && (budgetVal === "any" || !budgetVal) && selectedHeroTab === "all") {
+                matchCountEl.innerText = "310+ Verified Listings Available";
+                return;
+            }
+
+            let matches = allProperties.filter(p => p.status !== "Off-Market");
+
+            // Location filter
+            if (locVal) {
+                matches = matches.filter(p => {
+                    const titleMatch = p.title && p.title.toLowerCase().includes(locVal);
+                    const locMatch = p.location && p.location.toLowerCase().includes(locVal);
+                    const neighborhoodMatch = p.neighborhood && p.neighborhood.toLowerCase().includes(locVal);
+                    return titleMatch || locMatch || neighborhoodMatch;
+                });
+            }
+
+            // Type filter
+            if (typeVal) {
+                matches = matches.filter(p => {
+                    const pType = p.propertyType ? String(p.propertyType).toLowerCase() : "";
+                    const tStr = p.type ? String(p.type).toLowerCase() : "";
+                    const titleStr = p.title ? String(p.title).toLowerCase() : "";
+                    return pType.includes(typeVal) || tStr.includes(typeVal) || titleStr.includes(typeVal);
+                });
+            }
+
+            // Tab filter
+            if (selectedHeroTab !== "all") {
+                matches = matches.filter(p => {
+                    const propTypeStr = p.propertyType ? String(p.propertyType).toLowerCase() : "";
+                    const typeStr = p.type ? String(p.type).toLowerCase() : "";
+                    if (selectedHeroTab === "sale") return (propTypeStr === "sale" && !typeStr.includes("land"));
+                    if (selectedHeroTab === "rent") return (propTypeStr === "rent" && !typeStr.includes("land"));
+                    if (selectedHeroTab === "airbnb") return (propTypeStr.includes("airbnb") || propTypeStr.includes("short-let") || propTypeStr.includes("shortlet"));
+                    if (selectedHeroTab === "land") return typeStr.includes("land");
+                    return true;
+                });
+            }
+
+            // Budget filter
+            if (budgetVal && budgetVal !== "any") {
+                const parts = budgetVal.split("-");
+                const min = Number(parts[0]) || 0;
+                const max = (parts[1] === "Infinity") ? Infinity : (Number(parts[1]) || Infinity);
+                matches = matches.filter(p => {
+                    const price = getPropPrice(p);
+                    if (price === 0) return true;
+                    return price >= min && price <= max;
+                });
+            }
+
+            const count = matches.length;
+            const label = locVal ? `in ${locVal.charAt(0).toUpperCase() + locVal.slice(1)}` : "Verified Properties";
+            matchCountEl.innerText = count > 0 ? `🎯 Found ${count} ${label}` : "0 Matches (Try broader search)";
+        }
+
+        // Listeners for Live Counter updates
+        const heroLocInput = document.getElementById("hero-search-location");
+        const heroTypeInput = document.getElementById("hero-search-type");
+        const heroBudgetInput = document.getElementById("hero-search-budget");
+        if (heroLocInput) heroLocInput.addEventListener("input", updateHeroMatchCount);
+        if (heroTypeInput) heroTypeInput.addEventListener("change", updateHeroMatchCount);
+        if (heroBudgetInput) heroBudgetInput.addEventListener("change", updateHeroMatchCount);
+
+        // Popular Quick Tags Action Listeners
+        document.querySelectorAll(".hero-quick-tag").forEach(tagBtn => {
+            tagBtn.addEventListener("click", () => {
+                const loc = tagBtn.getAttribute("data-location") || "";
+                const type = tagBtn.getAttribute("data-type") || "";
+                const isDistress = tagBtn.getAttribute("data-distress") === "true";
+
+                if (heroLocInput) heroLocInput.value = isDistress ? "Distress" : loc;
+                if (heroTypeInput) heroTypeInput.value = isDistress ? "" : type;
+
+                updateHeroMatchCount();
+
+                if (heroSearchSubmit) heroSearchSubmit.click();
+            });
+        });
 
         // --- Master Tab Switching Logic ---
         const tabs = [
