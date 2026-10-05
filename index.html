@@ -181,39 +181,114 @@
 
     <!-- 2. The Hero Section -->
     <section id="home"
-        class="relative w-full h-screen min-h-[600px] flex items-center justify-center hero-pattern text-center">
-        <div class="absolute inset-0 bg-brand-blue/30 mix-blend-multiply z-0"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 z-0"></div>
+        class="relative w-full min-h-screen py-24 sm:py-28 lg:py-32 flex items-center justify-center hero-pattern text-center">
+        <div class="absolute inset-0 bg-brand-blue/40 mix-blend-multiply z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30 z-0"></div>
 
-        <div class="relative z-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto flex flex-col items-center justify-center">
+        <div class="relative z-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto flex flex-col items-center justify-center w-full">
+
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-semibold mb-6 animate-fade-up">
+                <span>🏆 Nigeria’s Premier Luxury Property Partner</span>
+            </div>
 
             <h1
-                class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 tracking-tight animate-fade-up">
+                class="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-4 tracking-tight animate-fade-up">
                 Transforming Properties into <br class="hidden sm:block">
                 <span class="text-brand-magenta">Cherished Homes</span> <span class="font-light">&amp;</span> <span
                     class="text-brand-magenta">Successful Investments</span>
             </h1>
 
             <p
-                class="mt-4 text-lg sm:text-xl lg:text-2xl text-gray-200 max-w-3xl font-light mb-10 animate-fade-up delay-100">
+                class="mt-2 text-base sm:text-lg lg:text-xl text-gray-200 max-w-2xl font-light mb-8 animate-fade-up delay-100">
                 Nigeria’s premier provider of premium real estate services, headquartered in Asokoro, Abuja.
             </p>
 
-            <div class="animate-fade-up delay-200">
-                <a href="https://wa.me/2348081975967?text=I%20would%20like%20to%20request%20a%20VIP%20consultation."
-                    target="_blank" rel="noopener noreferrer"
-                    class="inline-flex items-center justify-center px-8 py-4 text-base sm:text-lg font-semibold text-white transition-all duration-300 bg-brand-magenta rounded-full hover:bg-rose-600 hover:shadow-xl hover:shadow-brand-magenta/40 hover:-translate-y-1">
-                    Request VIP Consultation
-                    <svg class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                </a>
+            <!-- Luxury Hero Multi-Tab Search Box -->
+            <div class="w-full max-w-4xl bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-4 sm:p-6 border border-white/20 text-left animate-fade-up delay-150 mb-8">
+                <!-- Search Tabs -->
+                <div class="flex items-center gap-2 border-b border-gray-200 pb-3 mb-4 overflow-x-auto hide-scrollbar">
+                    <button type="button" class="hero-tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-brand-blue text-white shadow-sm" data-tab="all">All Properties</button>
+                    <button type="button" class="hero-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-gray-600 hover:text-brand-blue hover:bg-gray-100" data-tab="sale">For Sale</button>
+                    <button type="button" class="hero-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-gray-600 hover:text-brand-blue hover:bg-gray-100" data-tab="rent">For Rent</button>
+                    <button type="button" class="hero-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-gray-600 hover:text-brand-blue hover:bg-gray-100" data-tab="land">Land &amp; Plots</button>
+                    <button type="button" class="hero-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-gray-600 hover:text-brand-blue hover:bg-gray-100" data-tab="airbnb">AirBnB / Short-let</button>
+                </div>
+
+                <!-- Search Input Fields Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <!-- Location / District Input -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Location / District</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">📍</span>
+                            <input type="text" id="hero-search-location" placeholder="e.g. Asokoro, Maitama..."
+                                class="w-full pl-8 pr-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Property Type Select -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Property Type</label>
+                        <select id="hero-search-type"
+                            class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all cursor-pointer">
+                            <option value="">All Types</option>
+                            <option value="Duplex">Duplex</option>
+                            <option value="Terrace">Terrace Duplex</option>
+                            <option value="Penthouse">Penthouse</option>
+                            <option value="Mansion">Luxury Mansion</option>
+                            <option value="Land">Land / Plot</option>
+                            <option value="Commercial">Commercial Property</option>
+                            <option value="Apartment">Apartment</option>
+                        </select>
+                    </div>
+
+                    <!-- Budget Range Select -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Budget Range</label>
+                        <select id="hero-search-budget"
+                            class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all cursor-pointer">
+                            <option value="any">Any Price</option>
+                            <option value="0-50000000">Under ₦50M</option>
+                            <option value="50000000-150000000">₦50M – ₦150M</option>
+                            <option value="150000000-500000000">₦150M – ₦500M</option>
+                            <option value="500000000-1000000000">₦500M – ₦1B</option>
+                            <option value="1000000000-Infinity">₦1B+ (Ultra Luxury)</option>
+                        </select>
+                    </div>
+
+                    <!-- Search Action Button -->
+                    <div class="flex items-end">
+                        <button type="button" id="hero-search-submit"
+                            class="w-full py-2.5 px-4 bg-brand-magenta hover:bg-rose-600 text-white font-bold text-xs sm:text-sm rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <span>Search Properties</span>
+                        </button>
+                    </div>
+                </div>
             </div>
+
+            <!-- Hero Institutional Stats Bar (Highlighting 310+ Verified Listings) -->
+            <div class="w-full max-w-4xl grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 py-4 px-4 sm:px-6 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 text-white animate-fade-up delay-200">
+                <div class="flex flex-col items-center text-center p-2">
+                    <span class="text-2xl sm:text-3xl font-extrabold text-brand-magenta tracking-tight">310+</span>
+                    <span class="text-xs sm:text-sm font-medium text-gray-300 mt-0.5">Verified Listings</span>
+                </div>
+                <div class="flex flex-col items-center text-center p-2 border-l border-white/10">
+                    <span class="text-2xl sm:text-3xl font-extrabold text-amber-400 tracking-tight">₦50B+</span>
+                    <span class="text-xs sm:text-sm font-medium text-gray-300 mt-0.5">Portfolio Value</span>
+                </div>
+                <div class="flex flex-col items-center text-center p-2 border-l-0 sm:border-l border-white/10">
+                    <span class="text-2xl sm:text-3xl font-extrabold text-green-400 tracking-tight">100%</span>
+                    <span class="text-xs sm:text-sm font-medium text-gray-300 mt-0.5">Vetted Titles</span>
+                </div>
+                <div class="flex flex-col items-center text-center p-2 border-l border-white/10">
+                    <span class="text-2xl sm:text-3xl font-extrabold text-blue-300 tracking-tight">Asokoro</span>
+                    <span class="text-xs sm:text-sm font-medium text-gray-300 mt-0.5">Abuja Diplomatic HQ</span>
+                </div>
+            </div>
+
         </div>
     </section>
-
     <!-- 3. The About Us Section review and check if its consistent with what there want -->
     <section id="about" class="py-24 bg-white relative overflow-hidden">
         <!-- Abstract gradient shapes -->
@@ -1375,6 +1450,81 @@
 
             // Trigger Pagination Builder
             buildPagination(totalPages);
+        }
+
+        // --- Hero Search Box Integration Engine ---
+        let selectedHeroTab = "all";
+        const heroTabButtons = document.querySelectorAll(".hero-tab-btn");
+        heroTabButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                heroTabButtons.forEach(b => {
+                    b.classList.remove("bg-brand-blue", "text-white", "shadow-sm");
+                    b.classList.add("text-gray-600", "hover:text-brand-blue", "hover:bg-gray-100");
+                });
+                btn.classList.add("bg-brand-blue", "text-white", "shadow-sm");
+                btn.classList.remove("text-gray-600", "hover:text-brand-blue", "hover:bg-gray-100");
+                selectedHeroTab = btn.getAttribute("data-tab");
+            });
+        });
+
+        const heroSearchSubmit = document.getElementById("hero-search-submit");
+        if (heroSearchSubmit) {
+            heroSearchSubmit.addEventListener("click", () => {
+                const locInput = document.getElementById("hero-search-location");
+                const typeInput = document.getElementById("hero-search-type");
+                const budgetInput = document.getElementById("hero-search-budget");
+
+                const locVal = locInput ? locInput.value.trim() : "";
+                const typeVal = typeInput ? typeInput.value.trim() : "";
+                const budgetVal = budgetInput ? budgetInput.value : "any";
+
+                // Set combined search term
+                const terms = [locVal, typeVal].filter(Boolean);
+                currentTextSearch = terms.join(" ");
+                const lowerSearchInput = document.getElementById("text-search-input");
+                if (lowerSearchInput) lowerSearchInput.value = currentTextSearch;
+
+                // Set Tab Filter
+                if (selectedHeroTab === "all") {
+                    activeTab = "all";
+                    tabs.forEach(x => {
+                        const xbtn = document.getElementById(x.id);
+                        if (xbtn) xbtn.className = "pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue";
+                    });
+                } else {
+                    activeTab = selectedHeroTab;
+                    tabs.forEach(x => {
+                        const xbtn = document.getElementById(x.id);
+                        if (xbtn) {
+                            if (x.val === activeTab) {
+                                xbtn.className = "pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-brand-magenta text-brand-blue";
+                            } else {
+                                xbtn.className = "pb-3 text-base sm:text-lg font-bold transition-all duration-300 border-b-2 border-transparent text-gray-400 hover:text-brand-blue";
+                            }
+                        }
+                    });
+                }
+
+                // Set Budget Range
+                if (budgetVal === "any" || !budgetVal) {
+                    currentMinPrice = 0;
+                    currentMaxPrice = Infinity;
+                } else {
+                    const parts = budgetVal.split("-");
+                    currentMinPrice = Number(parts[0]) || 0;
+                    currentMaxPrice = (parts[1] === "Infinity") ? Infinity : (Number(parts[1]) || Infinity);
+                }
+
+                // Reset Pagination and Render
+                currentPage = 1;
+                renderProperties();
+
+                // Smooth Scroll to Featured Properties Section
+                const propSec = document.getElementById("properties");
+                if (propSec) {
+                    propSec.scrollIntoView({ behavior: "smooth" });
+                }
+            });
         }
 
         // --- Master Tab Switching Logic ---
