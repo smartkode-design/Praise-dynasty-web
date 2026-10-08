@@ -1,3 +1,17 @@
 https://www.praisedynastyrealty.com/* https://praisedynastyrealty.com/:splat 301
 http://www.praisedynastyrealty.com/* https://praisedynastyrealty.com/:splat 301
 http://praisedynastyrealty.com/* https://praisedynastyrealty.com/:splat 301
+
+# Canonical 301 redirects for legacy .html extensions
+/index.html / 301!
+/all-listings.html /all-listings 301!
+/admiralty-estate-asokoro.html /admiralty-estate-asokoro 301!
+/articles.html /articles 301!
+/article-details.html /article-details 301!
+/videos.html /videos 301!
+/funnel.html /funnel 301!
+/faq.html /faq 301!
+/founder.html /founder 301!
+/kyc.html /kyc 301!
+/privacy.html /privacy 301!
+/terms.html /terms 301!

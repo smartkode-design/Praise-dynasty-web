@@ -145,38 +145,58 @@ async function runGenerator() {
         activePropertyList.push(p);
     }
 
+    const todayDate = new Date().toISOString().split('T')[0];
+
     // Setup sitemap output
     let sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://praisedynastyrealty.com/</loc>
+    <lastmod>${todayDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://praisedynastyrealty.com/all-listings.html</loc>
+    <loc>https://praisedynastyrealty.com/all-listings</loc>
+    <lastmod>${todayDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://praisedynastyrealty.com/admiralty-estate-asokoro.html</loc>
+    <loc>https://praisedynastyrealty.com/admiralty-estate-asokoro</loc>
+    <lastmod>${todayDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://praisedynastyrealty.com/articles.html</loc>
+    <loc>https://praisedynastyrealty.com/articles</loc>
+    <lastmod>${todayDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://praisedynastyrealty.com/videos.html</loc>
+    <loc>https://praisedynastyrealty.com/videos</loc>
+    <lastmod>${todayDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://praisedynastyrealty.com/funnel.html</loc>
+    <loc>https://praisedynastyrealty.com/funnel</loc>
+    <lastmod>${todayDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/faq</loc>
+    <lastmod>${todayDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://praisedynastyrealty.com/founder</loc>
+    <lastmod>${todayDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>`;
 
     console.log(`Pre-rendering ${activePropertyList.length} active property pages with AI SEO & Internal Linking...`);
@@ -279,7 +299,7 @@ async function runGenerator() {
                     "@type": "ListItem",
                     "position": 2,
                     "name": "Properties",
-                    "item": "https://praisedynastyrealty.com/all-listings.html"
+                    "item": "https://praisedynastyrealty.com/all-listings"
                 },
                 {
                     "@type": "ListItem",
@@ -441,7 +461,7 @@ async function runGenerator() {
                         <p class="text-xs text-blue-100/70">Explore 2026 pricing benchmarks, off-market duplexes, and verified land opportunities.</p>
                     </div>
                 </div>
-                <a href="/admiralty-estate-asokoro.html" class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-magenta hover:bg-brand-magenta/90 text-white text-xs font-bold rounded-xl transition-all shadow-md whitespace-nowrap">
+                <a href="/admiralty-estate-asokoro" class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-magenta hover:bg-brand-magenta/90 text-white text-xs font-bold rounded-xl transition-all shadow-md whitespace-nowrap">
                     Read Admiralty Estate Guide &rarr;
                 </a>
             </div>`;
@@ -456,7 +476,7 @@ async function runGenerator() {
                     <p class="text-xs font-bold text-brand-magenta uppercase tracking-widest">Internal Property Directory</p>
                     <h3 class="text-2xl md:text-3xl font-bold text-brand-blue mt-1">Similar Properties in this Neighborhood</h3>
                 </div>
-                <a href="/all-listings.html" class="text-brand-magenta font-bold text-sm hover:underline flex items-center gap-1">Browse All Listings &rarr;</a>
+                <a href="/all-listings" class="text-brand-magenta font-bold text-sm hover:underline flex items-center gap-1">Browse All Listings &rarr;</a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 ${relatedCardsHtml}
@@ -541,7 +561,7 @@ async function runGenerator() {
         fs.writeFileSync(path.join(destDir, 'index.html'), pageHtml);
 
         // Add to sitemap
-        sitemapContent += `\n  <url>\n    <loc>https://praisedynastyrealty.com/property/${slug}/</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`;
+        sitemapContent += `\n  <url>\n    <loc>https://praisedynastyrealty.com/property/${slug}/</loc>\n    <lastmod>${todayDate}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`;
         
         count++;
     }
@@ -571,6 +591,30 @@ async function runGenerator() {
     // Insert new directory right before the footer
     listingsHtml = listingsHtml.replace('<footer ', `${seoLinksHtml}\n    <footer `);
     fs.writeFileSync(listingsPath, listingsHtml);
+
+    // INJECT STATIC SEO CRAWLER DIRECTORY INTO INDEX.HTML
+    console.log("Injecting static SEO links into index.html...");
+    let indexSeoHtml = `
+<section id="seo-property-directory-home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-white border-t border-gray-100">
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h3 class="text-xl font-bold text-brand-blue">Featured Properties Directory</h3>
+            <p class="text-xs text-gray-500 mt-1">Direct access to verified estates, lands, and luxury apartments across Abuja and Nigeria.</p>
+        </div>
+        <a href="/all-listings" class="text-xs font-bold text-brand-magenta hover:underline">View All &rarr;</a>
+    </div>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+`;
+    for (const property of activePropertyList.slice(0, 36)) {
+        indexSeoHtml += `        <li><a href="https://praisedynastyrealty.com/property/${property.slug}/" class="text-gray-600 hover:text-brand-magenta transition-colors line-clamp-1">${property.title} in ${property.location}</a></li>\n`;
+    }
+    indexSeoHtml += `    </ul>\n</section>\n<!-- END SEO DIRECTORY HOME -->`;
+
+    const indexPath = path.join(__dirname, 'index.html');
+    let indexHtml = fs.readFileSync(indexPath, 'utf8');
+    indexHtml = indexHtml.replace(/<section id="seo-property-directory-home"[\s\S]*?<!-- END SEO DIRECTORY HOME -->/, '');
+    indexHtml = indexHtml.replace('<footer ', `${indexSeoHtml}\n    <footer `);
+    fs.writeFileSync(indexPath, indexHtml);
 
     console.log(`✅ Successfully generated ${count} property detail pages with AI SEO, FAQ schema, and Internal Linking!`);
 }
